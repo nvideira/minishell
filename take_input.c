@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.h                                            :+:      :+:    :+:   */
+/*   take_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/17 11:49:51 by nvideira          #+#    #+#             */
-/*   Updated: 2022/10/17 11:56:11 by nvideira         ###   ########.fr       */
+/*   Created: 2022/10/25 16:31:14 by jlebre            #+#    #+#             */
+/*   Updated: 2022/10/25 18:01:53 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
+#include "minishell.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-#endif
+char *take_input(void)
+{
+	char	*str;
+	
+	str = readline(print_dir());
+	return (str);
+}
