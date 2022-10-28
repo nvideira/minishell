@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2022/10/26 18:42:13 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/10/26 19:00:08 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	ft_wordcount(const char *str, char c)
 	{
 		if (str[i] == 34)
 			i = find_quotes(str, i, 34);
-		printf ("i: %ld\n", i);
+		//printf ("i: %ld\n", i);
 		if (str[i] == 39)
 			i = find_quotes(str, i, 39);
 		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)

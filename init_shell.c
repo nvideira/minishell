@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:59:18 by jlebre            #+#    #+#             */
-/*   Updated: 2022/10/26 04:26:17 by marvin           ###   ########.fr       */
+/*   Updated: 2022/10/28 16:03:34 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	init_shell(char **env)
 {
-	char	*username;
+	char		*username;
+	//t_env_lst	*env_lst;
 	
 	play_sound(env, "init.ogg");
-	//play_sound(env, "error.ogg");
-
+	
 	//username = getenv("USER");
 	//clear();
 	//printf("\n\nUSER is: @%s", username);

@@ -3,25 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2022/10/26 17:42:35 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/10/26 20:47:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process_input(char *input)
+void	process_input(char *input, char **env)
 {
 	char	**args;
 	int		i;
-	//add_history(input);
+
 	i = 0;
+	add_history(input);
 	args = ft_split(input, 32);
+	commands(args, env);
+}
+
+	/* printf("INPUT: %s\n", input);
 	while (args[i])
 	{
-		printf("INPUT: %s\n", args[i]);
+		printf("%s\n", args[i]);
 		i++;
-	}
-}
+	} 
+	*/
+	//print_header(env);

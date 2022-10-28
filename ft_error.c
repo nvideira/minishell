@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   take_input.c                                       :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 16:31:14 by jlebre            #+#    #+#             */
-/*   Updated: 2022/10/25 18:01:53 by jlebre           ###   ########.fr       */
+/*   Created: 2022/10/26 17:15:16 by jlebre            #+#    #+#             */
+/*   Updated: 2022/10/26 17:22:11 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *take_input(void)
+void	ft_error(char *err, char **env)
 {
-	char	*str;
-	
-	str = readline(print_dir());
-	return (str);
+	red("Error!\n");
+	red(err);
+	play_sound(env, "error.ogg");
 }
