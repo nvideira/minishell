@@ -66,7 +66,7 @@ int			get_col(char **env);
 int			get_lines(char **env);
 
 //PROCESS INPUT
-void		process_input(char *input, char **env);
+void		process_input(char *input, char **env, t_env_lst *env_lst);
 void		commands(char **input, char **env);
 void		change_dir(char **input, char **env);
 

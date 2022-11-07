@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:55:46 by jlebre            #+#    #+#             */
-/*   Updated: 2022/10/26 19:25:41 by jlebre           ###   ########.fr       */
+/*   Updated: 2022/11/05 13:08:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s)
 		return (NULL);
-	if (!len || ft_strlen(s) < start)
+	if (!len || ((unsigned int)ft_strlen(s) < start))
 		return (ft_strdup(""));
-	if (len > ft_strlen(s))
+	if (len > (size_t)ft_strlen(s))
 	{
 		len = ft_strlen(s);
 		return (ft_substr(s, start, len));
@@ -111,26 +111,4 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 			dr[len] = sr[len];
 	}
 	return (dst);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	if (!s1 || !s2)
-		return (1);
-	while (s1[i])
-	{
-		if (s1[i] != s2[i])
-			return (1);
-		i++;	
-	}
-	return (0);
-}
-
-void	ft_clear(void)
-{
-	printf("\033c");
 }

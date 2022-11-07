@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2022/10/26 19:00:08 by jlebre           ###   ########.fr       */
+/*   Updated: 2022/11/07 18:58:17 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ static int	split_it(char const *str, char c, int st, char **ns)
 			i = find_quotes(str, i, 34);
 		if (str[i] == 39)
 			i = find_quotes(str, i, 39);
-		// if (s[i] == '\0')
+		// if (str[i] == '\0')
 		// 	break ;
 		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)
 		{
+			//printf("teste\n");
 			ns[j] = ft_substr(str, st, (i - st) + 1);
 			if (!ns[j++])
 				return (0);
@@ -93,7 +94,7 @@ static int	split_it(char const *str, char c, int st, char **ns)
 		}
 		i++;
 	}
-	ns[j] = NULL;
+	//ns[j - 1] = NULL;
 	return (1);
 }
 

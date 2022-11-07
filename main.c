@@ -14,25 +14,31 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char *input;
-	t_env_lst *env_lst;
+	char		*input;
+	t_env_lst	*env_lst;
+	char		*info;
 
 	(void)ac;
 	(void)av;
 	init_shell(env);
 	ft_clear();
 	env_lst = env_to_lst(env);
+	info = print_info();
 	// while (env_lst)
 	// {
 	// 	printf("name: %s, value: %s\n", env_lst->name, env_lst->value);
 	// 	env_lst = env_lst->next;
-	// }
+	// } 
 	while (1)
 	{
-		input = readline(print_info());
+		input = readline(info);
 		if (!input)
+		{
+			free(input);
 			exit(0);
-		process_input(input, env);
+		}
+		process_input(input, env, NULL);
 	}
+	free(input);
 	return (0);
 }
