@@ -21,24 +21,29 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	init_shell(env);
-	ft_clear();
 	env_lst = env_to_lst(env);
 	info = print_info();
-	// while (env_lst)
-	// {
-	// 	printf("name: %s, value: %s\n", env_lst->name, env_lst->value);
-	// 	env_lst = env_lst->next;
-	// } 
+	while (env_lst)
+	{
+		printf("name: %s, value: %s\n", env_lst->name, env_lst->value);
+		env_lst = env_lst->next;
+	} 
+	ft_clear();
 	while (1)
 	{
 		input = readline(info);
 		if (!input)
 		{
+			rl_clear_history();
 			free(input);
-			exit(0);
+			//free_env(&env_lst);
+			free(info);
+			exit(errno);
 		}
 		process_input(input, env, NULL);
 	}
 	free(input);
+	// free_env(&env_lst);
+	free(info);
 	return (0);
 }

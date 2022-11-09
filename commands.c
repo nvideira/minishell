@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/05 13:03:08 by marvin           ###   ########.fr       */
+/*   Updated: 2022/11/09 15:33:04 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	commands(char **input, char **env)
 {
+	if (!input)
+		return ;
+	//printf("test\n");
 	if (!ft_strcmp(input[0], "cd"))
 		change_dir(input, env);
 	else if (!ft_strcmp(input[0], "pwd"))

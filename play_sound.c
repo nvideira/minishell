@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:44:55 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/07 18:56:30 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:39:27 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void  play_sound(char **env, char *sound)
 			printf("ERROR!\n");
 		}
 	}
-	else
-	  wait(0);
+	// else
+	//   wait(0);
 	free(arr[0]);
 	free(arr[1]);
 }
