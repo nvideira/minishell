@@ -16,13 +16,13 @@ int	main(int ac, char **av, char **env)
 {
 	char		*input;
 	t_env_lst	*env_lst;
-	char		*info;
+	//char		*info;
 
 	(void)ac;
 	(void)av;
 	init_shell(env);
 	env_lst = env_to_lst(env);
-	info = print_info();
+	//info = print_info();
 	while (env_lst)
 	{
 		printf("name: %s, value: %s\n", env_lst->name, env_lst->value);
@@ -31,19 +31,15 @@ int	main(int ac, char **av, char **env)
 	ft_clear();
 	while (1)
 	{
-		input = readline(info);
+		input = readline(print_info());
 		if (!input)
 		{
 			rl_clear_history();
-			free(input);
-			//free_env(&env_lst);
-			free(info);
-			exit(errno);
+			free (input);
+			exit(0);
 		}
-		process_input(input, env, NULL);
+		process_input(input, env);
 	}
-	free(input);
-	// free_env(&env_lst);
-	free(info);
+	free (input);
 	return (0);
 }

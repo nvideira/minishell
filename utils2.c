@@ -45,7 +45,20 @@ int strict_cmp(char *s1, char *s2)
 	}
 	return (0);
 }
+
 void	ft_clear(void)
 {
 	printf("\033c");
+}
+
+int	ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != (char )c && s[i] != '\0')
+		i++;
+	if (s[i] == (char )c)
+		return (i);
+	return (0);
 }

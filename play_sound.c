@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_sound.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:44:55 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/09 15:39:27 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:56:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void  play_sound(char **env, char *sound)
 	char	*arr[3];
 	int		cenas;
 
-	arr[0] = ft_strdup("/bin/paplay");
-	arr[1] = ft_strdup(sound);
+	arr[0] = strdup("/bin/paplay");
+	arr[1] =  strdup(sound);
 	arr[2] = 0;
 	cenas = fork();
 	if (!cenas)
@@ -29,8 +29,6 @@ void  play_sound(char **env, char *sound)
 			printf("ERROR!\n");
 		}
 	}
-	// else
-	//   wait(0);
 	free(arr[0]);
 	free(arr[1]);
 }

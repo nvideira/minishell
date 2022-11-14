@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_input.c                                    :+:      :+:    :+:   */
+/*   shell_split2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/14 18:29:07 by nvideira         ###   ########.fr       */
+/*   Created: 2022/11/14 18:27:14 by nvideira          #+#    #+#             */
+/*   Updated: 2022/11/14 18:52:43 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_matrix(char **matrix)
+char	**shell_split(char *str)
 {
-	int	i;
+	char	**arr;
+	int		i;
+	int		j;
 
 	i = 0;
-	while (matrix[i])
+	j = 0;
+	arr = malloc(sizeof(char *) * (ft_strlen(str) + 1));
+	while (str[i])
 	{
-		printf("%s\n", matrix[i]);
-		i++;
+		while (str[i] && str[i] == 32)
+			i++;
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			if (ft_strchr(str + i + 1, str[i]))
+			{
+				arr[j] = ft_substr(str, i + 1, ft_strchr(str + i + 1, str[i]));
+				j++;
+			}
+			else
+			{
+				
+			}
+		}
 	}
-}
-
-void	process_input(char *input, char **env)
-{
-	char	**args;
-	
-	if (input[0] == '\0')
-		return ;
-	add_history(input);
-	args = ft_split(input, 32);
-	print_matrix(args);
-	commands(args, env);
 }
