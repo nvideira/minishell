@@ -32,10 +32,10 @@
 
 typedef struct s_command
 {
-	int					fd[2];
+	int					pipe[2];
 	pid_t				pid;
 	int					status;
-	char				*cmd;
+	char				**cmds;
 	char 				*path;
 	char				**args;
 }   t_command;
@@ -106,6 +106,14 @@ int 					strict_cmp(char *s1, char *s2);
 void					ft_clear(void);
 int						ft_strchr(const char *s, int c);
 
+//UTILS3
+int						ft_strncmp(const char *s1, const char *s2, size_t n);
+
+//GET NEXT LINE
+char					*get_next_line(int fd);
+static char				*reading(int fd, char **storage);
+static char				*update_stored(char **storage, char *string);
+static char				*add_leftover(char **storage);
 
 //NORMAL COLORS
 int						black(char *str);
