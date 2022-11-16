@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:27:14 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/15 18:22:03 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/16 11:57:58 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,18 @@ int	find_redirections(char *input)
 
 	i = 0;
 	redir_no = 0;
+	if (input[0] == '<' && input[1] == '<')
+		i
 	while (input[i] != '\0')
 	{
 		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
+		{
 			redir_no++;
+			if (input[i] == '<' && input[i + 1] == '<')
+				i++;
+			else if (input[i] == '>' && input[i + 1] == '>')
+				i++;
+		}
 		i++;
 	}
 	return (redir_no);
