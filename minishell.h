@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <stdarg.h>
 /////////////////////////////////////////////////
 # include <signal.h>
 /////////////////////////////////////////////////
@@ -32,10 +33,10 @@
 
 typedef struct s_command
 {
-	int					pipe[2];
+	int					fd[2];
 	pid_t				pid;
 	int					status;
-	char				**cmds;
+	char				*cmd;
 	char 				*path;
 	char				**args;
 }   t_command;
@@ -50,8 +51,9 @@ typedef struct s_env_lst
 //INIT SHELL
 void					init_shell(char **env);
 
+void					recieve();
+
 //ENV_TO_LIST
-int						ft_strchr(const char *s, int c);
 void					lst_add_back(t_env_lst **lst, t_env_lst *new);
 t_env_lst				*env_to_lst(char **env);
 t_env_lst				*new_node(char *env);
@@ -59,8 +61,10 @@ t_env_lst				*ft_lstlast(t_env_lst *lst);
 //FREE ENV
 void					free_env(t_env_lst **env);
 
+/*
 //SOUND
 void					play_sound(char **env, char *sound);
+*/
 
 //PRINT DIR
 char					*print_info(void);
@@ -105,15 +109,8 @@ int						ft_strcmp(char *s1, char *s2);
 int 					strict_cmp(char *s1, char *s2);
 void					ft_clear(void);
 int						ft_strchr(const char *s, int c);
+int						ft_atoi(const char *str);
 
-//UTILS3
-int						ft_strncmp(const char *s1, const char *s2, size_t n);
-
-//GET NEXT LINE
-char					*get_next_line(int fd);
-static char				*reading(int fd, char **storage);
-static char				*update_stored(char **storage, char *string);
-static char				*add_leftover(char **storage);
 
 //NORMAL COLORS
 int						black(char *str);

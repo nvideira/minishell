@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/14 18:29:07 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/15 12:51:05 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	process_input(char *input, char **env)
 		return ;
 	add_history(input);
 	args = ft_split(input, 32);
-	print_matrix(args);
+	//print_matrix(args);
 	commands(args, env);
 }

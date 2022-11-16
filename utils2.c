@@ -63,25 +63,29 @@ int	ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_strljoin(char const *s1, char const *s2, unsigned int len)
+int	ft_atoi(const char *str)
 {
-	char			*ns;
-	unsigned int	i;
-	unsigned int	j;
+	int	i;
+	int	val;
+	int	sinal;
 
-	if (!s2)
-		return (NULL);
-	if (!s1)
-		return (ft_substr(s2, 0, len));
-	ns = malloc((ft_strlen(s1) + len) * sizeof(char) + 1);
-	if (!ns)
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		ns[i] = s1[i];
-	j = -1;
-	while (s2[++j] && j < len)
-		ns[i + j] = s2[j];
-	ns[i + j] = '\0';
-	return (ns);
+	i = 0;
+	val = 0;
+	sinal = 1;
+	while ((str[i] == '\n') || (str[i] == '\r') || (str[i] == '\t')
+		|| (str[i] == '\v') || (str[i] == '\f') || (str[i] == ' '))
+		i++;
+	if ((str[i] == '-') || (str[i] == '+'))
+	{
+		if (str[i] == '-')
+			sinal *= -1;
+		i++;
+	}
+	while ((str[i] >= 48) && (str[i] <= 57))
+	{	
+		val *= 10;
+		val += str[i] - 48;
+		i++;
+	}
+	return (sinal * val);
 }

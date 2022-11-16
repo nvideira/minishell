@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_to_lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:25:45 by nvideira          #+#    #+#             */
-/*   Updated: 2022/10/28 17:58:28 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/15 12:48:46 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_strchr(const char *s, int c)
-{
-    int i;
-
-    i = 0;
-	while (s[i] != (char )c && s[i] != '\0')
-		i++;
-	if (s[i] == (char )c)
-		return (i);
-	else
-		return (0);
-}
 
 t_env_lst	*ft_lstlast(t_env_lst *lst)
 {

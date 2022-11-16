@@ -38,8 +38,15 @@ int	main(int ac, char **av, char **env)
 			free (input);
 			exit(0);
 		}
+		signal(SIGINT, recieve);
 		process_input(input, env);
 	}
 	free (input);
 	return (0);
+}
+
+void	recieve()
+{
+	if (SIGINT)
+		printf("\n");
 }
