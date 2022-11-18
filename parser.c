@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:50 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/16 18:54:36 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:49:43 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,30 @@ char	*heredoc(char *input)
 	return (tmp2);
 }
 
-void	wait_for_quotes(char *input, char type)
+char	*wait_for_quotes(char *input, char type)
 {
-	
+	char	*tmp;
+	char	*tmp2;
+	int		i;
+
+	while (1)
+	{
+		if (type == '"')
+			write(1, "d", 1);
+		write(1, "quote> ", 7);
+		tmp = get_next_line(0);
+		tmp2 = ft_strjoin(input, tmp);
+		free(input);
+		input = ft_strdup(tmp2);
+		free(tmp2);
+		if (ft_strchr(tmp, (int) type))
+		{
+			free(tmp);
+			break ;
+		}
+		free(tmp);
+	}
+	return (input);
 }
 
 void	search_quotes(char *input)
@@ -98,15 +119,36 @@ void	search_quotes(char *input)
 	{
 		if (input[i] == '\'')
 			quotes++;
-		else if (input[i] == '\"')
+		else if (input[i] == '"')
 			d_quotes++;
 		i++;
 	}
 	i = 0;
-	while (input[i] != '\'' && input[i] != '\"')
+	while (input[i] && input[i] != '\'' && input[i] != '"')
+	{	
+		if ((input[i] == '\'' && quotes % 2 != 0)
+			|| (input[i] == '"' && d_quotes % 2 != 0))
+			wait_for_quotes(input, input[i]);
+		else if (input[i] == '\'' && quotes % 2 == 0
+			&& d_quotes & 2 != 0)
+			{
+				i++;
+				while (input[i] != '\'' && input[i] != '"')
+					i++;
+				if (input[i] == '\'')
+					wait_for_quotes(input, '"');
+			}
+		else if (input[i] == '"' && d_quotes % 2 == 0
+			&& quotes % 2 != 0)
+			{
+				i++;
+				while (input[i] != '\'' && input[i] != '"')
+					i++;
+				if (input[i] == '"')
+					wait_for_quotes(input, '\'');
+			}
 		i++;
-	if ((input[i] == '\'' && quotes % 2 != 0) || (input[i] == '\"' && d_quotes % 2 != 0))
-		wait_for_quotes(input, input[i]);
+	}
 }
 
 void	parser(char *input)
