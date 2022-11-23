@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:50 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/18 17:49:43 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:06:32 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,37 @@ void	search_quotes(char *input)
 	}
 }
 
+int	empty_prompt(char *input)
+{
+	int i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] != ' ' && input[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+char	*do_expansion(char *input)
+{
+	int	i
+	int	quote;
+
+	i = 0;
+	quote = 0;
+	while (input[i] && input[i] != '$')
+	{
+		if (input[i] == '\'')
+			quote++;
+		i++;
+	}
+	if (quote % 2 == 1)
+		return (input);
+}
+
 void	parser(char *input)
 {
     int 	i;
@@ -159,6 +190,10 @@ void	parser(char *input)
 	char	*limiter;
 
     i = 0;
+	if (empty_prompt(input))
+		return ;
+	if (ft_strlen(input))
+		add_history(input);
 	search_quotes(input);
 	if (ft_strncmp(input, "<<", 2))
 	{
@@ -167,7 +202,10 @@ void	parser(char *input)
 		input = ft_strdup(tmp);
 		free(tmp);
 	}
+	if (ft_strchr(char *input, '$'))
+		do_expansion(input);
 	redir_no = find_redir(input);
+	
     while (input[i])
     {
         if ()
