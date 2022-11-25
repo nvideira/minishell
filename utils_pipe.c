@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:58:53 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/11 16:44:27 by marvin           ###   ########.fr       */
+/*   Updated: 2022/11/21 17:18:31 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_strichr(const char *s, int start, int c)
 {

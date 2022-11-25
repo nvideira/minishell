@@ -5,29 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 17:50:47 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/15 17:50:52 by nvideira         ###   ########.fr       */
+/*   Created: 2022/11/25 16:18:52 by nvideira          #+#    #+#             */
+/*   Updated: 2022/11/25 16:19:40 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_strljoin(char const *s1, char const *s2, unsigned int len)
 {
+	char			*ns;
 	unsigned int	i;
-	unsigned char	*str1;
-	unsigned char	*str2;
+	unsigned int	j;
 
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
-	i = 0;
-	while (str1[i] && str2[i] && i < n)
-	{
-		if (str1[i] != str2[i])
-			return (str1[i] - str2[i]);
-		i++;
-	}
-	if (i < n)
-		return (str1[i] - str2[i]);
-	return (0);
+	if (!s2)
+		return (NULL);
+	if (!s1)
+		return (ft_substr(s2, 0, len));
+	ns = malloc((ft_strlen(s1) + len) * sizeof(char) + 1);
+	if (!ns)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		ns[i] = s1[i];
+	j = -1;
+	while (s2[++j] && j < len)
+		ns[i + j] = s2[j];
+	ns[i + j] = '\0';
+	return (ns);
 }

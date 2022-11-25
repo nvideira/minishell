@@ -6,14 +6,14 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:50 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/23 19:06:32 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:39:09 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-int	find_redirections(char *input)
+int	find_redir(char *input)
 {
 	int i;
 	int redir_no;
@@ -84,7 +84,6 @@ char	*wait_for_quotes(char *input, char type)
 {
 	char	*tmp;
 	char	*tmp2;
-	int		i;
 
 	while (1)
 	{
@@ -130,7 +129,7 @@ void	search_quotes(char *input)
 			|| (input[i] == '"' && d_quotes % 2 != 0))
 			wait_for_quotes(input, input[i]);
 		else if (input[i] == '\'' && quotes % 2 == 0
-			&& d_quotes & 2 != 0)
+			&& d_quotes % 2 != 0)
 			{
 				i++;
 				while (input[i] != '\'' && input[i] != '"')
@@ -156,8 +155,11 @@ int	empty_prompt(char *input)
 	int i;
 
 	i = 0;
+	if (!input[i])
+		return (1);
 	while (input[i])
 	{
+
 		if (input[i] != ' ' && input[i] != '\t')
 			return (0);
 		i++;
@@ -165,50 +167,79 @@ int	empty_prompt(char *input)
 	return (1);
 }
 
-char	*do_expansion(char *input)
-{
-	int	i
-	int	quote;
+// char	*do_expansion(char *input)
+// {
+// 	int	i;
+// 	int	quote;
 
-	i = 0;
-	quote = 0;
-	while (input[i] && input[i] != '$')
-	{
-		if (input[i] == '\'')
-			quote++;
-		i++;
-	}
-	if (quote % 2 == 1)
-		return (input);
-}
+// 	i = 0;
+// 	quote = 0;
+// 	while (input[i] && input[i] != '$')
+// 	{
+// 		if (input[i] == '\'')
+// 			quote++;
+// 		i++;
+// 	}
+// 	if (quote % 2 == 1)
+// 		return (input);
+// }
 
-void	parser(char *input)
+char	**parser(char *input)
 {
-    int 	i;
-	int		redir_no;
+	//int 	i;
+	//int		redir_no;
 	char	*tmp;
-	char	*limiter;
+	// char	*limiter;
+	char	**args;
 
-    i = 0;
+    //i = 0;
+
 	if (empty_prompt(input))
-		return ;
-	if (ft_strlen(input))
-		add_history(input);
+		return (NULL);
+	
+	// if (ft_strlen(input))
+	// 	add_history(input);
 	search_quotes(input);
-	if (ft_strncmp(input, "<<", 2))
+	if (!ft_strncmp(input, "<<", 2))
 	{
 		tmp = heredoc(input);
 		free(input);
 		input = ft_strdup(tmp);
 		free(tmp);
 	}
-	if (ft_strchr(char *input, '$'))
-		do_expansion(input);
-	redir_no = find_redir(input);
+	args = ft_split(input, ' ');
+	//redir_no = find_redir(input);
+	// if (ft_strchr(char *input, '$'))
+	// 	do_expansion(input);
+    // while (input[i])
+    // {
+    //     if ()
+    // }
 	
-    while (input[i])
-    {
-        if ()
-    }
-   
+	return (args);
+}
+
+void	print_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		printf("%s\n", matrix[i]);
+		i++;
+	}
+}
+
+int main(int ac, char **av)
+{
+	char	**parsed;
+
+	(void)ac;
+	if (ac < 2)
+		return (0);
+	parsed = parser(av[1]);
+	if (parsed)
+		print_matrix(parsed);
+	return (0);
 }

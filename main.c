@@ -12,23 +12,20 @@
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+t_command	*com_info(void)
 {
-	char		*input;
-	t_env_lst	*env_lst;
-	//char		*info;
+	static t_command	a;
 
-	(void)ac;
-	(void)av;
+	return (&a);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	char	*input;
+
+	(void)argc;
+	(void)argv;
 	init_shell(env);
-	env_lst = env_to_lst(env);
-	//info = print_info();
-	while (env_lst)
-	{
-		printf("name: %s, value: %s\n", env_lst->name, env_lst->value);
-		env_lst = env_lst->next;
-	} 
-	ft_clear();
 	while (1)
 	{
 		input = readline(print_info());
@@ -36,17 +33,10 @@ int	main(int ac, char **av, char **env)
 		{
 			rl_clear_history();
 			free (input);
-			exit(0);
+			exit(com_info()->exit_value);
 		}
-		signal(SIGINT, recieve);
-		process_input(input, env);
+		process_input(input);
 	}
 	free (input);
-	return (0);
-}
-
-void	recieve()
-{
-	if (SIGINT)
-		printf("\n");
+	return (com_info()->exit_value);
 }

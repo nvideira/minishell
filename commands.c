@@ -3,87 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/14 15:25:36 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:38:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	commands(char **input, char **env)
+void	commands(char **input)
 {
 	if (input[0])
 	{
-		if (!ft_strncmp(input[0], "cd", 3))
+		if (!ft_strncmp(input[0], "echo", 5))
+			ft_echo(input);
+		else if (!ft_strncmp(input[0], "cd", 3))
 			change_dir(input);
 		else if (!ft_strncmp(input[0], "pwd", 4))
-			printf("%s\n", print_dir());
-		else if (!ft_strncmp(input[0], "echo", 5))
-			printf("%s\n", input[1]);
-		else 
-			env_commands(input, env);
-	}
-	
-}
-
-void	env_commands(char **input, char **env)
-{
-	char	*arr[2];
-	int		cenas;
-
-	arr[0] = find_path(input[0], env);
-	if (!arr[0])
-	{
-		printf("\033[0;31mcommand not found: %s\033[0m\n", input[0]);
-		return ;
-	}
-	arr[1] = input[1];
-	arr[2] = 0;
-	cenas = fork();
-	if (!cenas)
-	{
-		if (execve(arr[0], arr, env) == -1)
 		{
-			ft_error("Failed", env);
+			printf("%s\n", print_dir());
+			com_info()->exit_value = 0;
 		}
+		else if (!ft_strncmp(input[0], "export", 7))
+			printf("EXPORT: %s\n", input[1]);
+		else if (!ft_strncmp(input[0], "unset", 6))
+			ft_unset();
+		else if (!ft_strncmp(input[0], "env", 4))
+			ft_env();
+		else if (!ft_strncmp(input[0], "exit", 5))
+			{
+			rl_clear_history();
+			free (input);
+			exit(com_info()->exit_value);
+			}
+		else
+			env_commands(input);
 	}
-	waitpid(cenas, NULL, 0);
-}
-
-char	*find_path(char *cmd, char **env)
-{
-	int		j;
-	char	*path;
-	char	*ret_path;
-
-	j = 0;
-	while (env[j] && ft_strncmp(env[j], "PATH=", 5))
-		j++;
-	path = env[j];
-	while (path[j] && ft_strichr(path, j, ':') > -1)
-	{
-		ret_path = join_strings(path, j, cmd);
-		if (!access(ret_path, F_OK))
-			return (ret_path);
-		free(ret_path);
-		j += ft_strichr(path, j, ':') - j + 1;
-	}
-	if (path[j] && ft_strichr(path, j, ':') < 0)
-	{
-		ret_path = join_strings(path, j, cmd);
-		if (!access(ret_path, F_OK))
-			return (ret_path);
-		free(ret_path);
-	}
-	return (0);
-}
-
-void	change_dir(char **input)
-{
-	if (input[1])
-		chdir(input[1]);
-	else
-		chdir(ft_strjoin("/nfs/homes/", getenv("USER")));
 }

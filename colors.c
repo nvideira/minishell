@@ -12,11 +12,6 @@
 
 #include "minishell.h"
 
-int	black(char *str)
-{
-	return (printf("\033[0;30m%s\033[0m", str));
-}
-
 int	red(char *str)
 {
 	return (printf("\033[0;31m%s\033[0m", str));
@@ -37,19 +32,25 @@ int	blue(char *str)
 	return (printf("\033[0;34m%s\033[0m", str));
 }
 
-int	purple(char *str)
-{
-	return (printf("\033[0;35m%s\033[0m", str));
-}
-
 int	cyan(char *str)
 {
 	return (printf("\033[0;36m%s\033[0m", str));
 }
 
+/*
 int	white(char *str)
 {
 	return (printf("\033[0;37m%s\033[0m", str));
+}
+
+int	black(char *str)
+{
+	return (printf("\033[0;30m%s\033[0m", str));
+}
+
+int	purple(char *str)
+{
+	return (printf("\033[0;35m%s\033[0m", str));
 }
 
 //BOLD
@@ -93,3 +94,4 @@ int	bold_white(char *str)
 {
 	return (printf("\033[1;37m%s\033[0m", str));
 }
+*/

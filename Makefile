@@ -18,9 +18,9 @@ NAME = minishell
 
 INCLUDE = .
 
-SRC = main.c init_shell.c print_dir.c ft_error.c shell_split.c commands.c \
-	process_input.c utils.c utils2.c utils3.c colors.c print_header.c \
-	utils_pipe.c env_to_lst.c free_env.c get_next_line.c
+SRC = main.c init_shell.c print_dir.c shell_split.c commands.c \
+	process_input.c utils.c utils2.c colors.c ft_echo.c \
+	utils_pipe.c env_to_lst.c free_env.c change_dir.c env_commands.c ft_env.c 
 	
 OBJ = $(SRC:.c=.o)
 

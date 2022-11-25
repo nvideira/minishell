@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   change_dir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/26 17:15:16 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/15 12:47:01 by jlebre           ###   ########.fr       */
+/*   Created: 2022/11/16 15:56:17 by jlebre            #+#    #+#             */
+/*   Updated: 2022/11/17 22:25:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_error(char *err, char **env)
+void	change_dir(char **input)
 {
-	(void)env;
-	red("Error!\n");
-	red(err);
-	//play_sound(env, "error.ogg");
+	if (input[1])
+	{
+		chdir(input[1]);
+		com_info()->exit_value = 0;
+	}
+	else
+	{
+		chdir(ft_strjoin("/nfs/homes/", getenv("USER")));
+		com_info()->exit_value = 0;
+	}
 }
