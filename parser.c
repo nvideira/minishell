@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:50 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/29 10:33:54 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:52:53 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,15 @@ char	*heredoc(char *input)
 	tmp4 = NULL;
 	tmp3 = ft_substr(input, 3 + ft_strlen(limiter),
 			ft_strlen(input) - 3 - ft_strlen(limiter));
-	printf("after limiter: %s\n", tmp3);
-
 	while (1)
 	{
 		write(1, "heredoc> ", 9);
 		tmp = get_next_line(0);
 		if (!ft_strncmp(tmp, limiter, ft_strlen(limiter)))
+		{
+			free (limiter);	
 			break ;
+		}
 		if (tmp4)
 		{
 			tmp2 = ft_strjoin(tmp4, tmp);
@@ -214,7 +215,9 @@ char	**parser(char *input)
 	if (!ft_strncmp(input, "<<", 2))
 	{
 		tmp = heredoc(input);
-		free(input);
+		printf("input: %s\n", input);
+		printf("tmp: %s\n", tmp);
+		//free(input);
 		input = ft_strdup(tmp);
 		free(tmp);
 	}
