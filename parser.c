@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:50 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/25 16:39:09 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/29 10:33:54 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	find_redir(char *input)
 
 char	*find_limiter(char *input, int start)
 {
-	int 	i;
+	int		i;
 	char	*limiter;
 
 	i = start;
 	while (input[i] && input[i] == ' ')
 	{
-		start++;	
+		start++;
 		i++;
 	}
 	while (input[i] && input[i] != ' ')
@@ -53,6 +53,7 @@ char	*find_limiter(char *input, int start)
 	limiter = ft_substr(input, start, i - start);
 	return (limiter);
 }
+
 char	*heredoc(char *input)
 {
 	char	*tmp;
@@ -62,20 +63,30 @@ char	*heredoc(char *input)
 	char	*limiter;
 
 	limiter = find_limiter(input, 2);
-	tmp3 = ft_substr(input, 2 + ft_strlen(limiter),
-		ft_strlen(input) - 2 - ft_strlen(limiter));
+	tmp4 = NULL;
+	tmp3 = ft_substr(input, 3 + ft_strlen(limiter),
+			ft_strlen(input) - 3 - ft_strlen(limiter));
+	printf("after limiter: %s\n", tmp3);
+
 	while (1)
 	{
 		write(1, "heredoc> ", 9);
 		tmp = get_next_line(0);
 		if (!ft_strncmp(tmp, limiter, ft_strlen(limiter)))
 			break ;
-		tmp2 = ft_strjoin(tmp4, tmp);
+		if (tmp4)
+		{
+			tmp2 = ft_strjoin(tmp4, tmp);
+			free(tmp4);
+		}
+		else
+			tmp2 = ft_strdup(tmp);
 		free(tmp);
-		free(tmp4);
 		tmp4 = ft_strdup(tmp2);
 		free(tmp2);
+		tmp2 = NULL;
 	}
+	free(tmp);
 	tmp2 = ft_strjoin(tmp4, tmp3);
 	return (tmp2);
 }
@@ -130,29 +141,29 @@ void	search_quotes(char *input)
 			wait_for_quotes(input, input[i]);
 		else if (input[i] == '\'' && quotes % 2 == 0
 			&& d_quotes % 2 != 0)
-			{
+		{
+			i++;
+			while (input[i] != '\'' && input[i] != '"')
 				i++;
-				while (input[i] != '\'' && input[i] != '"')
-					i++;
-				if (input[i] == '\'')
-					wait_for_quotes(input, '"');
-			}
+			if (input[i] == '\'')
+				wait_for_quotes(input, '"');
+		}
 		else if (input[i] == '"' && d_quotes % 2 == 0
 			&& quotes % 2 != 0)
-			{
+		{
+			i++;
+			while (input[i] != '\'' && input[i] != '"')
 				i++;
-				while (input[i] != '\'' && input[i] != '"')
-					i++;
-				if (input[i] == '"')
-					wait_for_quotes(input, '\'');
-			}
+			if (input[i] == '"')
+				wait_for_quotes(input, '\'');
+		}
 		i++;
 	}
 }
 
 int	empty_prompt(char *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!input[i])

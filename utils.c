@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:55:46 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/09 18:29:28 by jlebre           ###   ########.fr       */
+/*   Updated: 2022/11/28 12:10:13 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = (char *)malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2) + 1)));
+	if (s1)
+		str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2) + 1)));
+	else
+		str = (char *)malloc(sizeof(char) * ((ft_strlen(s2) + 1)));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -31,9 +34,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	j = 0;
 	while (s2[j])
-	{
 		str[i++] = s2[j++];
-	}
 	str[i] = '\0';
 	return (str);
 }

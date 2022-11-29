@@ -27,8 +27,8 @@
 /////////////////////////////////////////////////
 # include <dirent.h>
 /////////////////////////////////////////////////
-# include <readline/readline.h>
-# include <readline/history.h>
+//# include <readline/readline.h>
+//# include <readline/history.h>
 ///////////////////////////////////////////////// PIPEX
 # include <fcntl.h>
 # include <errno.h>
