@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_to_lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:25:45 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/24 16:00:25 by jlebre           ###   ########.fr       */
+/*   Updated: 2022/11/29 16:45:40 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_env_lst	*ft_lstlast(t_env_lst *lst)
 		
 		lst = lst->next;
 	}
-	//printf("teste2\n");
 	return (lst);
 }
 
@@ -50,7 +49,7 @@ t_env_lst   *new_node(char *env)
 	if (!env_node)
 		return (NULL);
 	env_node->name = ft_substr(env, 0, ft_strchr(env, '=') + 1);
-	env_node->value = ft_substr(env, ft_strchr(env, '=') + 2, ft_strlen(env));
+	env_node->value = ft_substr(env, ft_strchr(env, '=') + 1, ft_strlen(env));
 	//printf("%s\n", env_node->value);
 	env_node->next = NULL;
 	return (env_node);
