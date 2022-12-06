@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:50 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/29 16:52:53 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:33:23 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,32 +130,32 @@ void	search_quotes(char *input)
 	{
 		if (input[i] == '\'')
 			quotes++;
-		else if (input[i] == '"')
+		else if (input[i] == '\"')
 			d_quotes++;
 		i++;
 	}
 	i = 0;
-	while (input[i] && input[i] != '\'' && input[i] != '"')
+	while (input[i] && input[i] != '\'' && input[i] != '\"')
 	{	
 		if ((input[i] == '\'' && quotes % 2 != 0)
-			|| (input[i] == '"' && d_quotes % 2 != 0))
+			|| (input[i] == '\"' && d_quotes % 2 != 0))
 			wait_for_quotes(input, input[i]);
 		else if (input[i] == '\'' && quotes % 2 == 0
 			&& d_quotes % 2 != 0)
 		{
 			i++;
-			while (input[i] != '\'' && input[i] != '"')
+			while (input[i] != '\'' && input[i] != '\"')
 				i++;
 			if (input[i] == '\'')
-				wait_for_quotes(input, '"');
+				wait_for_quotes(input, '\"');
 		}
-		else if (input[i] == '"' && d_quotes % 2 == 0
+		else if (input[i] == '\"' && d_quotes % 2 == 0
 			&& quotes % 2 != 0)
 		{
 			i++;
-			while (input[i] != '\'' && input[i] != '"')
+			while (input[i] != '\'' && input[i] != '\"')
 				i++;
-			if (input[i] == '"')
+			if (input[i] == '\"')
 				wait_for_quotes(input, '\'');
 		}
 		i++;
