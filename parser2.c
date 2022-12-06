@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:55:59 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/06 18:14:53 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/06 19:10:37 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	empty_prompt(char *input)
 	return (1);
 }
 
-char	*heredoc(char *limiter)
+char	*heredoc(char *limiter, int *here)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -53,6 +53,7 @@ char	*heredoc(char *limiter)
 		free(tmp2);
 	}
 	free(tmp);
+	*here = 1;
 	return(ret_str);
 }
 
@@ -61,8 +62,10 @@ char	*find_limiter(char *input, int start)
 	int		i;
 	char	*limiter;
 
+	while (input[start] && (input[start] == ' ' || input[start] == '\t'))
+		start++;
 	i = start;
-	while (input[i] && input[i] != ' ')
+	while (input[i] && input[i] != ' ' && input[i] != '\t')
 		i++;
 	limiter = ft_substr(input, start, i - start);
 	return (limiter);
@@ -151,11 +154,17 @@ char	***split_split(char **matrix)
 char	**parser(char *input)
 {
 	char		**tmp;
+	char		*tmp2;
 	int			i;
+	int			here;
 	
 	i = 0;
+	here = 0;
+	tmp2 = NULL;
 	if (empty_prompt(input))
 		return (NULL);
+	if (!ft_strncmp(input, "<<", 2))
+			tmp2 = heredoc(find_limiter(input, 2), &here);
 	if (ft_strlen(input))
 		add_history(input);
 	if (check_quotes(input))
@@ -170,14 +179,7 @@ char	**parser(char *input)
 		free_matrix(tmp);
 	}
 	else
-		com_info()->commands_array = ft_split(input, ' ');
-	if (!ft_strncmp(tmp[i], "<<", 2))
-	{
-		if (input[2] != ' ')
-			com_info()->args[0] = heredoc(find_limiter(input, 2));
-		else
-			com_info()->args[0] = heredoc(tmp[1]);
-	}
+		com_info()->commands_array[0] = ft_split(input, ' ');
 	
 }
 
