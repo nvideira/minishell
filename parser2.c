@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:55:59 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/06 15:55:43 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:14:53 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,21 @@ int	inside_quotes(char *string, int q_mod, int dq_mod)
 	}
 }
 
-void	norm_help(char *string, int j, int *quotes, int *dquotes)
-{
-	if (commands[i][j] == '\'' && dquotes == 0 && quotes == 0)
-		quotes = 1;
-	else if (commands[i][j] == '\'' && dquotes == 0 && quotes == 1)
-		quotes = 0;
-	else if (commands[i][j] == '\"' && dquotes == 0 && quotes == 0)
-		dquotes = 1;
-	else if (commands[i][j] == '\"' && dquotes == 1 && quotes == 0)
-		dquotes = 0;
-}
+//void	norm_help(char *string, int j, int *quotes, int *dquotes)
+//{
+	// if (commands[i][j] == '\'' && dquotes == 0 && quotes == 0)
+	// 	quotes = 1;
+	// else if (commands[i][j] == '\'' && dquotes == 0 && quotes == 1)
+	// 	quotes = 0;
+	// else if (commands[i][j] == '\"' && dquotes == 0 && quotes == 0)
+	// 	dquotes = 1;
+	// else if (commands[i][j] == '\"' && dquotes == 1 && quotes == 0)
+	// 	dquotes = 0;
+//}
 
-int	check_quotes(char **commands)
+int	check_quotes(char *commands)
 {
 	int	i;
-	int	j;
 	int	quotes;
 	int	dquotes;
 
@@ -113,17 +112,40 @@ int	check_quotes(char **commands)
 	dquotes = 0;
 	while (commands[i])
 	{
-		j = 0;
-		while (commands[i][j])
-		{
-			norm_help(commands[i], j, &quotes, &dquotes);
-			j++;
-		}
-		if (quotes || dquotes)
-			return (1);
+		if (commands[i] == '\'' && dquotes == 0 && quotes == 0)
+			quotes = 1;
+		else if (commands[i] == '\'' && dquotes == 0 && quotes == 1)
+			quotes = 0;
+		else if (commands[i] == '\"' && dquotes == 0 && quotes == 0)
+			dquotes = 1;
+		else if (commands[i] == '\"' && dquotes == 1 && quotes == 0)
+			dquotes = 0;
 		i++;
 	}
+	if (quotes || dquotes)
+		return (1);
 	return (0);
+}
+
+char	***split_split(char **matrix)
+{
+	char	***ret;
+	int		i;
+
+	i = 0;
+	while (matrix[i])
+		i++;
+	ret = malloc(sizeof(char **) * (i + 1));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (matrix[i])
+	{
+		ret[i] = ft_split(matrix[i], ' ');
+		i++;
+	}
+	ret[i] = NULL;
+	return (ret);
 }
 
 char	**parser(char *input)
@@ -136,12 +158,19 @@ char	**parser(char *input)
 		return (NULL);
 	if (ft_strlen(input))
 		add_history(input);
-	tmp = ft_split(input, ' ');
-	if (check_quotes(tmp))
+	if (check_quotes(input))
 	{
 		write(1, "minishell: syntax error: unclosed quotes\n", 41);
 		return (NULL);
 	}
+	if (ft_strchr(input, '|'))
+	{	
+		tmp = ft_split(input, '|');
+		com_info()->commands_array = split_split(tmp);
+		free_matrix(tmp);
+	}
+	else
+		com_info()->commands_array = ft_split(input, ' ');
 	if (!ft_strncmp(tmp[i], "<<", 2))
 	{
 		if (input[2] != ' ')
@@ -150,6 +179,19 @@ char	**parser(char *input)
 			com_info()->args[0] = heredoc(tmp[1]);
 	}
 	
+}
+
+void	free_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
 }
 
 int main(int ac, char **av)

@@ -54,7 +54,7 @@ typedef struct s_command
 	int					exit_value;
 	t_env_lst			*env_lst;
 	int					nb_args;
-	struct s_command	*next;
+	char				***commands_array;
 }   t_command;
 
 //COMMAND INFO
