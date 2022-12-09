@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:55:59 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/06 19:10:37 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:25:46 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,16 +151,47 @@ char	***split_split(char **matrix)
 	return (ret);
 }
 
+int	skip_quotes(char *input, int i, char quote)
+{
+	int	j;
+
+	j = ++i;
+	while (input[j] && input[j] != quote)
+		j++;
+	if (!input[j])
+		return (i);
+	return (j);
+}
+int	count_pipes(char *input)
+{
+	int	i;
+	int	pipe_no;
+
+	i = 0;
+	pipe_no = 0;
+	while (input[i])
+	{
+		if (input[i] == '\'' || input[i] == '\"')
+			i = skip_quotes(input, i, input[i]);
+		else if (input[i] == '|')
+			pipe_no++;
+		i++;
+	}
+	return (pipe_no);
+}
+
 char	**parser(char *input)
 {
 	char		**tmp;
 	char		*tmp2;
 	int			i;
 	int			here;
+	int			pipe_no;
 	
 	i = 0;
 	here = 0;
 	tmp2 = NULL;
+	pipe_no = 0;
 	if (empty_prompt(input))
 		return (NULL);
 	if (!ft_strncmp(input, "<<", 2))
@@ -172,14 +203,15 @@ char	**parser(char *input)
 		write(1, "minishell: syntax error: unclosed quotes\n", 41);
 		return (NULL);
 	}
-	if (ft_strchr(input, '|'))
-	{	
-		tmp = ft_split(input, '|');
-		com_info()->commands_array = split_split(tmp);
+	pipe_no = count_pipes(input);
+	tmp = ft_split(input, '|');
+	while (pipe_no >= 0)
+	{
+		lst_add_front(com_info()->commands, new_node(tmp[pipe_no]));
 		free_matrix(tmp);
+		pipe_no--;
 	}
-	else
-		com_info()->commands_array[0] = ft_split(input, ' ');
+	
 	
 }
 

@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:18:52 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/25 16:19:40 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:29:03 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ char	*ft_strljoin(char const *s1, char const *s2, unsigned int len)
 		ns[i + j] = s2[j];
 	ns[i + j] = '\0';
 	return (ns);
+}
+
+void	lst_add_front(t_args **lst, t_args *new)
+{
+	if (*lst != NULL)
+		new->next = *lst;
+	*lst = new;
 }

@@ -43,6 +43,12 @@ typedef struct s_env_lst
 	struct s_env_lst	*next;
 }	t_env_lst;
 
+typedef struct s_args
+{
+	char				**arg;
+	struct s_args		*next;
+}	t_args;
+
 typedef struct s_command
 {
 	int					fd[2];
@@ -54,7 +60,7 @@ typedef struct s_command
 	int					exit_value;
 	t_env_lst			*env_lst;
 	int					nb_args;
-	char				***commands_array;
+	t_args				*commands;
 }   t_command;
 
 //COMMAND INFO
