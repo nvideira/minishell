@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:18:52 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/09 18:29:03 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/12 18:21:50 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,21 @@ char	*ft_strljoin(char const *s1, char const *s2, unsigned int len)
 
 void	lst_add_front(t_args **lst, t_args *new)
 {
-	if (*lst != NULL)
+	if (*lst)
 		new->next = *lst;
 	*lst = new;
+}
+
+t_args	*add_mat_node(char *args)
+{
+	t_args	*new_node;
+
+	new_node = malloc(sizeof(t_args));
+	if (!new_node)
+		return (NULL);
+	printf("args = %s\n", args);
+	new_node->arg = ft_split(args, ' ');
+	
+	new_node->next = NULL;
+	return (new_node);
 }

@@ -6,11 +6,43 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:55:59 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/09 18:25:46 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/12 18:05:17 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_command	*com_info(void)
+{
+	static t_command	a;
+
+	return (&a);
+}
+
+void	print_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		printf("%s\n", matrix[i]);
+		i++;
+	}
+}
+
+void	free_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
 
 int	empty_prompt(char *input)
 {
@@ -71,26 +103,26 @@ char	*find_limiter(char *input, int start)
 	return (limiter);
 }
 
-int	inside_quotes(char *string, int q_mod, int dq_mod)
-{
-	int	i;
-	int	j;
+// int	inside_quotes(char *string, int q_mod, int dq_mod)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while (string[i] && string[i] != '\'' && string[i] != '\"')
-		i++;
-	if (!string[i])
-		return (0);
-	j = i + 1;
-	while (string[j] && string[j] != string[i])
-	{
-		if (string[i] == '\'' && string[j] == '\"')
-			dq_mod++;
-		else if (string[i] == '\"' && string[j] == '\'')
-			q_mod++;
-		j++;
-	}
-}
+// 	i = 0;
+// 	while (string[i] && string[i] != '\'' && string[i] != '\"')
+// 		i++;
+// 	if (!string[i])
+// 		return (0);
+// 	j = i + 1;
+// 	while (string[j] && string[j] != string[i])
+// 	{
+// 		if (string[i] == '\'' && string[j] == '\"')
+// 			dq_mod++;
+// 		else if (string[i] == '\"' && string[j] == '\'')
+// 			q_mod++;
+// 		j++;
+// 	}
+// }
 
 //void	norm_help(char *string, int j, int *quotes, int *dquotes)
 //{
@@ -162,6 +194,7 @@ int	skip_quotes(char *input, int i, char quote)
 		return (i);
 	return (j);
 }
+
 int	count_pipes(char *input)
 {
 	int	i;
@@ -180,63 +213,65 @@ int	count_pipes(char *input)
 	return (pipe_no);
 }
 
-char	**parser(char *input)
+void	parser(char *input)
 {
 	char		**tmp;
 	char		*tmp2;
-	int			i;
+	char		*tmp3;
+	//int			i;
 	int			here;
 	int			pipe_no;
 	
-	i = 0;
+	//i = 0;
 	here = 0;
 	tmp2 = NULL;
-	pipe_no = 0;
+	tmp3 = NULL;
 	if (empty_prompt(input))
-		return (NULL);
+		return ;
 	if (!ft_strncmp(input, "<<", 2))
-			tmp2 = heredoc(find_limiter(input, 2), &here);
-	if (ft_strlen(input))
-		add_history(input);
+		tmp2 = heredoc(find_limiter(input, 2), &here);
+	if (tmp2)
+	{
+		tmp3 = ft_strjoin(input, tmp2);
+		free(tmp2);
+		free(input);
+		input = ft_strdup(tmp3);
+		free(tmp3);
+	}
+	// if (ft_strlen(input))
+	// 	add_history(input);
 	if (check_quotes(input))
 	{
 		write(1, "minishell: syntax error: unclosed quotes\n", 41);
-		return (NULL);
+		return ;
 	}
 	pipe_no = count_pipes(input);
 	tmp = ft_split(input, '|');
 	while (pipe_no >= 0)
 	{
-		lst_add_front(com_info()->commands, new_node(tmp[pipe_no]));
-		free_matrix(tmp);
+		printf("teste\n");
+		lst_add_front(&com_info()->commands, add_mat_node(tmp[pipe_no]));
 		pipe_no--;
 	}
-	
-	
-}
-
-void	free_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
+	free_matrix(tmp);	
+	while (com_info()->commands)
 	{
-		free(matrix[i]);
-		i++;
+		print_matrix(com_info()->commands->arg);
+		com_info()->commands = com_info()->commands->next;
 	}
-	free(matrix);
+	
 }
+
 
 int main(int ac, char **av)
 {
-	char	**parsed;
+	//char	**parsed;
 
 	(void)ac;
 	if (ac < 2)
 		return (0);
-	parsed = parser(av[1]);
-	if (parsed)
-		print_matrix(parsed);
+	parser(av[1]);
+	// if (parsed)
+	// 	print_matrix(parsed);
 	return (0);
 }

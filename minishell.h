@@ -129,6 +129,8 @@ int						ft_atoi(const char *str);
 
 //UTILS3
 char					*ft_strljoin(char const *s1, char const *s2, unsigned int len);
+t_args					*add_mat_node(char *args);
+void					lst_add_front(t_args **lst, t_args *new);
 
 //GNL
 char					*get_next_line(int fd);

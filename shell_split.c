@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/25 16:38:07 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/12 18:27:30 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,8 @@ static int	ft_wordcount(const char *str, char c)
 	words = 0;
 	while (str[i])
 	{
-		if (str[i] == 34)
-			i = find_quotes(str, i, 34);
-		if (i == -1)
-			return (0);
-		//printf ("i: %ld\n", i);
-		if (str[i] == 39)
-			i = find_quotes(str, i, 39);
+		if (str[i] == 34 || str[i] == 39)
+			i = find_quotes(str, i, str[i]);
 		if (i == -1)
 			return (0);
 		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)
@@ -60,21 +55,19 @@ static int	split_it(char const *str, char c, int st, char **ns)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	while (str[i])
+	while (str[++i])
 	{
 		while (str[i] != '\0' && str[i] == c)
 		{
 			i++;
 			st++;
 		}
-		if (str[i] == 34)
-			i = find_quotes(str, i, 34);
-		if (str[i] == 39)
-			i = find_quotes(str, i, 39);
-		// if (s[i] == '\0')
-		// 	break ;
+		if (str[i] == 34 || str[i] == 39)
+			i = find_quotes(str, i, str[i]);
+		if (str[i] == '\0')
+			break ;
 		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)
 		{
 			ns[j] = ft_substr(str, st, (i - st) + 1);
@@ -82,7 +75,6 @@ static int	split_it(char const *str, char c, int st, char **ns)
 				return (0);
 			st = i + 1;
 		}
-		i++;
 	}
 	ns[j] = NULL;
 	return (1);
@@ -111,7 +103,7 @@ char	**ft_split(const char *s, char c)
 		printf("Error: Unclosed quotes\n");
 		return (NULL);
 	}
-	ns = malloc(sizeof(char *) * matlen + 1);
+	ns = malloc(sizeof(char *) * (matlen + 1));
 	if (!ns)
 		return (NULL);
 	if (!split_it(s, c, st, ns))
