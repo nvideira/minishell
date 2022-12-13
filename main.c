@@ -21,7 +21,7 @@ t_command	*com_info(void)
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*input;
+	char		*input;
 
 	(void)argc;
 	(void)argv;
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **env)
 			free (input);
 			exit(com_info()->exit_value);
 		}
-		process_input(input);
+		process_input(input, env);
 	}
 	free (input);
 	return (com_info()->exit_value);

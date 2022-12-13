@@ -27,8 +27,8 @@
 /////////////////////////////////////////////////
 # include <dirent.h>
 /////////////////////////////////////////////////
-//# include <readline/readline.h>
-//# include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 ///////////////////////////////////////////////// PIPEX
 # include <fcntl.h>
 # include <errno.h>
@@ -41,13 +41,8 @@ typedef struct s_env_lst
 	char				*name;
 	char				*value;
 	struct s_env_lst	*next;
+	struct s_env_lst	*prev;
 }	t_env_lst;
-
-typedef struct s_args
-{
-	char				**arg;
-	struct s_args		*next;
-}	t_args;
 
 typedef struct s_command
 {
@@ -59,48 +54,134 @@ typedef struct s_command
 	char				**args;
 	int					exit_value;
 	t_env_lst			*env_lst;
+	t_env_lst			*vars;
 	int					nb_args;
-	t_args				*commands;
+	char				*color;
 }   t_command;
 
-//COMMAND INFO
+/*__  __ ___ _  _ ___ ___ _  _ ___ _    _    
+ |  \/  |_ _| \| |_ _/ __| || | __| |  | |   
+ | |\/| || || .` || |\__ \ __ | _|| |__| |__ 
+ |_|  |_|___|_|\_|___|___/_||_|___|____|____|*/
+
+//COMMAND INFO - So you can acess the list in any part of the program
 t_command				*com_info(void);
 
 //INIT SHELL
 void					init_shell(char **env);
 void					recieve(int sig);
 
+//PRINT DIR
+char					*print_info(void);
+char					*print_dir(void);
+
+/*___ _  ___   __
+ | __| \| \ \ / /
+ | _|| .` |\ V / 
+ |___|_|\_| \_/*/
+
 //ENV_TO_LIST
 t_env_lst				*env_to_lst(char **env);
 t_env_lst				*new_node(char *env);
 t_env_lst				*ft_lstlast(t_env_lst *lst);
 void					lst_add_back(t_env_lst **lst, t_env_lst *new);
-char					**lst_to_env(t_env_lst *lst);
+
+char    				**lst_to_env();
+void					change_value(char *str);
 
 //FREE ENV
 void					free_env(t_env_lst **env);
 
-//PRINT DIR
-char					*print_info(void);
-char					*print_dir(void);
+/*___  _   ___  ___ ___ ___ 
+ | _ \/_\ | _ \/ __| __| _ \
+ |  _/ _ \|   /\__ \ _||   /
+ |_|/_/ \_\_|_\|___/___|_|_\*/
+
 //PROCESS INPUT
-void					process_input(char *input);
+void					process_input(char *input, char **env);
 int						count_args(char **matrix);
 
-//COMMANDS
-void					commands(char **input);
-void					env_commands(char **input);
+/*
+//PARSER 1
+char					**parser(char *input);
+int						empty_prompt(char *input);
+void					search_quotes(char *input);
+char					*wait_for_quotes(char *input, char type);
+char					*heredoc(char *input);
+char					*find_limiter(char *input, int start);
+int						find_redir(char *input);
+*/
+
+/*
+//PARSER 2
+void					parser(char *input);
+int						count_pipes(char *input);
+int						skip_quotes(char *input, int i, char quote);
+char					***split_split(char **matrix);
+int						check_quotes(char *commands);
+char					*find_limiter(char *input, int start);
+char					*heredoc(char *limiter, int *here);
+int						empty_prompt(char *input);
+void					free_matrix(char **matrix);
+*/
+
+/* ___ ___  __  __ __  __   _   _  _ ___  ___ 
+  / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
+ | (_| (_) | |\/| | |\/| |/ _ \| .` | |) \__ \
+  \___\___/|_|  |_|_|  |_/_/ \_\_|\_|___/|___/*/
+
+void					commands(char **input, char **env);
+
+void					env_commands(char **input, char **env);
 char					*find_path(char *cmd, t_env_lst *env_lst);
+
+//CHANGE COLOR
+void					change_color(char	**input);
+void					do_change(char **input, int bold);
+void					change_color_help(void);
+
+//CD
+void					ft_cd(char **input, char **env);
+void					change_pwd(char *type, char *str, char **env);
+void					change_pwd_env(char *type, int size, char *val, char **env);
+int						cd_errors(char **input);
 
 //ECHO
 void					ft_echo(char **input);
-
-//CD
-void					change_dir(char **input);
+void					print_vars(char **input);
+void					print_vars2(char **input);
 
 //ENV
-void					ft_env();
-void					ft_unset();
+void					ft_env(char **input);
+
+//EXIT
+void					ft_exit(char **input);
+void					check_error_3(char *arg, char **input);
+char					*print_vars_exit(char **input);
+void					do_exit(int exit_value, char **input);
+void					exit_errors(int error, char **input);
+
+//EXPORT
+void					*ft_export(char **input);
+void					change_value(char *str);
+int						check_if_exists(char *str);
+void					print_exported(char **input);
+t_env_lst				*sort_list(void);
+
+//PWD
+void					ft_pwd(void);
+int						ft_isdigit(char *str);
+
+//UNSET
+void					ft_unset(char **input);
+
+/*_   _ _____ ___ _    ___ 
+ | | | |_   _|_ _| |  / __|
+ | |_| | | |  | || |__\__ \
+  \___/  |_| |___|____|___/*/
+
+//FT_ERROR
+void					ft_error(char *err);
 
 //SHELL_SPLIT_UTILS
 int						find_quotes(const char *str, int i, int type);
@@ -129,13 +210,19 @@ int						ft_atoi(const char *str);
 
 //UTILS3
 char					*ft_strljoin(char const *s1, char const *s2, unsigned int len);
-t_args					*add_mat_node(char *args);
 void					lst_add_front(t_args **lst, t_args *new);
+t_args					*add_mat_node(char *args);
 
-//GNL
+//GET_NEXT_LINE
 char					*get_next_line(int fd);
-//
+static char				*reading(int fd, char **storage);
+static char				*update_stored(char **storage, char *string);
+static char				*add_leftover(char **storage);
 
+/* ___ ___  _    ___  ___  ___ 
+  / __/ _ \| |  / _ \| _ \/ __|
+ | (_| (_) | |_| (_) |   /\__ \
+  \___\___/|____\___/|_|_\|___/*/
 
 //NORMAL COLORS
 int						black(char *str);

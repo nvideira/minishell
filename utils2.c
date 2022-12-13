@@ -89,3 +89,20 @@ int	ft_atoi(const char *str)
 	}
 	return (sinal * val);
 }
+
+int	ft_isdigit(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if ((str[i] > 47) && (str[i] < 58))
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}

@@ -6,19 +6,23 @@
 /*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/24 15:56:45 by jlebre           ###   ########.fr       */
+/*   Updated: 2022/12/09 17:53:27 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	env_commands(char **input)
+void	env_commands(char **input, char **env)
 {
-	char	*arr[2];
-	int		cenas;
-	int		temp;
+	char		*arr[2];
+	int			i;
+	int			cenas;
+	int			temp;
+	t_env_lst	*temp_lst;
 
-	arr[0] = find_path(input[0], com_info()->env_lst);
+	i = 0;
+	temp_lst = com_info()->env_lst;
+	arr[0] = find_path(input[0], temp_lst);
 	if (!arr[0])
 	{
 		printf("\033[0;31mCommand not found: %s\033[0m\n", input[0]);
@@ -30,11 +34,24 @@ void	env_commands(char **input)
 	cenas = fork();
 	if (!cenas)
 	{
-		if (execve(arr[0], arr, com_info()->args) == -1)
+		while (temp_lst->next)
 		{
-			com_info()->exit_value = 126;
-			red("Deu Merda\n");
+			while (env[i])
+			{
+				if (ft_strcmp(ft_strjoin(temp_lst->name, temp_lst->value), env[i]))
+				{
+					if (execve(arr[0], arr, env) == -1)
+					{
+						com_info()->exit_value = 126;
+						ft_error("Deu Merda");
+					}
+				}
+				i++;
+			}
+			i = 0;
+			temp_lst = temp_lst->next;
 		}
+		
 	}
 	waitpid(cenas, &temp, 0);
 	com_info()->exit_value = temp / 256;
@@ -52,7 +69,10 @@ char	*find_path(char *cmd, t_env_lst *env_lst)
 	while (temp && ft_strncmp(temp->name, "PATH=", 5))
 	{
 		temp = temp->next;
+		j++;
 	}
+	if (temp == NULL)
+		return (0);
 	path = temp->value;
 	while (path[j] && ft_strichr(path, j, ':') > -1)
 	{

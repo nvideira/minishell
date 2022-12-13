@@ -6,38 +6,33 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/22 17:38:03 by marvin           ###   ########.fr       */
+/*   Updated: 2022/12/13 01:42:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	commands(char **input)
+void	commands(char **input, char **env)
 {
 	if (input[0])
 	{
 		if (!ft_strncmp(input[0], "echo", 5))
 			ft_echo(input);
 		else if (!ft_strncmp(input[0], "cd", 3))
-			change_dir(input);
+			ft_cd(input, env);
 		else if (!ft_strncmp(input[0], "pwd", 4))
-		{
-			printf("%s\n", print_dir());
-			com_info()->exit_value = 0;
-		}
+			ft_pwd();
 		else if (!ft_strncmp(input[0], "export", 7))
-			printf("EXPORT: %s\n", input[1]);
+			ft_export(input);
 		else if (!ft_strncmp(input[0], "unset", 6))
-			ft_unset();
+			ft_unset(input);
 		else if (!ft_strncmp(input[0], "env", 4))
-			ft_env();
+			ft_env(input);
 		else if (!ft_strncmp(input[0], "exit", 5))
-			{
-			rl_clear_history();
-			free (input);
-			exit(com_info()->exit_value);
-			}
+			ft_exit(input);
+		else if (!ft_strncmp(input[0], "change_color", 13))
+			change_color(input);
 		else
-			env_commands(input);
+			env_commands(input, env);
 	}
 }

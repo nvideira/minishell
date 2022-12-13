@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:55:59 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/12 18:05:17 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/13 21:27:44 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,11 +218,9 @@ void	parser(char *input)
 	char		**tmp;
 	char		*tmp2;
 	char		*tmp3;
-	//int			i;
 	int			here;
 	int			pipe_no;
 	
-	//i = 0;
 	here = 0;
 	tmp2 = NULL;
 	tmp3 = NULL;
@@ -238,8 +236,8 @@ void	parser(char *input)
 		input = ft_strdup(tmp3);
 		free(tmp3);
 	}
-	// if (ft_strlen(input))
-	// 	add_history(input);
+	if (ft_strlen(input))
+		add_history(input);
 	if (check_quotes(input))
 	{
 		write(1, "minishell: syntax error: unclosed quotes\n", 41);
@@ -249,16 +247,15 @@ void	parser(char *input)
 	tmp = ft_split(input, '|');
 	while (pipe_no >= 0)
 	{
-		printf("teste\n");
 		lst_add_front(&com_info()->commands, add_mat_node(tmp[pipe_no]));
 		pipe_no--;
 	}
 	free_matrix(tmp);	
-	while (com_info()->commands)
-	{
-		print_matrix(com_info()->commands->arg);
-		com_info()->commands = com_info()->commands->next;
-	}
+	// while (com_info()->commands)
+	// {
+	// 	print_matrix(com_info()->commands->arg);
+	// 	com_info()->commands = com_info()->commands->next;
+	// }
 	
 }
 

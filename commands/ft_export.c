@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_input.c                                    :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/13 01:29:50 by marvin           ###   ########.fr       */
+/*   Created: 2022/12/09 17:45:11 by jlebre            #+#    #+#             */
+/*   Updated: 2022/12/13 02:39:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-//Se já existir na lista ENV, tem de alterar o valor lá
+//Ordenar por ordem alfabética
+void	print_exported(char **input)
+{
+	t_env_lst	*temp;
+	(void)input;
 
-int	check_if_exists_vars(char *str)
+	temp = sort_list();
+	while (temp)
+	{
+		printf("declare -x %s\"%s\"\n", temp->name, temp->value);
+		temp = temp->next;
+	}
+	com_info()->exit_value = 0;
+}
+
+int	check_if_exists(char *str)
 {
 	t_env_lst	*temp;
 	char		*name;
@@ -23,7 +36,7 @@ int	check_if_exists_vars(char *str)
 
 	len = 0;
 	i = 0;
-	temp = com_info()->vars;
+	temp = com_info()->env_lst;
 	while (str[len] != '=')
 		len++;
 	name = malloc(sizeof(char) * (len + 1));
@@ -48,7 +61,7 @@ int	check_if_exists_vars(char *str)
 	return (0);
 }
 
-void	change_value_vars(char *str)
+void	change_value(char *str)
 {
 	t_env_lst	*head;
 	char		*name;
@@ -61,7 +74,7 @@ void	change_value_vars(char *str)
 	len = 0;
 	i = 0;
 	j = 0;
-	head = com_info()->vars;
+	head = com_info()->env_lst;
 	while (str[len] != '=')
 		len++;
 	name = malloc(sizeof(char) * (len + 2));
@@ -85,87 +98,39 @@ void	change_value_vars(char *str)
 		i++;
 		j++;
 	}
-	while (com_info()->vars->name != name)
+	while (com_info()->env_lst->name != name)
 	{
-		if (!ft_strncmp(name, com_info()->vars->name, (len + 1)))
+		if (!ft_strncmp(name, com_info()->env_lst->name, (len + 1)))
 		{
-			com_info()->vars->value = value;
+			com_info()->env_lst->value = value;
 			break ;
 		}
-		com_info()->vars = com_info()->vars->next;
+		com_info()->env_lst = com_info()->env_lst->next;
 	}
-	com_info()->vars = head;
+	com_info()->env_lst = head;
 }
 
-void	exported_vars(char **input)
+void   *ft_export(char **input)
 {
-	int	i;
+    int	i;
 
-	i = 0;
-	if (input[0][i] == '=')
-	{
-		printf("%s not found\n", input[1]);
-		return ;
-	}
-	while (input[i])
-	{
+    i = 1;
+	if (!input[i])
+		print_exported(input);
+    while (input[i])
+    {
 		if (ft_strchr(input[i], '='))
 		{
-			if (check_if_exists(input[i]) && !check_if_exists_vars(input[i]))
-			{
+			if (check_if_exists(input[i]))
 				change_value(input[i]);
-				lst_add_back(&com_info()->vars, new_node(input[i]));
-			}
-			else if (check_if_exists_vars(input[i]))
-				change_value_vars(input[i]);
 			else
-				lst_add_back(&com_info()->vars, new_node(input[i]));
+				lst_add_back(&com_info()->env_lst, new_node(input[i]));
 		}
 		else
 			break ;
 		i++;
-	}
-	return ;
-}
-
-//Find Equal Sign
-int	find_es(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (1);
-		i++;
-	}
+    }
 	return (0);
 }
 
-void	process_input(char *input, char **env)
-{
-	char	**args;
-	
-	if (input[0] == '\0')
-		return ;
-	add_history(input);
-	args = ft_split(input, 32);
-	com_info()->nb_args = count_args(args);
-	if (find_es(args[0]) == 1)
-	{
-		exported_vars(args);
-	}
-	else
-		commands(args, env);
-}
-
-int	count_args(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-		i++;
-	return (i);
-}
+//(export aaa bbb=) (cria aaa= e bbb=)

@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   change_dir.c                                       :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 15:56:17 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/17 22:25:23 by marvin           ###   ########.fr       */
+/*   Created: 2022/12/09 17:46:02 by jlebre            #+#    #+#             */
+/*   Updated: 2022/12/09 17:49:25 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	change_dir(char **input)
+void	ft_pwd(void)
 {
-	if (input[1])
-	{
-		chdir(input[1]);
-		com_info()->exit_value = 0;
-	}
-	else
-	{
-		chdir(ft_strjoin("/nfs/homes/", getenv("USER")));
-		com_info()->exit_value = 0;
-	}
+	printf("%s\n", print_dir());
+	com_info()->exit_value = 0;
 }
