@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/14 18:05:06 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:12:44 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,20 +145,15 @@ int	find_es(char *str)
 
 void	process_input(char **env)
 {
-	t_args	*help;
-
 	com_info()->commands->nb_args = count_args(com_info()->commands->arg);
-	help = com_info()->commands;
-	// while (help)
-	// {
-		if (find_es(help->arg[0]) == 1)
-		{
-			exported_vars(help->arg);
-		}
+	while (com_info()->commands)
+	{
+		if (find_es(com_info()->commands->arg[0]) == 1)
+			exported_vars(com_info()->commands->arg);
 		else
-			commands(help->arg, env);
-		//help = help->next;
-	//}
+			commands(com_info()->commands->arg, env);
+		com_info()->commands = com_info()->commands->next;
+	}
 }
 
 int	count_args(char **matrix)
