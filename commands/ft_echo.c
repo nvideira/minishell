@@ -71,10 +71,10 @@ void	ft_echo(char **input)
 	else
 	{
 		i = 1;
-		while (i < com_info()->nb_args)
+		while (i < com_info()->commands->nb_args)
 		{
 			printf("%s", input[i]);
-			if ((com_info()->nb_args - i) != 1)
+			if ((com_info()->commands->nb_args - i) != 1)
 				printf(" ");
 			i++;
 		}

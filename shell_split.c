@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/13 21:09:10 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:48:37 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	split_it(char const *str, char c, int st, char **ns)
 			i = find_quotes(str, i, 34);
 		if (str[i] == 39)
 			i = find_quotes(str, i, 39);
-		if (s[i] == '\0')
+		if (str[i] == '\0')
 			break ;
 		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)
 		{

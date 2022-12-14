@@ -6,18 +6,18 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:55:59 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/14 16:21:44 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:51:13 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_command	*com_info(void)
-{
-	static t_command	a;
+// t_command	*com_info(void)
+// {
+// 	static t_command	a;
 
-	return (&a);
-}
+// 	return (&a);
+// }
 
 void	print_matrix(char **matrix)
 {
@@ -102,39 +102,6 @@ char	*find_limiter(char *input, int start)
 	limiter = ft_substr(input, start, i - start);
 	return (limiter);
 }
-
-// int	inside_quotes(char *string, int q_mod, int dq_mod)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (string[i] && string[i] != '\'' && string[i] != '\"')
-// 		i++;
-// 	if (!string[i])
-// 		return (0);
-// 	j = i + 1;
-// 	while (string[j] && string[j] != string[i])
-// 	{
-// 		if (string[i] == '\'' && string[j] == '\"')
-// 			dq_mod++;
-// 		else if (string[i] == '\"' && string[j] == '\'')
-// 			q_mod++;
-// 		j++;
-// 	}
-// }
-
-//void	norm_help(char *string, int j, int *quotes, int *dquotes)
-//{
-	// if (commands[i][j] == '\'' && dquotes == 0 && quotes == 0)
-	// 	quotes = 1;
-	// else if (commands[i][j] == '\'' && dquotes == 0 && quotes == 1)
-	// 	quotes = 0;
-	// else if (commands[i][j] == '\"' && dquotes == 0 && quotes == 0)
-	// 	dquotes = 1;
-	// else if (commands[i][j] == '\"' && dquotes == 1 && quotes == 0)
-	// 	dquotes = 0;
-//}
 
 int	check_quotes(char *commands)
 {
@@ -226,7 +193,7 @@ void	parser(char *input, char **env)
 	tmp3 = NULL;
 	if (input[0] == '\0')
 		return ;
-	if (empty_prompt(input))
+	if (empty_prompt(input) || input[0] == '\0')
 		return ;
 	if (!ft_strncmp(input, "<<", 2))
 		tmp2 = heredoc(find_limiter(input, 2), &here);
@@ -253,7 +220,7 @@ void	parser(char *input, char **env)
 		pipe_no--;
 	}
 	free_matrix(tmp);
-	
+	process_input(env);
 	// while (com_info()->commands)
 	// {
 	// 	print_matrix(com_info()->commands->arg);
@@ -263,15 +230,15 @@ void	parser(char *input, char **env)
 }
 
 
-int main(int ac, char **av)
-{
-	//char	**parsed;
+// int main(int ac, char **av)
+// {
+// 	//char	**parsed;
 
-	(void)ac;
-	if (ac < 2)
-		return (0);
-	parser(av[1]);
-	// if (parsed)
-	// 	print_matrix(parsed);
-	return (0);
-}
+// 	(void)ac;
+// 	if (ac < 2)
+// 		return (0);
+// 	parser(av[1]);
+// 	// if (parsed)
+// 	// 	print_matrix(parsed);
+// 	return (0);
+// }

@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdarg.h>
+# include <fcntl.h>
 /////////////////////////////////////////////////
 # include <signal.h>
 /////////////////////////////////////////////////
@@ -47,6 +48,7 @@ typedef struct s_env_lst
 typedef struct s_args
 {
 	char				**arg;
+	int					nb_args;
 	struct s_args		*next;
 }	t_args;
 
@@ -60,11 +62,10 @@ typedef struct s_command
 	char				**args;
 	int					exit_value;
 	t_env_lst			*env_lst;
+	t_args				*commands;
 	t_env_lst			*vars;
 	int					nb_args;
 	char				*color;
-	t_args				*commands;
-	int					pipe_no;
 }   t_command;
 
 /*__  __ ___ _  _ ___ ___ _  _ ___ _    _    
@@ -106,23 +107,11 @@ void					free_env(t_env_lst **env);
  |_|/_/ \_\_|_\|___/___|_|_\*/
 
 //PROCESS INPUT
-void					process_input(char *input, char **env);
+void					process_input(char **env);
 int						count_args(char **matrix);
 
-/*
-//PARSER 1
-char					**parser(char *input);
-int						empty_prompt(char *input);
-void					search_quotes(char *input);
-char					*wait_for_quotes(char *input, char type);
-char					*heredoc(char *input);
-char					*find_limiter(char *input, int start);
-int						find_redir(char *input);
-*/
-
-/*
 //PARSER 2
-void					parser(char *input);
+void					parser(char *input, char **env);
 int						count_pipes(char *input);
 int						skip_quotes(char *input, int i, char quote);
 char					***split_split(char **matrix);
@@ -130,8 +119,8 @@ int						check_quotes(char *commands);
 char					*find_limiter(char *input, int start);
 char					*heredoc(char *limiter, int *here);
 int						empty_prompt(char *input);
+void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
-*/
 
 /* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
@@ -223,9 +212,6 @@ t_args					*add_mat_node(char *args);
 
 //GET_NEXT_LINE
 char					*get_next_line(int fd);
-static char				*reading(int fd, char **storage);
-static char				*update_stored(char **storage, char *string);
-static char				*add_leftover(char **storage);
 
 /* ___ ___  _    ___  ___  ___ 
   / __/ _ \| |  / _ \| _ \/ __|

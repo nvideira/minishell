@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:18:52 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/12 18:21:50 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:51:42 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_args	*add_mat_node(char *args)
 	new_node = malloc(sizeof(t_args));
 	if (!new_node)
 		return (NULL);
-	printf("args = %s\n", args);
 	new_node->arg = ft_split(args, ' ');
 	
 	new_node->next = NULL;

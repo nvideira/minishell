@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/13 01:29:50 by marvin           ###   ########.fr       */
+/*   Updated: 2022/12/14 18:05:06 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,21 +143,22 @@ int	find_es(char *str)
 	return (0);
 }
 
-void	process_input(char *input, char **env)
+void	process_input(char **env)
 {
-	char	**args;
-	
-	if (input[0] == '\0')
-		return ;
-	add_history(input);
-	args = ft_split(input, 32);
-	com_info()->nb_args = count_args(args);
-	if (find_es(args[0]) == 1)
-	{
-		exported_vars(args);
-	}
-	else
-		commands(args, env);
+	t_args	*help;
+
+	com_info()->commands->nb_args = count_args(com_info()->commands->arg);
+	help = com_info()->commands;
+	// while (help)
+	// {
+		if (find_es(help->arg[0]) == 1)
+		{
+			exported_vars(help->arg);
+		}
+		else
+			commands(help->arg, env);
+		//help = help->next;
+	//}
 }
 
 int	count_args(char **matrix)
