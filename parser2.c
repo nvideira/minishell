@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:55:59 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/13 21:27:44 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:21:44 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int	count_pipes(char *input)
 	return (pipe_no);
 }
 
-void	parser(char *input)
+void	parser(char *input, char **env)
 {
 	char		**tmp;
 	char		*tmp2;
@@ -224,6 +224,8 @@ void	parser(char *input)
 	here = 0;
 	tmp2 = NULL;
 	tmp3 = NULL;
+	if (input[0] == '\0')
+		return ;
 	if (empty_prompt(input))
 		return ;
 	if (!ft_strncmp(input, "<<", 2))
@@ -250,7 +252,8 @@ void	parser(char *input)
 		lst_add_front(&com_info()->commands, add_mat_node(tmp[pipe_no]));
 		pipe_no--;
 	}
-	free_matrix(tmp);	
+	free_matrix(tmp);
+	
 	// while (com_info()->commands)
 	// {
 	// 	print_matrix(com_info()->commands->arg);

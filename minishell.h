@@ -44,6 +44,12 @@ typedef struct s_env_lst
 	struct s_env_lst	*prev;
 }	t_env_lst;
 
+typedef struct s_args
+{
+	char				**arg;
+	struct s_args		*next;
+}	t_args;
+
 typedef struct s_command
 {
 	int					fd[2];
@@ -57,6 +63,8 @@ typedef struct s_command
 	t_env_lst			*vars;
 	int					nb_args;
 	char				*color;
+	t_args				*commands;
+	int					pipe_no;
 }   t_command;
 
 /*__  __ ___ _  _ ___ ___ _  _ ___ _    _    
