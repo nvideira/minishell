@@ -54,7 +54,7 @@ typedef struct s_args
 
 typedef struct s_command
 {
-	int					fd[2];
+	int					pipe[2];
 	pid_t				pid;
 	int					status;
 	char				*cmd;
@@ -66,6 +66,7 @@ typedef struct s_command
 	t_env_lst			*vars;
 	int					nb_args;
 	char				*color;
+	int					pipe_no;
 }   t_command;
 
 /*__  __ ___ _  _ ___ ___ _  _ ___ _    _    

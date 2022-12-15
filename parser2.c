@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:55:59 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/14 17:51:13 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:23:52 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ void	parser(char *input, char **env)
 		return ;
 	}
 	pipe_no = count_pipes(input);
+	com_info()->pipe_no = pipe_no;
 	tmp = ft_split(input, '|');
 	while (pipe_no >= 0)
 	{
