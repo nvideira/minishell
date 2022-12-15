@@ -54,7 +54,8 @@ typedef struct s_args
 
 typedef struct s_command
 {
-	int					pipe[2];
+	int					pipe1[2];
+	int					pipe2[2];
 	pid_t				pid;
 	int					status;
 	char				*cmd;
