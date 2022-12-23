@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/19 02:31:50 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:13:31 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,12 +154,17 @@ void	process_input(char **env)
 			if (use_pipe(com_info()->pipe2))
 				return ;
 		com_info()->pipe_no--;
-		com_info()->commands->nb_args = count_args(com_info()->commands->arg);
-		if (find_es(com_info()->commands->arg[0]) == 1)
-			exported_vars(com_info()->commands->arg);
+		if (com_info()->pid == 0)
+		{	
+			com_info()->commands->nb_args = count_args(com_info()->commands->arg);
+			if (find_es(com_info()->commands->arg[0]) == 1)
+				exported_vars(com_info()->commands->arg);
+			else
+				commands(com_info()->commands->arg, env);
+			com_info()->commands = com_info()->commands->next;
+		}
 		else
-			commands(com_info()->commands->arg, env);
-		com_info()->commands = com_info()->commands->next;
+			wait()
 	}
 }
 
