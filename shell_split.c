@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/14 17:48:37 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:22:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,23 @@
 int	find_quotes(const char *str, int i, int type)
 {
 	int	st;
-	
+
 	st = i;
 	i++;
-	while (str[i] && str[i] != type)
-		i++;
-	if (str[i] == type)
-		return (i);
+	if (type == 34)
+	{
+		while (str[i] && str[i] != 34)
+			i++;
+		if (str[i] == 34)
+			return (i);
+	}
+	else
+	{
+		while (str[i] && str[i] != 39)
+			i++;
+		if (str[i] == 39)
+			return (i);
+	}
 	return (st);
 }
 
@@ -42,8 +52,11 @@ static int	ft_wordcount(const char *str, char c)
 	words = 0;
 	while (str[i])
 	{
-		if (str[i] == 34 || str[i] == 39)
-			i = find_quotes(str, i, str[i]);
+		if (str[i] == 34)
+			i = find_quotes(str, i, 34);
+		//printf ("i: %ld\n", i);
+		if (str[i] == 39)
+			i = find_quotes(str, i, 39);
 		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)
 			words++;
 		i++;
@@ -69,8 +82,8 @@ static int	split_it(char const *str, char c, int st, char **ns)
 			i = find_quotes(str, i, 34);
 		if (str[i] == 39)
 			i = find_quotes(str, i, 39);
-		if (str[i] == '\0')
-			break ;
+		// if (s[i] == '\0')
+		// 	break ;
 		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)
 		{
 			ns[j] = ft_substr(str, st, (i - st) + 1);

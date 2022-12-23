@@ -54,9 +54,9 @@ typedef struct s_args
 
 typedef struct s_command
 {
-	int					pipe1[2];
-	int					pipe2[2];
+	int					pip[2];
 	pid_t				pid;
+	int					fd_in;
 	int					status;
 	char				*cmd;
 	char 				*path;
@@ -111,8 +111,15 @@ void					free_env(t_env_lst **env);
 //PROCESS INPUT
 void					process_input(char **env);
 int						count_args(char **matrix);
+void					exported_vars(char **input);
+int						find_es(char *str);
 
-//PARSER 2
+//QUOTES
+int						find_quote(char *str);
+char					*remove_quotes(char *input);
+
+
+//PARSER
 void					parser(char *input, char **env);
 int						count_pipes(char *input);
 int						skip_quotes(char *input, int i, char quote);
@@ -123,6 +130,9 @@ char					*heredoc(char *limiter, int *here);
 int						empty_prompt(char *input);
 void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
+
+//////////////PIPES
+int						use_pipe(int *pip);
 
 /* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
@@ -149,6 +159,9 @@ int						cd_errors(char **input);
 void					ft_echo(char **input);
 void					print_vars(char **input);
 void					print_vars2(char **input);
+void					do_print(char **input, int start, int type);
+void					check_flag(char c);
+void					process_flags(char **input, int start);
 
 //ENV
 void					ft_env(char **input);
@@ -165,7 +178,7 @@ void					*ft_export(char **input);
 void					change_value(char *str);
 int						check_if_exists(char *str);
 void					print_exported(char **input);
-t_env_lst				*sort_list(void);
+t_env_lst				*sort_list(t_env_lst	*curr);
 
 //PWD
 void					ft_pwd(void);

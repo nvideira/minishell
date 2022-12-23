@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/13 01:42:38 by marvin           ###   ########.fr       */
+/*   Updated: 2022/12/16 17:29:07 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 
 void	commands(char **input, char **env)
 {
+	int	i;
+
+	if (input[1])
+	{
+		i = 1;
+		while (input[i])
+		{
+			if (find_quote(input[i]) == 2)
+			{
+				input[i] = remove_quotes(input[i]);
+			}
+			i++;
+		}
+	}
 	if (input[0])
 	{
 		if (!ft_strncmp(input[0], "echo", 5))
@@ -36,3 +50,11 @@ void	commands(char **input, char **env)
 			env_commands(input, env);
 	}
 }
+
+/*
+else if (!ft_strncmp(input[0], "./", 2))
+		{
+			if (open(input[0], O_DIRECTORY) < 0)
+				printf("Deu merda\n");
+		}
+*/

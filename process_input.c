@@ -6,141 +6,63 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/19 16:13:31 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/20 01:21:58 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//Se já existir na lista ENV, tem de alterar o valor lá
-
-int	check_if_exists_vars(char *str)
+void	process_input(char **env)
 {
-	t_env_lst	*temp;
-	char		*name;
-	int			len;
-	int			i;
-
-	len = 0;
-	i = 0;
-	temp = com_info()->vars;
-	while (str[len] != '=')
-		len++;
-	name = malloc(sizeof(char) * (len + 1));
-	if (!name)
-		return (0);
-	while (i < len)
+	while (com_info()->commands)
 	{
-		name[i] = str[i];
-		i++;
-	}
-	name[i] = '\0';
-	while (temp)
-	{
-		if (!ft_strncmp(name, temp->name, len))
+		if (pipe(com_info()->pip) < 0)
 		{
-			free(name);
-			return (1);
+			write(2, "Pipe error\n", 10);
+			return ;
 		}
-		temp = temp->next;
-	}
-	free(name);
-	return (0);
-}
-
-void	change_value_vars(char *str)
-{
-	t_env_lst	*head;
-	char		*name;
-	char		*value;
-	int			len;
-	int			len_val;
-	int			i;
-	int			j;
-
-	len = 0;
-	i = 0;
-	j = 0;
-	head = com_info()->vars;
-	while (str[len] != '=')
-		len++;
-	name = malloc(sizeof(char) * (len + 2));
-	if (!name)
-		return ;
-	len_val = (ft_strlen(str) - (len + 1));
-	value = malloc(sizeof(char) * (len_val + 1));
-	if (!value)
-		return ;
-	while (i < len && str[i])
-	{
-		name[i] = str[i];
-		i++;
-	}
-	name[i] = '=';
-	i++;
-	name[i] = '\0';
-	while (str[i])
-	{
-		value[j] = str[i];
-		i++;
-		j++;
-	}
-	while (com_info()->vars->name != name)
-	{
-		if (!ft_strncmp(name, com_info()->vars->name, (len + 1)))
+		com_info()->pid = fork();
+		if (com_info()->pid == 0)
 		{
-			com_info()->vars->value = value;
-			break ;
-		}
-		com_info()->vars = com_info()->vars->next;
-	}
-	com_info()->vars = head;
-}
-
-void	exported_vars(char **input)
-{
-	int	i;
-
-	i = 0;
-	if (input[0][i] == '=')
-	{
-		printf("%s not found\n", input[1]);
-		return ;
-	}
-	while (input[i])
-	{
-		if (ft_strchr(input[i], '='))
-		{
-			if (check_if_exists(input[i]) && !check_if_exists_vars(input[i]))
+			if (com_info()->fd_in > 0)
 			{
-				change_value(input[i]);
-				lst_add_back(&com_info()->vars, new_node(input[i]));
+				dup2(com_info()->fd_in, STDIN_FILENO);
+				close(com_info()->fd_in);
 			}
-			else if (check_if_exists_vars(input[i]))
-				change_value_vars(input[i]);
+			com_info()->fd_in = com_info()->pip[0];
+			if (com_info()->commands->next)
+			{
+				dup2(com_info()->pip[1], STDOUT_FILENO);
+				close(com_info()->pip[1]);
+			}
+			com_info()->commands->nb_args = count_args(com_info()->commands->arg);
+			if (find_es(com_info()->commands->arg[0]) == 1)
+				exported_vars(com_info()->commands->arg);
 			else
-				lst_add_back(&com_info()->vars, new_node(input[i]));
+				commands(com_info()->commands->arg, env);
 		}
 		else
-			break ;
-		i++;
+		{
+			dup2(com_info()->pip[0], STDIN_FILENO);
+			close(com_info()->pip[1]);
+			close(com_info()->pip[0]);
+			// waitpid(com_info()->pid, &com_info()->status, 0);
+		}
+		com_info()->commands = com_info()->commands->next;
 	}
-	return ;
 }
 
-//Find Equal Sign
-int	find_es(char *str)
+/* void	process_input(char **env)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+	while (com_info()->commands)
 	{
-		if (str[i] == '=')
-			return (1);
-		i++;
+		com_info()->commands->nb_args = count_args(com_info()->commands->arg);
+		if (find_es(com_info()->commands->arg[0]) == 1)
+			exported_vars(com_info()->commands->arg);
+		else
+			commands(com_info()->commands->arg, env);
+		com_info()->commands = com_info()->commands->next;
 	}
-	return (0);
 }
 
 void	process_input(char **env)
@@ -154,26 +76,12 @@ void	process_input(char **env)
 			if (use_pipe(com_info()->pipe2))
 				return ;
 		com_info()->pipe_no--;
-		if (com_info()->pid == 0)
-		{	
-			com_info()->commands->nb_args = count_args(com_info()->commands->arg);
-			if (find_es(com_info()->commands->arg[0]) == 1)
-				exported_vars(com_info()->commands->arg);
-			else
-				commands(com_info()->commands->arg, env);
-			com_info()->commands = com_info()->commands->next;
-		}
+		com_info()->commands->nb_args = count_args(com_info()->commands->arg);
+		if (find_es(com_info()->commands->arg[0]) == 1)
+			exported_vars(com_info()->commands->arg);
 		else
-			wait()
+			commands(com_info()->commands->arg, env);
+		com_info()->commands = com_info()->commands->next;
 	}
 }
-
-int	count_args(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-		i++;
-	return (i);
-}
+ */

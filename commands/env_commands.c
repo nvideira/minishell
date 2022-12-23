@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/09 17:53:27 by jlebre           ###   ########.fr       */
+/*   Updated: 2022/12/22 17:55:43 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,47 @@ void	env_commands(char **input, char **env)
 {
 	char		*arr[2];
 	int			i;
-	int			cenas;
-	int			temp;
+	//int			temp;
 	t_env_lst	*temp_lst;
 
 	i = 0;
 	temp_lst = com_info()->env_lst;
-	arr[0] = find_path(input[0], temp_lst);
-	if (!arr[0])
+	//com_info()->pid = fork();
+	if (com_info()->pid == 0)
 	{
-		printf("\033[0;31mCommand not found: %s\033[0m\n", input[0]);
-		com_info()->exit_value = 127;
-		return ;
-	}
-	arr[1] = input[1];
-	arr[2] = 0;
-	cenas = fork();
-	if (!cenas)
-	{
-		while (temp_lst->next)
+		if (execve(input[0], input, env) == -1)
 		{
-			while (env[i])
+			arr[0] = find_path(input[0], temp_lst);
+			if (!arr[0])
 			{
-				if (ft_strcmp(ft_strjoin(temp_lst->name, temp_lst->value), env[i]))
-				{
-					if (execve(arr[0], arr, env) == -1)
-					{
-						com_info()->exit_value = 126;
-						ft_error("Deu Merda");
-					}
-				}
-				i++;
+				printf("\033[0;31mCommand not found: %s\033[0m\n", input[0]);
+				com_info()->exit_value = 127;
+				exit(127);
 			}
-			i = 0;
-			temp_lst = temp_lst->next;
+			arr[1] = input[1];
+			arr[2] = 0;
+			while (temp_lst->next)
+			{
+				while (env[i])
+				{
+					if (ft_strcmp(ft_strjoin(temp_lst->name, temp_lst->value), env[i]))
+					{
+						if (execve(arr[0], arr, env) == -1)
+						{
+							com_info()->exit_value = 126;
+							ft_error("Deu Merda");
+						}
+					}
+					i++;
+				}
+				i = 0;
+				temp_lst = temp_lst->next;
+			}
 		}
-		
 	}
-	waitpid(cenas, &temp, 0);
-	com_info()->exit_value = temp / 256;
+	else
+		waitpid(com_info()->pid, &com_info()->status, 0);
+	com_info()->exit_value = com_info()->status / 256;
 }
 
 char	*find_path(char *cmd, t_env_lst *env_lst)

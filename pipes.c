@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 02:22:13 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/19 17:43:18 by nvideira         ###   ########.fr       */
+/*   Updated: 2022/12/19 11:51:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	use_pipe(int *pip)
 		dup2(pip[0], STDIN_FILENO);
 		close(pip[0]);
 		close(pip[1]);
-		wait(NULL);
 	}
 	return (0);
 }
