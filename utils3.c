@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 16:18:52 by nvideira          #+#    #+#             */
-/*   Updated: 2022/12/19 11:46:09 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/03 18:54:45 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_args	*add_mat_node(char *args)
 	if (!new_node)
 		return (NULL);
 	new_node->arg = ft_split(args, ' ');
-	
 	new_node->next = NULL;
 	return (new_node);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/16 17:29:07 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/03 20:49:53 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,7 @@ void	commands(char **input, char **env)
 			change_color(input);
 		else
 			env_commands(input, env);
+		// if (com_info()->pid == 0)
+		// 	exit(com_info()->exit_value);
 	}
 }
-
-/*
-else if (!ft_strncmp(input[0], "./", 2))
-		{
-			if (open(input[0], O_DIRECTORY) < 0)
-				printf("Deu merda\n");
-		}
-*/

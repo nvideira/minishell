@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2022/11/05 13:22:34 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/03 20:40:58 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,16 @@ int	find_quotes(const char *str, int i, int type)
 	return (st);
 }
 
-static int	ft_space(char s, char c)
+static int	ft_space(char s)
+{
+	if (s == '\n' || s == '\t' || s == '\v'
+		|| s == '\f' || s == '\r' || s == ' ')
+		return (1);
+	else
+		return (0);
+}
+
+static int	ft_ispipe(char s, char c)
 {
 	if (s == c || s == '\0')
 		return (1);
@@ -54,10 +63,9 @@ static int	ft_wordcount(const char *str, char c)
 	{
 		if (str[i] == 34)
 			i = find_quotes(str, i, 34);
-		//printf ("i: %ld\n", i);
 		if (str[i] == 39)
 			i = find_quotes(str, i, 39);
-		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)
+		if (ft_ispipe(str[i], c) == 0 && ft_ispipe(str[i + 1], c) == 1)
 			words++;
 		i++;
 	}
@@ -82,10 +90,12 @@ static int	split_it(char const *str, char c, int st, char **ns)
 			i = find_quotes(str, i, 34);
 		if (str[i] == 39)
 			i = find_quotes(str, i, 39);
-		// if (s[i] == '\0')
-		// 	break ;
-		if (ft_space(str[i], c) == 0 && ft_space(str[i + 1], c) == 1)
+		if (str[i] == '\0')
+			break ;
+		if (ft_ispipe(str[i], c) == 0 && ft_ispipe(str[i + 1], c) == 1)
 		{
+			while (ft_space(str[st]) || ft_ispipe(str[st], c))
+				st++;
 			ns[j] = ft_substr(str, st, (i - st) + 1);
 			if (!ns[j++])
 				return (0);

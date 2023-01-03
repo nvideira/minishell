@@ -132,7 +132,7 @@ void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
 
 //////////////PIPES
-int						use_pipe(int *pip);
+void					use_pipe(void);
 
 /* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|

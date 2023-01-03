@@ -25,7 +25,7 @@ void	ft_echo(char **input)
 		com_info()->exit_value = 0;
 	}
 	else if (input[1][0] == '$' && ft_strlen(input[1]) < 2)
-		do_print(input, 1, 1);
+		do_print(input, 1, 1);	
 	else if (input[1][0] == '$')
 		print_vars(input);
 	else if (!ft_strncmp(input[1], "-n", 3))
@@ -34,6 +34,8 @@ void	ft_echo(char **input)
 		process_flags(input, 2);
 	else
 		do_print(input, 1, 1);
+
+	
 }
 
 /*
