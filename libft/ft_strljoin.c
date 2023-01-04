@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_strljoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 23:31:01 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/17 23:31:01 by marvin           ###   ########.fr       */
+/*   Created: 2023/01/04 01:05:45 by marvin            #+#    #+#             */
+/*   Updated: 2023/01/04 01:05:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(char **input)
+char	*ft_strljoin(char const *s1, char const *s2, unsigned int len)
 {
-	if (!input[1])
-		printf("\n");
-	else if (!ft_strncmp(input[1], "-n", 3))
-		do_print(input, 2, 2);
-	else if (!ft_strncmp(input[1], "-e", 3))
-		process_flags(input, 2);
-	else
-		do_print(input, 1, 1);
-	com_info()->exit_value = 0;
+	char			*ns;
+	unsigned int	i;
+	unsigned int	j;
+
+	if (!s2)
+		return (NULL);
+	if (!s1)
+		return (ft_substr(s2, 0, len));
+	ns = malloc((ft_strlen(s1) + len) * sizeof(char) + 1);
+	if (!ns)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		ns[i] = s1[i];
+	j = -1;
+	while (s2[++j] && j < len)
+		ns[i + j] = s2[j];
+	ns[i + j] = '\0';
+	return (ns);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/03 20:56:56 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/04 00:42:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	env_commands(char **input, char **env)
 
 	i = 0;
 	temp_lst = com_info()->env_lst;
-	use_pipe();
+	if (com_info()->commands->next)
+		use_pipe();
+	else
+		com_info()->pid = fork();
 	if (com_info()->pid == 0)
 	{
 		if (execve(input[0], input, env) == -1)

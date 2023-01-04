@@ -56,7 +56,8 @@ void	do_print(char **input, int start, int type)
 	while (start < com_info()->commands->nb_args)
 	{
 		printf("%s", input[start]);
-		if ((com_info()->commands->nb_args - start) != 1)
+		if ((com_info()->commands->nb_args - start) != 1 && ft_strncmp(com_info()->commands->arg[start], "", 1)
+			&& ft_strncmp(com_info()->commands->arg[start + 1], "", 1))
 			printf(" ");
 		start++;
 	}

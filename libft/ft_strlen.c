@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 23:31:01 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/17 23:31:01 by marvin           ###   ########.fr       */
+/*   Created: 2023/01/04 01:07:27 by marvin            #+#    #+#             */
+/*   Updated: 2023/01/04 01:07:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(char **input)
+int	ft_strlen(const char *str)
 {
-	if (!input[1])
-		printf("\n");
-	else if (!ft_strncmp(input[1], "-n", 3))
-		do_print(input, 2, 2);
-	else if (!ft_strncmp(input[1], "-e", 3))
-		process_flags(input, 2);
-	else
-		do_print(input, 1, 1);
-	com_info()->exit_value = 0;
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return ((int)i);
 }

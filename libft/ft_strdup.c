@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 23:31:01 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/17 23:31:01 by marvin           ###   ########.fr       */
+/*   Created: 2023/01/04 01:08:29 by marvin            #+#    #+#             */
+/*   Updated: 2023/01/04 01:08:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(char **input)
+char	*ft_strdup(const char *s1)
 {
-	if (!input[1])
-		printf("\n");
-	else if (!ft_strncmp(input[1], "-n", 3))
-		do_print(input, 2, 2);
-	else if (!ft_strncmp(input[1], "-e", 3))
-		process_flags(input, 2);
-	else
-		do_print(input, 1, 1);
-	com_info()->exit_value = 0;
+	char	*p;
+
+	p = malloc(ft_strlen(s1) + 1);
+	if (!p)
+		return (NULL);
+	ft_memmove(p, s1, ft_strlen(s1) + 1);
+	return (p);
 }

@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 23:31:01 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/17 23:31:01 by marvin           ###   ########.fr       */
+/*   Created: 2023/01/04 01:04:51 by marvin            #+#    #+#             */
+/*   Updated: 2023/01/04 01:04:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(char **input)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	if (!input[1])
-		printf("\n");
-	else if (!ft_strncmp(input[1], "-n", 3))
-		do_print(input, 2, 2);
-	else if (!ft_strncmp(input[1], "-e", 3))
-		process_flags(input, 2);
-	else
-		do_print(input, 1, 1);
-	com_info()->exit_value = 0;
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	if (!s1 || !s2)
+		return (NULL);
+	str = (char *)malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2) + 1)));
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[j])
+	{
+		str[i++] = s1[j++];
+	}
+	j = 0;
+	while (s2[j])
+	{
+		str[i++] = s2[j++];
+	}
+	str[i] = '\0';
+	return (str);
 }

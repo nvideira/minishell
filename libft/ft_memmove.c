@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/09 17:44:22 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/28 04:07:15 by marvin           ###   ########.fr       */
+/*   Created: 2022/10/25 17:55:46 by jlebre            #+#    #+#             */
+/*   Updated: 2023/01/04 01:09:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_unset(char **input)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int			i;
-	
-	i = 1;
-	if (!input[i])
-		unset_error();
-	while (input[i])
+	char		*dr;
+	const char	*sr;
+	size_t		i;
+
+	sr = src;
+	dr = dst;
+	i = 0;
+	if (!dst && !src)
+		return (NULL);
+	if (dr < sr)
 	{
-		check_unset(input[i]);
-		i++;
+		while (i < len)
+		{
+			dr[i] = sr[i];
+			i++;
+		}
 	}
-	com_info()->exit_value = 0;
+	else
+	{
+		while (len--)
+			dr[len] = sr[len];
+	}
+	return (dst);
 }

@@ -106,11 +106,10 @@ void	ft_cd(char **input, char **env)
 	else
 	{
 		chdir(getenv("HOME"));
-		change_pwd("PWD=", getenv("OLDPWD"), env); //esta a correr mal aqui
+		change_pwd("PWD=", getenv("OLDPWD"), env);
 	}
 	com_info()->exit_value = 0;
 	change_pwd("OLDPWD=", curr, env);
-	//printf("teste\n");
 }
 
 //Nao aceita absoluth path! Escreve mal no env, mas ja funciona

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/03 20:49:53 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/04 00:52:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,6 @@
 
 void	commands(char **input, char **env)
 {
-	int	i;
-
-	if (input[1])
-	{
-		i = 1;
-		while (input[i])
-		{
-			if (find_quote(input[i]) == 2)
-			{
-				input[i] = remove_quotes(input[i]);
-			}
-			i++;
-		}
-	}
 	if (input[0])
 	{
 		if (!ft_strncmp(input[0], "echo", 5))
@@ -48,7 +34,5 @@ void	commands(char **input, char **env)
 			change_color(input);
 		else
 			env_commands(input, env);
-		// if (com_info()->pid == 0)
-		// 	exit(com_info()->exit_value);
 	}
 }

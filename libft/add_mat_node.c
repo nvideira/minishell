@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   add_mat_node.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/09 17:44:22 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/28 04:07:15 by marvin           ###   ########.fr       */
+/*   Created: 2023/01/04 01:13:35 by marvin            #+#    #+#             */
+/*   Updated: 2023/01/04 01:13:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	ft_unset(char **input)
+t_args	*add_mat_node(char *args)
 {
-	int			i;
-	
-	i = 1;
-	if (!input[i])
-		unset_error();
-	while (input[i])
-	{
-		check_unset(input[i]);
-		i++;
-	}
-	com_info()->exit_value = 0;
+	t_args	*new_node;
+
+	new_node = malloc(sizeof(t_args));
+	if (!new_node)
+		return (NULL);
+	new_node->arg = ft_split(args, ' ');
+	new_node->next = NULL;
+	return (new_node);
 }

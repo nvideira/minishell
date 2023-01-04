@@ -54,7 +54,8 @@ typedef struct s_args
 
 typedef struct s_command
 {
-	int					pip[2];
+	int					pip1[2];
+	int					pip2[2];
 	pid_t				pid;
 	int					fd_in;
 	int					status;
@@ -115,9 +116,17 @@ void					exported_vars(char **input);
 int						find_es(char *str);
 
 //QUOTES
+char 					**process_quotes(char **input);
+char 					**process_peliculas(char **input);
 int						find_quote(char *str);
+int						find_pelicula(char *str);
 char					*remove_quotes(char *input);
+char					*remove_peliculas(char *input);
 
+//DOLLAR SIGN
+char					**check_ds(char **input);
+char					*change_val(char *input);
+char					*change_val2(char *input);
 
 //PARSER
 void					parser(char *input, char **env);
@@ -176,9 +185,12 @@ void					exit_errors(int error, char **input);
 //EXPORT
 void					*ft_export(char **input);
 void					change_value(char *str);
+void					change_value2(char *str);
 int						check_if_exists(char *str);
+int						check_if_exists2(char *str);
 void					print_exported(char **input);
-t_env_lst				*sort_list(t_env_lst	*curr);
+void 					check_export(char *input);
+t_env_lst				*sort_list(t_env_lst *curr);
 
 //PWD
 void					ft_pwd(void);
@@ -186,6 +198,10 @@ int						ft_isdigit(char *str);
 
 //UNSET
 void					ft_unset(char **input);
+void					unset_error(void);
+void					do_unset(char *input, t_env_lst *lst);
+int						check_if_exists_unset(char *input, t_env_lst *temp);
+void					check_unset(char *input);
 
 /*_   _ _____ ___ _    ___ 
  | | | |_   _|_ _| |  / __|
@@ -194,6 +210,10 @@ void					ft_unset(char **input);
 
 //FT_ERROR
 void					ft_error(char *err);
+
+//ITOA
+char					*ft_itoa(int number);
+int						size_of_number(long nb);
 
 //SHELL_SPLIT_UTILS
 int						find_quotes(const char *str, int i, int type);

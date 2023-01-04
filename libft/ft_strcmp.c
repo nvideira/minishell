@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 23:31:01 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/17 23:31:01 by marvin           ###   ########.fr       */
+/*   Created: 2023/01/04 01:10:33 by marvin            #+#    #+#             */
+/*   Updated: 2023/01/04 01:10:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(char **input)
+int	ft_strcmp(char *s1, char *s2)
 {
-	if (!input[1])
-		printf("\n");
-	else if (!ft_strncmp(input[1], "-n", 3))
-		do_print(input, 2, 2);
-	else if (!ft_strncmp(input[1], "-e", 3))
-		process_flags(input, 2);
-	else
-		do_print(input, 1, 1);
-	com_info()->exit_value = 0;
+	int	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (1);
+	while (s1[i])
+	{
+		if (s1[i] != s2[i])
+			return (1);
+		i++;	
+	}
+	return (0);
 }
