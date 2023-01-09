@@ -26,6 +26,7 @@ void	process_input(char **env)
 			com_info()->commands->arg = process_peliculas(com_info()->commands->arg);
 			commands(com_info()->commands->arg, env);
 		}
+		com_info()->cmds_done++;
 		com_info()->commands = com_info()->commands->next;
 	}
 }

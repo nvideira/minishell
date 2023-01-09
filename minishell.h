@@ -54,8 +54,8 @@ typedef struct s_args
 
 typedef struct s_command
 {
-	int					pip1[2];
-	int					pip2[2];
+	int					**pip;
+	int					cmds_done;
 	pid_t				pid;
 	int					fd_in;
 	int					status;
@@ -141,8 +141,9 @@ void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
 
 //////////////PIPES
-void					use_pipe(void);
-
+//void					use_pipe(void);
+void	init_pipes(void);
+void	fd_dup(int i);
 /* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
  | (_| (_) | |\/| | |\/| |/ _ \| .` | |) \__ \
@@ -248,6 +249,8 @@ t_args					*add_mat_node(char *args);
 //GET_NEXT_LINE
 char					*get_next_line(int fd);
 
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putchar_fd(char c, int fd);	
 /* ___ ___  _    ___  ___  ___ 
   / __/ _ \| |  / _ \| _ \/ __|
  | (_| (_) | |_| (_) |   /\__ \

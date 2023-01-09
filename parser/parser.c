@@ -43,6 +43,7 @@ void	parser(char *input, char **env)
 		return ;
 	}
 	pipe_no = count_pipes(input);
+	com_info()->pipe_no = pipe_no;
 	tmp = ft_split(input, '|');
 	while (pipe_no >= 0)
 	{
@@ -50,7 +51,8 @@ void	parser(char *input, char **env)
 		pipe_no--;
 	}
 	free_matrix(tmp);
-
+	if (com_info()->pipe_no > 0)
+		init_pipes();
 	process_input(env);
 	// while (com_info()->commands)
 	// {

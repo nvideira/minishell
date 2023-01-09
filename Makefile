@@ -35,7 +35,8 @@ SRC = main.c init_shell.c print_dir.c ft_error.c shell_split.c \
 	parser/parser.c parser/parser_utils.c parser/parser_utils2.c \
 	pipes/pipes.c pipes/utils_pipe.c \
 	quotes_ds/remove_quote.c quotes_ds/process_ds.c \
-	quotes_ds/process_quotes.c 
+	quotes_ds/process_quotes.c \
+	ft_putnbr_fd.c ft_putchar_fd.c
 	
 OBJ = $(SRC:.c=.o)
 
