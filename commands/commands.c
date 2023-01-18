@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/04 00:52:35 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/17 20:52:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	commands(char **input, char **env)
+void	commands(char **input, char **env, int is_fork)
 {
 	if (input[0])
 	{
@@ -33,6 +33,23 @@ void	commands(char **input, char **env)
 		else if (!ft_strncmp(input[0], "change_color", 13))
 			change_color(input);
 		else
-			env_commands(input, env);
+			fork_commands(input, env, is_fork);
 	}
+}
+
+void	fork_commands(char **input, char **env, int is_fork)
+{
+	int	cenas;
+	
+	signal_block();
+	if (!is_fork)
+	{
+		cenas = fork();
+		if (cenas == 0)
+			env_commands(input, env);
+		else
+			waitpid(cenas, &com_info()->exit_value, 0);
+	}
+	else
+		env_commands(input, env);
 }

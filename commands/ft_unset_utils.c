@@ -14,7 +14,7 @@
 
 void	unset_error(void)
 {
-	printf("unset: not enough arguments\n");
+	ft_error("unset: not enough arguments\n");
 	return ;
 }
 

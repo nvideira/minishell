@@ -16,20 +16,20 @@ void	exit_errors(int error, char **input)
 {
 	if (error == 1)
 	{
-		printf("exit\nexit: %s: numeric argument required\n", input[1]);
+		ft_error("exit\nexit: %s: numeric argument required\n", input[1]);
 		rl_clear_history();
 		free (input);
 		exit(2);
 	}
 	else if (error == 2)
 	{
-		printf("exit\nexit: too many arguments\n");
+		ft_error("exit\nexit: too many arguments\n");
 		com_info()->exit_value = 1;
 		return ;
 	}
 	else if (error == 3)
 	{
-		printf("exit\nexit: %s: numeric argument required\n", input[1]);
+		ft_error("exit\nexit: %s: numeric argument required\n", input[1]);
 		rl_clear_history();
 		free (input);
 		exit(2);

@@ -69,6 +69,9 @@ typedef struct s_command
 	int					nb_args;
 	char				*color;
 	int					pipe_no;
+	int					temp_fd;
+	char				**env;
+	int					redir_flag;
 }   t_command;
 
 /*__  __ ___ _  _ ___ ___ _  _ ___ _    _    
@@ -81,6 +84,8 @@ t_command				*com_info(void);
 
 //INIT SHELL
 void					init_shell(char **env);
+void					catch_signal(void);
+void					signal_block(void);
 void					recieve(int sig);
 
 //PRINT DIR
@@ -111,9 +116,13 @@ void					free_env(t_env_lst **env);
 
 //PROCESS INPUT
 void					process_input(char **env);
+char					**parse_cenas(char **arg);
 int						count_args(char **matrix);
 void					exported_vars(char **input);
 int						find_es(char *str);
+int						check_if_exists_vars(char *str);
+void					change_value_vars(char *str);
+
 
 //QUOTES
 char 					**process_quotes(char **input);
@@ -126,10 +135,12 @@ char					*remove_peliculas(char *input);
 //DOLLAR SIGN
 char					**check_ds(char **input);
 char					*change_val(char *input);
-char					*change_val2(char *input);
+char					*change_val2(char *input, int i, int j);
 
 //PARSER
-void					parser(char *input, char **env);
+void					parser(char *input);
+void					parser2(char *input);
+void					parser3(char *input);
 int						count_pipes(char *input);
 int						skip_quotes(char *input, int i, char quote);
 char					***split_split(char **matrix);
@@ -141,15 +152,19 @@ void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
 
 //////////////PIPES
-//void					use_pipe(void);
-void	init_pipes(void);
-void	fd_dup(int i);
+void					init_pipes(void);
+void					do_pipes(char **input);
+void					execute_pipe(char **input);
+void					fd_dup(int i);
 /* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
  | (_| (_) | |\/| | |\/| |/ _ \| .` | |) \__ \
   \___\___/|_|  |_|_|  |_/_/ \_\_|\_|___/|___/*/
 
-void					commands(char **input, char **env);
+void					commands(char **input, char **env, int is_fork);
+void					fork_commands(char **input, char **env, int is_fork);
+void					wait_pid(int counter);
+int						needs_fork(char	**input);
 
 void					env_commands(char **input, char **env);
 char					*find_path(char *cmd, t_env_lst *env_lst);
@@ -210,7 +225,10 @@ void					check_unset(char *input);
   \___/  |_| |___|____|___/*/
 
 //FT_ERROR
-void					ft_error(char *err);
+void					ft_error(char *err, ...);
+int						ft_putchar_fde(char c, int fd);
+int						ft_putstr_fde(char *s, int fd);
+int						ft_putnbr_fde(int n, int k, int fd);
 
 //ITOA
 char					*ft_itoa(int number);
@@ -249,8 +267,8 @@ t_args					*add_mat_node(char *args);
 //GET_NEXT_LINE
 char					*get_next_line(int fd);
 
-void	ft_putnbr_fd(int n, int fd);
-void	ft_putchar_fd(char c, int fd);	
+void 					ft_putnbr_fd(int n, int fd);
+void					ft_putchar_fd(char c, int fd);
 /* ___ ___  _    ___  ___  ___ 
   / __/ _ \| |  / _ \| _ \/ __|
  | (_| (_) | |_| (_) |   /\__ \

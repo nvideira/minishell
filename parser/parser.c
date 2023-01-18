@@ -6,19 +6,42 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:45:00 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/03 20:48:22 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:56:44 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	parser(char *input, char **env)
+char	**parse_cenas(char **arg)
 {
-	char		**tmp;
+	arg = process_quotes(arg);
+	arg = check_ds(arg);
+	arg = process_peliculas(arg);
+	return (arg);
+}
+
+int	check_xor(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '|')
+		{
+			if (input[i + 1] == '|')
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	parser(char *input)
+{
 	char		*tmp2;
 	char		*tmp3;
 	int			here;
-	int			pipe_no;
 
 	here = 0;
 	tmp2 = NULL;
@@ -37,11 +60,29 @@ void	parser(char *input, char **env)
 	}
 	if (ft_strlen(input))
 	 	add_history(input);
+	parser2(input);
+}
+
+void	parser2(char *input)
+{
 	if (check_quotes(input))
 	{
-		write(1, "minishell: syntax error: unclosed quotes\n", 41);
+		ft_error("minishell: syntax error: unclosed quotes\n");
 		return ;
 	}
+	if (check_xor(input))
+	{
+		ft_error("minishell: syntax error near unexpected token `|'\n");
+		return ;
+	}
+	parser3(input);
+}
+
+void	parser3(char *input)
+{
+	char		**tmp;
+	int			pipe_no;
+	
 	pipe_no = count_pipes(input);
 	com_info()->pipe_no = pipe_no;
 	tmp = ft_split(input, '|');
@@ -51,12 +92,8 @@ void	parser(char *input, char **env)
 		pipe_no--;
 	}
 	free_matrix(tmp);
+	com_info()->commands->arg = parse_cenas(com_info()->commands->arg);
 	if (com_info()->pipe_no > 0)
 		init_pipes();
-	process_input(env);
-	// while (com_info()->commands)
-	// {
-	// 	print_matrix(com_info()->commands->arg);
-	// 	com_info()->commands = com_info()->commands->next;
-	// }
+	
 }

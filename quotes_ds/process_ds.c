@@ -12,37 +12,6 @@
 
 #include "minishell.h"
 
-// A função change_val2 serve para alterar o valor de $_ no meio de uma str
-
-char	*change_val2(char *input)
-{
-	int			i;
-	int			j;
-	static char	*name;
-	
-	i = 0;
-	j = 0;
-	while (input[i])
-	{
-		if (input[i] == '$')
-		{
-			i++;
-			while (input[i] != ' ')
-			{
-				name[j] = input[i];
-				j++;
-				i++;
-			}
-			//check name;
-			//change;
-			//join to previous str
-		}
-		i++;
-	}
-	
-	return (input);
-}
-
 char	*change_val(char *input)
 {
 	t_env_lst	*temp;
@@ -68,6 +37,8 @@ char	*change_val(char *input)
 	return ("");
 }
 
+// ' and " handling not working properly when there's more than 2
+
 char	**check_ds(char **input)
 {
 	int	i;
@@ -80,10 +51,14 @@ char	**check_ds(char **input)
 		if (!ft_strncmp(input[i], "$?", 3) && find_pelicula(input[i]) != 2)
 			input[i] = ft_itoa(com_info()->exit_value);
 		else if (input[i][0] == '$' && ft_strlen(input[i]) > 1)
+		{
+			printf("2\n");
 			input[i] = ft_strdup(change_val(input[i]));
-		else if (ft_strchr(input[i], '$') && ft_strlen(input[i]) > 1
-			&& find_pelicula(input[i]) != 2)
-			input[i] = ft_strdup(change_val2(input[i]));
+		}
+		else if ((ft_strchr(input[i], '$') != 0) && (ft_strlen(input[i]) > 1)
+			&& (find_pelicula(input[i]) == 0))
+			{printf("2\n");
+			input[i] = change_val2(input[i], 0, 0);}
 		i++;
 	}
 	return (input);

@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **env)
 	init_shell(env);
 	while (1)
 	{
+		catch_signal();
 		input = readline(print_info());
 		if (!input)
 		{
@@ -35,7 +36,8 @@ int	main(int argc, char **argv, char **env)
 			free (input);
 			exit(com_info()->exit_value);
 		}
-		parser(input, env);
+		parser(input);
+		process_input(env);
 	}
 	free (input);
 	return (com_info()->exit_value);

@@ -39,7 +39,7 @@ void	do_change(char **input, int bold)
 		if (ft_strlen(input[2]) != 1 || ft_atoi(input[1]) < 0
 			|| ft_atoi(input[1]) > 7 || ft_atoi(input[2]) < 0
 			|| ft_atoi(input[2]) > 1)
-			red("Change_Color: Invalid arguments\n");	
+			ft_error("\033[0;31mChange_Color: Invalid arguments\033[0m\n");	
 		else
 			b = "1";
 	}
@@ -61,14 +61,14 @@ void	change_color(char	**input)
 		i++;
 	if (!input[1])
 	{
-		red("Change_Color: Not enough arguments\n");	
-		red("Try \"change_color --help\" for help\n");
+		ft_error("\033[0;31mChange_Color: Not enough arguments\033[0m\n");	
+		ft_error("\033[0;31mTry \"change_color --help\" for help\033[0m\n");
 		return ;	
 	}
 	if (i > 3)
 	{
-		red("Change_Color: Too much arguments\n");	
-		red("Try \"change_color --help\" for help\n");
+		ft_error("\033[0;31mChange_Color: Too much arguments\033[0m\n");	
+		ft_error("\033[0;31mTry \"change_color --help\" for help\033[0m\n");
 		return ;	
 	}
 	if (!ft_strncmp(input[1], "--help", 6))
@@ -76,5 +76,5 @@ void	change_color(char	**input)
 	else if (ft_isdigit(input[1]) && ft_strlen(input[1]) == 1)
 		do_change(input, i);
 	else
-		red("Change_Color: Invalid arguments\n");	
+		ft_error("\033[0;31mChange_Color: Invalid arguments\033[0m\n");	
 }

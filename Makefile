@@ -18,9 +18,9 @@ NAME = minishell
 
 INCLUDE = .
 
-SRC = main.c init_shell.c print_dir.c ft_error.c shell_split.c \
-	process_input.c process_input_utils.c colors.c \
-	env_to_lst.c free_env.c\
+SRC = main.c init_shell.c print_dir.c shell_split.c \
+	process_input.c process_input_utils.c process_input_utils2.c \
+	colors.c signals.c env_to_lst.c free_env.c \
 	commands/commands.c commands/env_commands.c commands/ft_exit.c \
 	commands/ft_echo.c commands/ft_unset.c commands/ft_export.c \
 	commands/ft_env.c commands/ft_pwd.c commands/change_color.c \
@@ -31,12 +31,12 @@ SRC = main.c init_shell.c print_dir.c ft_error.c shell_split.c \
 	libft/ft_memmove.c libft/ft_strchr.c libft/ft_strcmp.c \
 	libft/ft_strdup.c libft/ft_strjoin.c libft/ft_strlen.c \
 	libft/ft_strljoin.c libft/ft_substr.c libft/lst_add_front.c \
-	libft/strict_cmp.c \
+	libft/strict_cmp.c libft/ft_putnbr_fd.c libft/ft_putchar_fd.c \
+	libft/ft_error.c libft/ft_error_utils.c \
 	parser/parser.c parser/parser_utils.c parser/parser_utils2.c \
 	pipes/pipes.c pipes/utils_pipe.c \
 	quotes_ds/remove_quote.c quotes_ds/process_ds.c \
-	quotes_ds/process_quotes.c \
-	ft_putnbr_fd.c ft_putchar_fd.c
+	quotes_ds/process_quotes.c quotes_ds/process_ds_utils.c
 	
 OBJ = $(SRC:.c=.o)
 
