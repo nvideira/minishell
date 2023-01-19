@@ -156,6 +156,12 @@ void					init_pipes(void);
 void					do_pipes(char **input);
 void					execute_pipe(char **input);
 void					fd_dup(int i);
+
+//////////////REDIRECTIONS
+void					check_redir(char **input);
+int						check_redir_type(char *input, int j);
+void					redirections(char **input, int i, int j, int type);
+
 /* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
  | (_| (_) | |\/| | |\/| |/ _ \| .` | |) \__ \

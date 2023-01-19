@@ -6,82 +6,67 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/18 21:57:54 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:38:45 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_redir_type(char *input)
+int	check_redir_type(char *input, int j)
 {
-	int	i;
-
-	i = 0;
-	while (input[i])
+	if (input[j] == '>')
 	{
-		if (input[i] == '>')
-		{
-			if (input[i + 1] == '>')
-				return (1);
-			else
-				return (2);
-		}
-		else if (input[i] == '<')
-		{
-			if (input[i + 1] == '<')
-				return (3);
-			else
-				return (4);
-		}
-		i++;
+		if (input[j + 1] == '>')
+			return (1);
+		else
+			return (2);
+	}
+	else if (input[j] == '<')
+	{
+		if (input[j + 1] == '<')
+			return (3);
+		else
+			return (4);
 	}
 	return (0);
 }
 
-void	redirections(char **input)
+void	redirections(char **input, int i, int j, int type)
 {
-	int		i;
 	int		fd;
-	int		type;
+	char	*file;
 
-	i = 0;
-	while (input[i])
-	{
-		type = check_redir_type(input[i]);
-		if (type == 1)
-		{
-			fd = open(input[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
-			dup2(fd, 1);
-			close(fd);
-		}
-		else if (type == 2)
-		{
-			fd = open(input[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			dup2(fd, 1);
-			close(fd);
-		}
-		else if (type == 3)
-		{
-			fd = open(input[i + 1], O_CREAT | O_RDONLY, 0644);
-			dup2(fd, 0);
-			close(fd);
-		}
-		else if (type == 4)
-		{
-			fd = open(input[i + 1], O_CREAT | O_RDONLY, 0644);
-			dup2(fd, 0);
-			close(fd);
-		}
-		i++;
-	}
+	if (input[i + 1] && input[i + 1] == input[i])
+		perror("minishell: syntax error near unexpected token");
+	if (((type == 1 || type == 3) && input[i][j + 2] != '\0')
+			|| ((type == 2 || type == 4) && input[i][j + 1] != '\0'))
+		file = ft_substr(input[i], j + 2, ft_strlen(input[i]));
+	else
+		file = ft_substr(input[i + 1], 0, ft_strlen(input[i + 1]));
+	if (type == 1)
+		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else if (type == 2)
+		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	else if (type == 4)
+		fd = open(file, O_RDONLY);
+	else if (type == 3)
+		heredoc(file);
+	if (type == 1 || type == 2)
+		dup2(fd, STDOUT_FILENO);
+	else if (type == 4 || type == 3)
+		dup2(fd, STDIN_FILENO);
+	close(fd);
+	free(file);
 }
 
 void	check_redir(char **input)
 {
 	int	i;
 	int	j;
+	int	type;
 
 	i = 0;
+	type = 0;
 	while (input[i])
 	{
 		j = 0;
@@ -89,12 +74,11 @@ void	check_redir(char **input)
 		{
 			if (input[i][j] == '>' || input[i][j] == '<')
 			{
-				redirections(input);
-				return ;
+				type = check_redir_type(input[i], j);
+				redirections(input, i, j, type);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (0);
 }
