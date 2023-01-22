@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:45:00 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/18 20:56:44 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/22 23:16:50 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	parser(char *input)
 	tmp3 = NULL;
 	if (empty_prompt(input))
 		return ;
-	if (!ft_strncmp(input, "<<", 2))
-		tmp2 = heredoc(find_limiter(input, 2), &here);
 	if (tmp2)
 	{
 		tmp3 = ft_strjoin(input, tmp2);

@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/19 17:38:45 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/22 23:05:26 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	redirections(char **input, int i, int j, int type)
 	else if (type == 4)
 		fd = open(file, O_RDONLY);
 	else if (type == 3)
-		heredoc(file);
+		fd = heredoc(file);
 	if (type == 1 || type == 2)
 		dup2(fd, STDOUT_FILENO);
 	else if (type == 4 || type == 3)

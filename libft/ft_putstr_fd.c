@@ -1,54 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils2.c                                    :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:57:06 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/22 23:16:32 by nvideira         ###   ########.fr       */
+/*   Created: 2021/10/30 19:33:11 by nvideira          #+#    #+#             */
+/*   Updated: 2021/10/30 20:41:42 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	print_matrix(char **matrix)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
-	while (matrix[i])
+	if (!s || !fd)
+		return ;
+	while (s[i] != '\0')
 	{
-		printf("%s\n", matrix[i]);
+		write(fd, &s[i], 1);
 		i++;
 	}
-}
-
-void	free_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-}
-
-int	empty_prompt(char *input)
-{
-	int	i;
-
-	i = 0;
-	if (!input[i])
-		return (1);
-	while (input[i])
-	{
-		if (input[i] != ' ' && input[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
 }

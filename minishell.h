@@ -145,8 +145,6 @@ int						count_pipes(char *input);
 int						skip_quotes(char *input, int i, char quote);
 char					***split_split(char **matrix);
 int						check_quotes(char *commands);
-char					*find_limiter(char *input, int start);
-char					*heredoc(char *limiter, int *here);
 int						empty_prompt(char *input);
 void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
@@ -161,7 +159,7 @@ void					fd_dup(int i);
 void					check_redir(char **input);
 int						check_redir_type(char *input, int j);
 void					redirections(char **input, int i, int j, int type);
-
+int						heredoc(char *limiter);
 /* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
  | (_| (_) | |\/| | |\/| |/ _ \| .` | |) \__ \
@@ -256,6 +254,7 @@ int						ft_strlen(const char *str);
 char					*ft_substr(char const *s, unsigned int start, size_t len);
 char					*ft_strdup(const char *s1);
 void					*ft_memmove(void *dst, const void *src, size_t len);
+void					ft_putstr_fd(char *s, int fd);
 
 //UTILS2
 char					**ft_split(const char *s, char c);
@@ -272,7 +271,6 @@ t_args					*add_mat_node(char *args);
 
 //GET_NEXT_LINE
 char					*get_next_line(int fd);
-
 void 					ft_putnbr_fd(int n, int fd);
 void					ft_putchar_fd(char c, int fd);
 /* ___ ___  _    ___  ___  ___ 

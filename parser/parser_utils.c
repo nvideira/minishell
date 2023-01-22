@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/14 16:58:16 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/22 23:16:23 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*find_limiter(char *input, int start)
-{
-	int		i;
-	char	*limiter;
-
-	while (input[start] && (input[start] == ' ' || input[start] == '\t'))
-		start++;
-	i = start;
-	while (input[i] && input[i] != ' ' && input[i] != '\t')
-		i++;
-	limiter = ft_substr(input, start, i - start);
-	return (limiter);
-}
 
 int	check_quotes(char *commands)
 {

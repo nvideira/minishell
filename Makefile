@@ -32,12 +32,12 @@ SRC = main.c init_shell.c print_dir.c shell_split.c \
 	libft/ft_strdup.c libft/ft_strjoin.c libft/ft_strlen.c \
 	libft/ft_strljoin.c libft/ft_substr.c libft/lst_add_front.c \
 	libft/strict_cmp.c libft/ft_putnbr_fd.c libft/ft_putchar_fd.c \
-	libft/ft_error.c libft/ft_error_utils.c \
+	libft/ft_error.c libft/ft_error_utils.c libft/ft_putstr_fd.c \
 	parser/parser.c parser/parser_utils.c parser/parser_utils2.c \
 	pipes/pipes.c pipes/utils_pipe.c \
 	quotes_ds/remove_quote.c quotes_ds/process_ds.c \
 	quotes_ds/process_quotes.c quotes_ds/process_ds_utils.c\
-	redirections/redirections.c
+	#redirections/redirections.c redirections/heredoc.c
 	
 OBJ = $(SRC:.c=.o)
 
