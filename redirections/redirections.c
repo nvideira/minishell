@@ -38,9 +38,10 @@ void	redirections(char **input, int i, int j, int type)
 
 	if (input[i + 1] && input[i + 1] == input[i])
 		perror("minishell: syntax error near unexpected token");
-	if (((type == 1 || type == 3) && input[i][j + 2] != '\0')
-			|| ((type == 2 || type == 4) && input[i][j + 1] != '\0'))
+	if (((type == 1 || type == 3) && input[i][j + 2] != '\0'))
 		file = ft_substr(input[i], j + 2, ft_strlen(input[i]));
+	else if ((type == 2 || type == 4) && input[i][j + 1] != '\0')
+		file = ft_substr(input[i], j + 1, ft_strlen(input[i]));
 	else
 		file = ft_substr(input[i + 1], 0, ft_strlen(input[i + 1]));
 	if (type == 1)

@@ -37,7 +37,7 @@ SRC = main.c init_shell.c print_dir.c shell_split.c \
 	pipes/pipes.c pipes/utils_pipe.c \
 	quotes_ds/remove_quote.c quotes_ds/process_ds.c \
 	quotes_ds/process_quotes.c quotes_ds/process_ds_utils.c\
-	#redirections/redirections.c redirections/heredoc.c
+	redirections/redirections.c redirections/heredoc.c
 	
 OBJ = $(SRC:.c=.o)
 

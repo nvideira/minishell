@@ -16,7 +16,7 @@ void	process_input(char **env)
 {
 	while (com_info()->commands)
 	{
-		//check_redir(com_info()->commands->arg);
+		check_redir(com_info()->commands->arg);
 		com_info()->commands->nb_args = count_args(com_info()->commands->arg);
 		if (find_es(com_info()->commands->arg[0]) == 1)
 			exported_vars(com_info()->commands->arg);

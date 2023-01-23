@@ -41,9 +41,7 @@ void	parser(char *input)
 {
 	char		*tmp2;
 	char		*tmp3;
-	int			here;
 
-	here = 0;
 	tmp2 = NULL;
 	tmp3 = NULL;
 	if (empty_prompt(input))
