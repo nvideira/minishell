@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-char **process_quotes(char **input)
+char	**process_quotes(char **input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (input[i])
@@ -26,9 +26,9 @@ char **process_quotes(char **input)
 	return (input);
 }
 
-char **process_peliculas(char **input)
+char	**process_peliculas(char **input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (input[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:44:22 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/28 04:07:15 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/23 15:23:12 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_unset(char **input)
 {
 	int			i;
-	
+
 	i = 1;
 	if (!input[i])
 		unset_error();

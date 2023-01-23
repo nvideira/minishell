@@ -15,7 +15,7 @@
 void	print_vars2(char **input)
 {
 	t_env_lst	*temp;
-	char 		*name;
+	char		*name;
 
 	name = input[1];
 	temp = com_info()->env_lst;
@@ -34,14 +34,14 @@ void	print_vars2(char **input)
 void	print_vars(char **input)
 {
 	t_env_lst	*temp;
-	char 		*name;
+	char		*name;
 
 	name = input[1];
 	temp = com_info()->vars;
 	name++;
 	while (temp)
 	{
-		if (!ft_strncmp(ft_strjoin(name, "="),temp->name, ft_strlen(name) - 1))
+		if (!ft_strncmp(ft_strjoin(name, "="), temp->name, ft_strlen(name) - 1))
 		{
 			printf("%s\n", temp->value);
 			return ;
@@ -56,7 +56,8 @@ void	do_print(char **input, int start, int type)
 	while (start < com_info()->commands->nb_args)
 	{
 		printf("%s", input[start]);
-		if ((com_info()->commands->nb_args - start) != 1 && ft_strncmp(com_info()->commands->arg[start], "", 1)
+		if ((com_info()->commands->nb_args - start) != 1
+			&& ft_strncmp(com_info()->commands->arg[start], "", 1)
 			&& ft_strncmp(com_info()->commands->arg[start + 1], "", 1))
 			printf(" ");
 		start++;

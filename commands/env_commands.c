@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/18 20:29:14 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:41:27 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	env_commands(char **input, char **env)
 	path = find_path(input[0], com_info()->env_lst);
 	if (!path)
 	{
-		ft_error("\033[0;31mCommand not found: %s\033[0m\n", input[0]);
+		ft_error("Command not found: %s\n", input[0]);
 		com_info()->exit_value = 127;
+		catch_signal();
 		return ;
 	}
 	if (execve(path, input, env) == -1)
@@ -30,15 +31,33 @@ void	env_commands(char **input, char **env)
 	}
 }
 
-// Acrescentar condição para verificar se está no env!
-// Norminette
+char	*find_return_path(char *path, int j, char *cmd)
+{
+	char		*ret_path;
+
+	while (path[j] && ft_strichr(path, j, ':') > -1)
+	{
+		ret_path = join_strings(path, j, cmd);
+		if (!access(ret_path, F_OK))
+			return (ret_path);
+		free(ret_path);
+		j += ft_strichr(path, j, ':') - j + 1;
+	}
+	if (path[j] && ft_strichr(path, j, ':') < 0)
+	{
+		ret_path = join_strings(path, j, cmd);
+		if (!access(ret_path, F_OK))
+			return (ret_path);
+		free(ret_path);
+	}
+	return (0);
+}
 
 char	*find_path(char *cmd, t_env_lst *env_lst)
 {
 	int			j;
 	t_env_lst	*temp;
 	char		*path;
-	char		*ret_path;
 
 	j = 0;
 	temp = env_lst;
@@ -56,22 +75,6 @@ char	*find_path(char *cmd, t_env_lst *env_lst)
 			return (cmd);
 	}
 	else
-	{
-		while (path[j] && ft_strichr(path, j, ':') > -1)
-		{
-			ret_path = join_strings(path, j, cmd);
-			if (!access(ret_path, F_OK))
-				return (ret_path);
-			free(ret_path);
-			j += ft_strichr(path, j, ':') - j + 1;
-		}
-		if (path[j] && ft_strichr(path, j, ':') < 0)
-		{
-			ret_path = join_strings(path, j, cmd);
-			if (!access(ret_path, F_OK))
-				return (ret_path);
-			free(ret_path);
-		}
-	}
+		return (find_return_path(path, j, cmd));
 	return (0);
 }

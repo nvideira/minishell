@@ -16,7 +16,7 @@ char	*change_val(char *input)
 {
 	t_env_lst	*temp;
 	t_env_lst	*temp2;
-	char 		*name;
+	char		*name;
 
 	name = input;
 	temp = com_info()->vars;
@@ -30,7 +30,8 @@ char	*change_val(char *input)
 	temp2 = com_info()->env_lst;
 	while (temp2)
 	{
-		if (!ft_strncmp(ft_strjoin(name, "="), temp2->name, ft_strlen(name) + 1))
+		if (!ft_strncmp(ft_strjoin(name, "=")
+				, temp2->name, ft_strlen(name) + 1))
 			return (temp2->value);
 		temp2 = temp2->next;
 	}
@@ -57,9 +58,13 @@ char	**check_ds(char **input)
 		}
 		else if ((ft_strchr(input[i], '$') != 0) && (ft_strlen(input[i]) > 1)
 			&& (find_pelicula(input[i]) == 0))
-			{printf("2\n");
-			input[i] = change_val2(input[i], 0, 0);}
+		{
+			printf("2\n");
+			input[i] = change_val2(input[i], 0, 0);
+		}
 		i++;
 	}
 	return (input);
 }
+
+//	Why printf 2?

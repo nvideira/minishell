@@ -49,18 +49,20 @@ typedef struct s_args
 {
 	char				**arg;
 	int					nb_args;
+	int					redir_type;
 	struct s_args		*next;
 }	t_args;
 
 typedef struct s_command
 {
 	int					**pip;
+	int					**red;
 	int					cmds_done;
 	pid_t				pid;
 	int					fd_in;
 	int					status;
 	char				*cmd;
-	char 				*path;
+	char				*path;
 	char				**args;
 	int					exit_value;
 	t_env_lst			*env_lst;
@@ -69,11 +71,12 @@ typedef struct s_command
 	int					nb_args;
 	char				*color;
 	int					pipe_no;
+	int					redir_no;
 	int					temp_fd;
 	char				**env;
-	int					redir_flag;
-	int					redir_no;
-}   t_command;
+	int					redir_type_prev;
+	int					redir_database[100];
+}	t_command;
 
 /*__  __ ___ _  _ ___ ___ _  _ ___ _    _    
  |  \/  |_ _| \| |_ _/ __| || | __| |  | |   
@@ -104,7 +107,7 @@ t_env_lst				*new_node(char *env);
 t_env_lst				*ft_lstlast(t_env_lst *lst);
 void					lst_add_back(t_env_lst **lst, t_env_lst *new);
 
-char    				**lst_to_env();
+char					**lst_to_env(void);
 void					change_value(char *str);
 
 //FREE ENV
@@ -150,6 +153,8 @@ int						empty_prompt(char *input);
 void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
 
+void					do_fork(char **input, int type);
+
 //////////////PIPES
 void					init_pipes(void);
 void					do_pipes(char **input);
@@ -157,19 +162,21 @@ void					execute_pipe(char **input);
 void					fd_dup(int i);
 
 //////////////REDIRECTIONS
+void					init_redirs(void);
 void					check_redir(char **input);
-int						check_redir_type(char *input, int j);
 void					redirections(char **input, int i, int j, int type);
 int						heredoc(char *limiter);
-/* ___ ___  __  __ __  __   _   _  _ ___  ___ 
+int						count_redirs(char **input);
+
+/*
+   ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
  | (_| (_) | |\/| | |\/| |/ _ \| .` | |) \__ \
-  \___\___/|_|  |_|_|  |_/_/ \_\_|\_|___/|___/*/
+  \___\___/|_|  |_|_|  |_/_/ \_\_|\_|___/|___/
+*/
 
 void					commands(char **input, char **env, int is_fork);
 void					fork_commands(char **input, char **env, int is_fork);
-void					wait_pid(int counter);
-int						needs_fork(char	**input);
 
 void					env_commands(char **input, char **env);
 char					*find_path(char *cmd, t_env_lst *env_lst);
@@ -182,8 +189,8 @@ void					change_color_help(void);
 //CD
 void					ft_cd(char **input, char **env);
 void					change_pwd(char *type, char *str, char **env);
-void					change_pwd_env(char *type, int size, char *val, char **env);
 int						cd_errors(char **input);
+void					change_pwd_env(char *type, int size, char *val, char **env);
 
 //ECHO
 void					ft_echo(char **input);
@@ -212,6 +219,9 @@ int						check_if_exists2(char *str);
 void					print_exported(char **input);
 void 					check_export(char *input);
 t_env_lst				*sort_list(t_env_lst *curr);
+char					*get_name_export(char *str, int len);
+char					*get_name_change_export(char *str, int len);
+char					*get_value_export(char *str, int len);
 
 //PWD
 void					ft_pwd(void);
@@ -262,13 +272,14 @@ char					**ft_split(const char *s, char c);
 int						ft_strcmp(char *s1, char *s2);
 int 					strict_cmp(char *s1, char *s2);
 void					ft_clear(void);
+int						ft_str1chr(const char *s, int c);
 int						ft_strchr(const char *s, int c);
 int						ft_atoi(const char *str);
 
 //UTILS3
 char					*ft_strljoin(char const *s1, char const *s2, unsigned int len);
 void					lst_add_front(t_args **lst, t_args *new);
-t_args					*add_mat_node(char *args);
+t_args					*add_mat_node(char *args, int i);
 
 //GET_NEXT_LINE
 char					*get_next_line(int fd);

@@ -12,12 +12,11 @@
 
 #include "minishell.h"
 
-
 char	*get_name(char *str)
 {
-	int			len;
-	int			i;
-	char		*name;
+	int		len;
+	int		i;
+	char	*name;
 
 	len = 0;
 	i = 0;
@@ -61,37 +60,13 @@ void	change_value_vars(char *str)
 	char		*name;
 	char		*value;
 	int			len;
-	int			len_val;
-	int			i;
-	int			j;
 
 	len = 0;
-	i = 0;
-	j = 0;
 	head = com_info()->vars;
 	while (str[len] != '=')
 		len++;
-	name = malloc(sizeof(char) * (len + 2));
-	if (!name)
-		return ;
-	len_val = (ft_strlen(str) - (len + 1));
-	value = malloc(sizeof(char) * (len_val + 1));
-	if (!value)
-		return ;
-	while (i < len && str[i])
-	{
-		name[i] = str[i];
-		i++;
-	}
-	name[i] = '=';
-	i++;
-	name[i] = '\0';
-	while (str[i])
-	{
-		value[j] = str[i];
-		i++;
-		j++;
-	}
+	name = get_name_change_export(str, len);
+	value = get_value_export(str, len);
 	while (com_info()->vars->name != name)
 	{
 		if (!ft_strncmp(name, com_info()->vars->name, (len + 1)))

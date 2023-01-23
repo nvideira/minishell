@@ -81,3 +81,21 @@ char	*ft_substring(char const *s, unsigned int start, size_t len)
 	sub[i] = '\0';
 	return (sub);
 }
+
+int	count_pipes(char *input)
+{
+	int	i;
+	int	pipe_no;
+
+	i = 0;
+	pipe_no = 0;
+	while (input[i])
+	{
+		if (input[i] == '\'' || input[i] == '\"')
+			i = skip_quotes(input, i, input[i]);
+		else if (input[i] == '|')
+			pipe_no++;
+		i++;
+	}
+	return (pipe_no);
+}

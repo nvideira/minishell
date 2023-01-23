@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_to_lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:25:45 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/03 23:30:18 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/23 16:37:32 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_env_lst	*ft_lstlast(t_env_lst *lst)
 {
 	if (!lst)
 		return (NULL);
-
 	while (lst->next != NULL)
 	{
 		lst = lst->next;

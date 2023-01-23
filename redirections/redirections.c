@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/22 23:05:26 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:07:35 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	count_redirs(char **input)
+{
+	int	i;
+	int	j;
+	int	redir_no;
+
+	i = 0;
+	redir_no = 0;
+	while (input[i])
+	{
+		j = 0;
+		while (input[i][j])
+		{
+			if (input[i][j] == '>' || input[i][j] == '<')
+			{
+				if ((input[i][j] == '>' && input[i][j + 1] == '>')
+					|| (input[i][j] == '<' && input[i][j + 1] == '<'))
+					j++;
+				redir_no++;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (redir_no);
+}
 
 int	check_redir_type(char *input, int j)
 {

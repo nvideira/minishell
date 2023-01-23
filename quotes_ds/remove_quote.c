@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:13:10 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/03 23:46:52 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/23 15:49:11 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ char	*remove_peliculas(char *input)
 int	find_quote(char *str)
 {
 	int	i;
-    int quote;
+	int	quote;
 
 	i = 0;
-    quote = 0;
+	quote = 0;
 	while (str[i])
 	{
 		if (str[i] == '"')
@@ -79,10 +79,10 @@ int	find_quote(char *str)
 int	find_pelicula(char *str)
 {
 	int	i;
-    int quote;
+	int	quote;
 
 	i = 0;
-    quote = 0;
+	quote = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'')

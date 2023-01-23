@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 02:22:13 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/17 20:52:41 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/23 18:59:57 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,23 @@ void	fd_close(int pos)
 		close(com_info()->pip[pos][1]);
 }
 
+/* void	do_fork(char **input, int type)
+{
+	int	prev;
+
+	prev = com_info()->redir_type_prev;
+	ft_putnbr_fd(type, 2);
+	write(2, "\n", 1);
+	ft_putnbr_fd(prev, 2);
+	write(2, "\n", 1);
+	if (type == 5 || prev == 5)
+		execute_pipe(input);
+	else if ((type > 0 && type < 5) || (prev > 0 && prev < 5))
+		check_redir(input, type);
+	else
+		return ;
+} */
+ 
 void	execute_pipe(char **input)
 {
 	int	pid;
@@ -63,20 +80,20 @@ void	fd_dup(int pos)
 	if (pos == 0)
 	{
 		close(com_info()->pip[0][0]);
-		dup2(com_info()->pip[0][1], 1);
+		dup2(com_info()->pip[0][1], STDOUT_FILENO);
 		close(com_info()->pip[0][1]);
 	}
 	else if (pos == com_info()->pipe_no)
 	{
-		dup2(com_info()->pip[pos - 1][0], 0);
+		dup2(com_info()->pip[pos - 1][0], STDIN_FILENO);
 		close(com_info()->pip[pos - 1][0]);
 	}
 	else
 	{
 		close(com_info()->pip[pos][0]);
-		dup2(com_info()->pip[pos - 1][0], 0);
+		dup2(com_info()->pip[pos - 1][0], STDIN_FILENO);
 		close(com_info()->pip[pos - 1][0]);
-		dup2(com_info()->pip[pos][1], 1);
+		dup2(com_info()->pip[pos][1], STDOUT_FILENO);
 		close(com_info()->pip[pos][1]);
 	}
 }

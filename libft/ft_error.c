@@ -3,25 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:15:16 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/11 14:28:34 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/23 18:57:40 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// Guardar tudo numa str
+// Mandar para o perror
 
 #include "minishell.h"
 
 static int	check(char **c, va_list arg)
 {
 	if (**c == 'c')
-		return (ft_putchar_fde(va_arg(arg, int), 1));
+		return (ft_putchar_fde(va_arg(arg, int), 2));
 	else if (**c == 's')
-		return (ft_putstr_fde(va_arg(arg, char *), 1));
+		return (ft_putstr_fde(va_arg(arg, char *), 2));
 	else if (**c == 'i')
-		return (ft_putnbr_fde(va_arg(arg, int), 0, 1));
+		return (ft_putnbr_fde(va_arg(arg, int), 0, 2));
 	else if (**c == '%')
-		return (ft_putchar_fde(**c, 1));
+		return (ft_putchar_fde(**c, 2));
 	else
 		return (1);
 }

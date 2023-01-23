@@ -22,7 +22,7 @@ void	do_unset(char *input, t_env_lst *lst)
 {
 	t_env_lst	*head;
 
-	head = lst;	
+	head = lst;
 	while (lst)
 	{
 		if (!ft_strncmp(input, lst->name, (ft_strlen(lst->name) - 1))

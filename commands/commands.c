@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebee <jlebee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/17 20:52:57 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/23 29:08:32 by jlebee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	commands(char **input, char **env, int is_fork)
 {
 	if (input[0])
 	{
+		if (!ft_strncmp(input[0], ">", 1) || !ft_strncmp(input[0], "<", 1))
+			check_redir(input);
 		if (!ft_strncmp(input[0], "echo", 5))
 			ft_echo(input);
 		else if (!ft_strncmp(input[0], "cd", 3))
@@ -40,7 +42,7 @@ void	commands(char **input, char **env, int is_fork)
 void	fork_commands(char **input, char **env, int is_fork)
 {
 	int	cenas;
-	
+
 	signal_block();
 	if (!is_fork)
 	{

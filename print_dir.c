@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_dir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:17:25 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/13 02:24:41 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/23 15:49:40 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*print_info(void)
 	char	*str;
 	char	*username;
 	char	*dir;
-	
+
 	dir = getcwd(cwd, sizeof(cwd));
 	username = getenv("USER");
 	str = ft_strjoin(username, com_info()->color);

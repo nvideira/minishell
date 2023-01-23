@@ -51,7 +51,7 @@ char	*create_new(char *input, int i, int j, char *name)
 char	*remove_ds(char *input, int size)
 {
 	char	*new;
-	int 	i;
+	int		i;
 	int		j;
 
 	i = 0;

@@ -37,7 +37,7 @@ t_env_lst	*sort_list(t_env_lst *curr)
 	t_env_lst	*head;
 
 	head = curr;
-	while(curr->next)
+	while (curr->next)
 	{
 		if (cmp_name(curr->name, curr->next->name) == 1)
 		{
@@ -59,8 +59,8 @@ t_env_lst	*sort_list(t_env_lst *curr)
 void	print_exported(char **input)
 {
 	t_env_lst	*temp;
-	(void)input;
 
+	(void)input;
 	temp = sort_list(com_info()->env_lst);
 	while (temp)
 	{

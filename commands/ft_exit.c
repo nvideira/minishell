@@ -47,7 +47,7 @@ void	do_exit(int exit_value, char **input)
 char	*print_vars_exit(char **input)
 {
 	t_env_lst	*temp;
-	char 		*name;
+	char		*name;
 
 	name = input[1];
 	temp = com_info()->vars;

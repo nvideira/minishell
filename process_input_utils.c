@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   process_input_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:04:30 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/12 05:00:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/23 16:37:10 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	exported_vars_utils(char *input)
+{
+	if (check_if_exists(input) && !check_if_exists_vars(input))
+	{
+		change_value(input);
+		lst_add_back(&com_info()->vars, new_node(input));
+	}
+	else if (check_if_exists_vars(input))
+		change_value_vars(input);
+	else
+		lst_add_back(&com_info()->vars, new_node(input));
+}
 
 void	exported_vars(char **input)
 {
@@ -25,17 +38,7 @@ void	exported_vars(char **input)
 	while (input[i])
 	{
 		if (ft_strchr(input[i], '='))
-		{
-			if (check_if_exists(input[i]) && !check_if_exists_vars(input[i]))
-			{
-				change_value(input[i]);
-				lst_add_back(&com_info()->vars, new_node(input[i]));
-			}
-			else if (check_if_exists_vars(input[i]))
-				change_value_vars(input[i]);
-			else
-				lst_add_back(&com_info()->vars, new_node(input[i]));
-		}
+			exported_vars_utils(input[i]);
 		else
 			break ;
 		i++;
