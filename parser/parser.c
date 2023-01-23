@@ -82,6 +82,7 @@ void	parser3(char *input)
 	pipe_no = count_pipes(input);
 	com_info()->pipe_no = pipe_no;
 	tmp = ft_split(input, '|');
+	//com_info()->redir_no = count_redirs(tmp);
 	while (pipe_no >= 0)
 	{
 		lst_add_front(&com_info()->commands, add_mat_node(tmp[pipe_no]));
@@ -91,5 +92,4 @@ void	parser3(char *input)
 	com_info()->commands->arg = parse_cenas(com_info()->commands->arg);
 	if (com_info()->pipe_no > 0)
 		init_pipes();
-	
 }

@@ -88,3 +88,30 @@ int	count_pipes(char *input)
 	}
 	return (pipe_no);
 }
+
+int	count_redir(char **input)
+{
+	int	i;
+	int	j;
+	int	redir_no;
+
+	i = 0;
+	redir_no = 0;
+	while (input[i])
+	{
+		j = 0;
+		while (input[i][j])
+		{
+			if (input[i][j] == '>' || input[i][j] == '<')
+			{
+				if ((input[i][j] == '>' && input[i][j + 1] == '>')
+					|| (input[i][j] == '<' && input[i][j + 1] == '<'))
+					j++;
+				redir_no++;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (redir_no);
+}

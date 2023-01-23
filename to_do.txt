@@ -1,1 +1,6 @@
-Errors to STDOUT
+// Doesn't work
+// a=3
+// b=$a
+// echo $b
+// $a
+// but works with exported

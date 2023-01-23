@@ -20,6 +20,8 @@ void	init_shell(char **env)
 	com_info()->vars = NULL;
 	com_info()->fd_in = 0;
 	com_info()->cmds_done = 0;
+	com_info()->pipe_no = 0;
+	com_info()->redir_no = 0;
 	com_info()->color = "\033[1;32m:";
 	com_info()->env = env;
 	username = getenv("USER");

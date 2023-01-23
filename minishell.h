@@ -72,6 +72,7 @@ typedef struct s_command
 	int					temp_fd;
 	char				**env;
 	int					redir_flag;
+	int					redir_no;
 }   t_command;
 
 /*__  __ ___ _  _ ___ ___ _  _ ___ _    _    
