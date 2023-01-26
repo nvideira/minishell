@@ -12,12 +12,34 @@
 
 #include "../minishell.h"
 
-void	unset_error(void)
+// Verifica se a variável existe na env_lst e na vars
+// Executa o unset
+void	check_unset(char *input)
 {
-	ft_error("unset: not enough arguments\n");
-	return ;
+	int	exist1;
+	int	exist2;
+
+	exist1 = check_if_exists_unset(input, com_info()->env_lst);
+	exist2 = check_if_exists_unset(input, com_info()->vars);
+	if (exist1)
+		do_unset(input, com_info()->env_lst);
+	if (exist2)
+		do_unset(input, com_info()->vars);
 }
 
+// Verifica se a variável existe
+int	check_if_exists_unset(char *input, t_env_lst *temp)
+{
+	while (temp)
+	{
+		if (!ft_strncmp(input, temp->name, ft_strlen(input)))
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+// Executa o unset
 void	do_unset(char *input, t_env_lst *lst)
 {
 	t_env_lst	*head;
@@ -46,26 +68,9 @@ void	do_unset(char *input, t_env_lst *lst)
 	lst = head;
 }
 
-int	check_if_exists_unset(char *input, t_env_lst *temp)
+// Erros do comando unset
+void	unset_error(void)
 {
-	while (temp)
-	{
-		if (!ft_strncmp(input, temp->name, ft_strlen(input)))
-			return (1);
-		temp = temp->next;
-	}
-	return (0);
-}
-
-void	check_unset(char *input)
-{
-	int	exist1;
-	int	exist2;
-
-	exist1 = check_if_exists_unset(input, com_info()->env_lst);
-	exist2 = check_if_exists_unset(input, com_info()->vars);
-	if (exist1)
-		do_unset(input, com_info()->env_lst);
-	if (exist2)
-		do_unset(input, com_info()->vars);
+	ft_error("unset: not enough arguments\n");
+	return ;
 }

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:58:53 by jlebre            #+#    #+#             */
-/*   Updated: 2022/11/21 17:18:31 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/26 03:06:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Recria a função strichr
 int	ft_strichr(const char *s, int start, int c)
 {
 	while (s[start] != (char )c && s[start] != '\0')
@@ -22,6 +23,7 @@ int	ft_strichr(const char *s, int start, int c)
 		return (-1);
 }
 
+// Recria a função strncmp
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	unsigned int	i;
@@ -42,6 +44,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
+// Retorna o path do comando
 char	*join_strings(char *path, int j, char *cmd)
 {
 	char	*dir;
@@ -53,6 +56,7 @@ char	*join_strings(char *path, int j, char *cmd)
 	return (ret_path);
 }
 
+// Retorna o path do comando
 char	*ft_substring(char const *s, unsigned int start, size_t len)
 {
 	char			*sub;
@@ -82,6 +86,7 @@ char	*ft_substring(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
+// Conta o numero de pipes
 int	count_pipes(char *input)
 {
 	int	i;

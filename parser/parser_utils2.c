@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:57:06 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/22 23:16:32 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/26 00:48:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_matrix(char **matrix)
 	i = 0;
 	while (matrix[i])
 	{
-		printf("%s\n", matrix[i]);
+		//printf("matrix[%i] = %s\n", i, matrix[i]);
 		i++;
 	}
 }

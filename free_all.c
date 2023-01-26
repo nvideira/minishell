@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/28 00:33:34 by marvin            #+#    #+#             */
-/*   Updated: 2023/01/26 02:41:37 by marvin           ###   ########.fr       */
+/*   Created: 2023/01/25 15:35:18 by jlebre            #+#    #+#             */
+/*   Updated: 2023/01/25 15:37:36 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-// Recria o comando export
-void	*ft_export(char **input)
+void    free_all(void)
 {
-	int	i;
-
-	i = 1;
-	if (!input[i])
-		print_exported(input);
-	while (input[i])
-	{
-		if (ft_strchr(input[i], '='))
-			check_export(input[i]);
-		i++;
-	}
-	return (0);
+    free(com_info()->cmd);
+    free(com_info()->path);
+    free(com_info()->color);
 }

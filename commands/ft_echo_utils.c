@@ -12,45 +12,7 @@
 
 #include "../minishell.h"
 
-void	print_vars2(char **input)
-{
-	t_env_lst	*temp;
-	char		*name;
-
-	name = input[1];
-	temp = com_info()->env_lst;
-	name++;
-	while (temp)
-	{
-		if (!ft_strncmp(ft_strjoin(name, "="), temp->name, ft_strlen(name) - 1))
-		{
-			printf("%s\n", temp->value);
-			return ;
-		}
-		temp = temp->next;
-	}
-}
-
-void	print_vars(char **input)
-{
-	t_env_lst	*temp;
-	char		*name;
-
-	name = input[1];
-	temp = com_info()->vars;
-	name++;
-	while (temp)
-	{
-		if (!ft_strncmp(ft_strjoin(name, "="), temp->name, ft_strlen(name) - 1))
-		{
-			printf("%s\n", temp->value);
-			return ;
-		}
-		temp = temp->next;
-	}
-	print_vars2(input);
-}
-
+// Imprime o que foi passado para o comando echo
 void	do_print(char **input, int start, int type)
 {
 	while (start < com_info()->commands->nb_args)
@@ -67,6 +29,7 @@ void	do_print(char **input, int start, int type)
 	com_info()->exit_value = 0;
 }
 
+// Verifica qual flag foi passada para o comando echo -e
 void	check_flag(char c)
 {
 	if (c == 'a')
@@ -86,6 +49,7 @@ void	check_flag(char c)
 	return ;
 }
 
+// Processa as flags para o comando echo -e
 void	process_flags(char **input, int start)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/23 18:58:13 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/25 19:02:08 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,7 @@ int	find_quotes(const char *str, int i, int type)
 	return (st);
 }
 
-static int	ft_space(char s)
-{
-	if (s == '\n' || s == '\t' || s == '\v'
-		|| s == '\f' || s == '\r' || s == ' ')
-		return (1);
-	else
-		return (0);
-}
-
-static int	ft_ispipe(char s, char c)
-{
-	if (s == c || s == '\0')
-		return (1);
-	else
-		return (0);
-}
-
-static int	ft_wordcount(const char *str, char c)
+int	ft_wordcount(const char *str, char c)
 {
 	int		words;
 	size_t	i;
@@ -96,7 +79,7 @@ static int	split_it(char const *str, char c, int st, char **ns)
 			break ;
 		if (ft_ispipe(str[i], c) == 0 && ft_ispipe(str[i + 1], c) == 1)
 		{
-			while (ft_space(str[st]) || ft_ispipe(str[st], c))
+			while (str[st] && (ft_space(str[st]) || ft_ispipe(str[st], c)))
 				st++;
 			ns[j] = ft_substr(str, st, (i - st) + 1);
 			if (!ns[j++])
@@ -107,14 +90,6 @@ static int	split_it(char const *str, char c, int st, char **ns)
 	}
 	ns[j] = NULL;
 	return (1);
-}
-
-void	*freematrix(char **ns, int msize)
-{
-	while (msize--)
-		free(ns[msize]);
-	free(ns);
-	return (NULL);
 }
 
 char	**ft_split(const char *s, char c)

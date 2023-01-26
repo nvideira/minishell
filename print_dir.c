@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   print_dir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:17:25 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/23 15:49:40 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/26 03:10:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Função para criar o prompt
 char	*print_info(void)
 {
 	char	cwd[1024];
@@ -27,6 +28,7 @@ char	*print_info(void)
 	return (str);
 }
 
+// Função para imprimir o diretório atual
 char	*print_dir(void)
 {
 	char	cwd[1024];

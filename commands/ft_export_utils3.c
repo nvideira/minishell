@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:17:14 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/23 16:27:57 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/26 02:54:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// Retorna o nome da variavel
 char	*get_name_export(char *str, int len)
 {
 	char	*name;
@@ -30,6 +31,7 @@ char	*get_name_export(char *str, int len)
 	return (name);
 }
 
+// Retorna o nome da variavel com o '='
 char	*get_name_change_export(char *str, int len)
 {
 	char	*name;
@@ -50,6 +52,7 @@ char	*get_name_change_export(char *str, int len)
 	return (name);
 }
 
+// Retorna o valor da variavel
 char	*get_value_export(char *str, int len)
 {
 	char	*value;

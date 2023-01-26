@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/22 23:16:23 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:51:50 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,27 @@ int	skip_quotes(char *input, int i, char quote)
 	if (!input[j])
 		return (i);
 	return (j);
+}
+
+int	verify_redir(char *input)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (input[i])
+	{
+		if (input[i] == '>' || input[i] == '<' || input[i] == '|')
+		{
+			j = i + 1;
+			while (input[j] && ft_space(input[j]))
+				j++;
+			if (input[j] != input[i] && (input[j] == '>' || input[j] == '<' || input[j] == '|'))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }

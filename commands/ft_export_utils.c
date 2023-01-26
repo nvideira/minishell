@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 
+// Compara o nome das variaveis
 int	cmp_name(char *s1, char *s2)
 {
 	int	i;
@@ -30,6 +31,7 @@ int	cmp_name(char *s1, char *s2)
 	return (0);
 }
 
+// Ordena a lista de variaveis
 t_env_lst	*sort_list(t_env_lst *curr)
 {
 	char		*temp;
@@ -56,6 +58,7 @@ t_env_lst	*sort_list(t_env_lst *curr)
 	return (curr);
 }
 
+// Imprime as variaveis exportadas
 void	print_exported(char **input)
 {
 	t_env_lst	*temp;

@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// Função que retorna o nome da variável
 char	*get_name(char *str)
 {
 	int		len;
@@ -34,47 +35,3 @@ char	*get_name(char *str)
 	return (name);
 }
 
-int	check_if_exists_vars(char *str)
-{
-	t_env_lst	*temp;
-	char		*name;
-
-	temp = com_info()->vars;
-	name = get_name(str);
-	while (temp)
-	{
-		if (!ft_strncmp(name, temp->name, ft_strlen(name)))
-		{
-			free(name);
-			return (1);
-		}
-		temp = temp->next;
-	}
-	free(name);
-	return (0);
-}
-
-void	change_value_vars(char *str)
-{
-	t_env_lst	*head;
-	char		*name;
-	char		*value;
-	int			len;
-
-	len = 0;
-	head = com_info()->vars;
-	while (str[len] != '=')
-		len++;
-	name = get_name_change_export(str, len);
-	value = get_value_export(str, len);
-	while (com_info()->vars->name != name)
-	{
-		if (!ft_strncmp(name, com_info()->vars->name, (len + 1)))
-		{
-			com_info()->vars->value = value;
-			break ;
-		}
-		com_info()->vars = com_info()->vars->next;
-	}
-	com_info()->vars = head;
-}

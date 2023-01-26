@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:46:02 by jlebre            #+#    #+#             */
-/*   Updated: 2022/12/09 17:49:25 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/26 02:42:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// Recria o comando pwd
 void	ft_pwd(void)
 {
 	printf("%s\n", print_dir());

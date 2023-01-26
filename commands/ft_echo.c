@@ -12,6 +12,9 @@
 
 #include "../minishell.h"
 
+// Recria o comando echo
+// Tem as funcionalidades de -n e -e
+// Também tem a funcionalidade de imprimir o que é passado como argumento
 void	ft_echo(char **input)
 {
 	if (!input[1])

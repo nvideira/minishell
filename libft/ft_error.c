@@ -6,7 +6,7 @@
 /*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:15:16 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/23 18:57:40 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/25 16:46:09 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	ft_main(va_list arg, char *c)
 void	ft_error(char *err, ...)
 {
 	va_list	arg;
-	
+
 	if (!err)
 		return ;
 	va_start(arg, err);

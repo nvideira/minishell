@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// Processa aspas duplas
 char	**process_quotes(char **input)
 {
 	int	i;
@@ -19,13 +20,14 @@ char	**process_quotes(char **input)
 	i = 0;
 	while (input[i])
 	{
-		if (find_quote(input[i]) == 2)
+		if (find_quote(input[i]) % 2 == 0 && find_quote(input[i]) != 0)
 			input[i] = remove_quotes(input[i]);
 		i++;
 	}
 	return (input);
 }
 
+// Processa aspas simples
 char	**process_peliculas(char **input)
 {
 	int	i;
@@ -33,7 +35,7 @@ char	**process_peliculas(char **input)
 	i = 0;
 	while (input[i])
 	{
-		if (find_pelicula(input[i]) == 2)
+		if (find_pelicula(input[i]) % 2 == 0 && find_pelicula(input[i]) != 0)
 			input[i] = remove_peliculas(input[i]);
 		i++;
 	}

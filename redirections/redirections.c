@@ -3,110 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/23 19:07:35 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/26 17:19:42 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_redirs(char **input)
+void	do_redir(char **before, char **after)
 {
-	int	i;
-	int	j;
-	int	redir_no;
+	int	pid;
 
-	i = 0;
-	redir_no = 0;
-	while (input[i])
+	pid = fork();
+	if (pid == 0)
 	{
-		j = 0;
-		while (input[i][j])
-		{
-			if (input[i][j] == '>' || input[i][j] == '<')
-			{
-				if ((input[i][j] == '>' && input[i][j + 1] == '>')
-					|| (input[i][j] == '<' && input[i][j + 1] == '<'))
-					j++;
-				redir_no++;
-			}
-			j++;
-		}
-		i++;
+		redirections(after, com_info()->redir_type);
+		commands(before, com_info()->env, 1);
 	}
-	return (redir_no);
-}
-
-int	check_redir_type(char *input, int j)
-{
-	if (input[j] == '>')
-	{
-		if (input[j + 1] == '>')
-			return (1);
-		else
-			return (2);
-	}
-	else if (input[j] == '<')
-	{
-		if (input[j + 1] == '<')
-			return (3);
-		else
-			return (4);
-	}
-	return (0);
-}
-
-void	redirections(char **input, int i, int j, int type)
-{
-	int		fd;
-	char	*file;
-
-	if (input[i + 1] && input[i + 1] == input[i])
-		perror("minishell: syntax error near unexpected token");
-	if (((type == 1 || type == 3) && input[i][j + 2] != '\0'))
-		file = ft_substr(input[i], j + 2, ft_strlen(input[i]));
-	else if ((type == 2 || type == 4) && input[i][j + 1] != '\0')
-		file = ft_substr(input[i], j + 1, ft_strlen(input[i]));
 	else
-		file = ft_substr(input[i + 1], 0, ft_strlen(input[i + 1]));
-	if (type == 1)
-		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	else if (type == 2)
-		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (type == 4)
-		fd = open(file, O_RDONLY);
-	else if (type == 3)
-		fd = heredoc(file);
-	if (type == 1 || type == 2)
-		dup2(fd, STDOUT_FILENO);
-	else if (type == 4 || type == 3)
-		dup2(fd, STDIN_FILENO);
-	close(fd);
-	free(file);
+		waitpid(pid, &com_info()->exit_value, 0);
+	// E preciso dar close?
+	//fd_close(com_info()->cmds_done_redir);
+	unlink(".heredoc");
 }
 
-void	check_redir(char **input)
+// Executa as redireções.
+// Se i for impar, é o tipo de redireção.
+// Se i for par, é o arquivo.
+void	execute_redir(char **input)
 {
-	int	i;
-	int	j;
-	int	type;
+	char	***new;
+	int i;
 
-	i = 0;
-	type = 0;
-	while (input[i])
+	i = 1;
+	new = split_redir(input);
+	//print_matrix_redir(new);
+	if (com_info()->redir_no > 1)
 	{
-		j = 0;
-		while (input[i][j])
+		while (i < com_info()->redir_no * 2 - 2)
 		{
-			if (input[i][j] == '>' || input[i][j] == '<')
-			{
-				type = check_redir_type(input[i], j);
-				redirections(input, i, j, type);
-			}
-			j++;
+			close(open(new[i + 1][0], O_CREAT, 0644));
+			i += 2;open(new[i + 1][0], O_CREAT, 0644);
 		}
-		i++;
 	}
+	com_info()->redir_type = check_redir_type(new[i][0]);
+	do_redir(new[0], new[i + 1]);
+	
+	// while (i < com_info()->redir_no * 2)
+	// {
+	// 	com_info()->redir_type = check_redir_type(new[i][0]);
+	// 	do_redir(new[i - 1], new[i + 1]);
+	// 	i += 2;
+	// }
 }

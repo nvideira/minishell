@@ -3,58 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 02:22:13 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/23 18:59:57 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/26 03:05:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fd_close(int pos)
-{
-	if (pos == 0)
-		close(com_info()->pip[0][1]);
-	else if (pos == com_info()->pipe_no)
-		close(com_info()->pip[pos - 1][0]);
-	else
-		close(com_info()->pip[pos][1]);
-}
-
-/* void	do_fork(char **input, int type)
-{
-	int	prev;
-
-	prev = com_info()->redir_type_prev;
-	ft_putnbr_fd(type, 2);
-	write(2, "\n", 1);
-	ft_putnbr_fd(prev, 2);
-	write(2, "\n", 1);
-	if (type == 5 || prev == 5)
-		execute_pipe(input);
-	else if ((type > 0 && type < 5) || (prev > 0 && prev < 5))
-		check_redir(input, type);
-	else
-		return ;
-} */
- 
-void	execute_pipe(char **input)
-{
-	int	pid;
-	
-	pid = fork();
-	if (pid == 0)
-	{
-		fd_dup(com_info()->cmds_done);
-		commands(input, com_info()->env, 1);
-	}
-	else
-		waitpid(pid, &com_info()->exit_value, 0);
-	fd_close(com_info()->cmds_done);
-	unlink(".heredoc");
-}
-
+// Inicializa os pipes
 void	init_pipes(void)
 {
 	int	i;
@@ -75,6 +33,24 @@ void	init_pipes(void)
 	com_info()->pip[i] = NULL;
 }
 
+// Executa os pipes
+void	execute_pipe(char **input)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		fd_dup(com_info()->cmds_done);
+		commands(input, com_info()->env, 1);
+	}
+	else
+		waitpid(pid, &com_info()->exit_value, 0);
+	fd_close(com_info()->cmds_done);
+	unlink(".heredoc");
+}
+
+// Duplica os file descriptors
 void	fd_dup(int pos)
 {
 	if (pos == 0)
@@ -96,4 +72,15 @@ void	fd_dup(int pos)
 		dup2(com_info()->pip[pos][1], STDOUT_FILENO);
 		close(com_info()->pip[pos][1]);
 	}
+}
+
+// Fecha os file descriptors
+void	fd_close(int pos)
+{
+	if (pos == 0)
+		close(com_info()->pip[0][1]);
+	else if (pos == com_info()->pipe_no)
+		close(com_info()->pip[pos - 1][0]);
+	else
+		close(com_info()->pip[pos][1]);
 }

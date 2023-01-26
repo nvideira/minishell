@@ -12,6 +12,39 @@
 
 #include "../minishell.h"
 
+// Recria o comando cd
+// Tem as funcionalidades de - e ~
+// Também tem a funcionalidade de mudar o diretório atual
+void	ft_cd(char **input, char **env)
+{
+	char	*curr;
+	char	*new;
+
+	if (!cd_errors(input))
+		return ;
+	curr = print_dir();
+	new = ft_strjoin(curr, "/");
+	if (input[1])
+	{
+		if (!ft_strncmp(input[1], "-", 2))
+			do_cd(getenv("OLDPWD"), getenv("OLDPWD"), env);
+		else
+			do_cd(input[1], ft_strjoin(new, input[1]), env);
+	}
+	else
+		do_cd(getenv("HOME"), getenv("OLDPWD"), env);
+	com_info()->exit_value = 0;
+	change_pwd("OLDPWD=", curr, env);
+}
+
+// Função que muda o diretório atual
+void	do_cd(char *new_dir, char *new_pwd, char **env)
+{
+	chdir(new_dir);
+	change_pwd("PWD=", new_pwd, env);
+}
+
+// Função que vê se há erros no comando cd
 int	cd_errors(char **input)
 {
 	int	i;
@@ -39,6 +72,7 @@ int	cd_errors(char **input)
 	return (1);
 }
 
+// FUnção que altera o PWD no env
 void	change_pwd_env(char *type, int size, char *val, char **env)
 {
 	int	i;
@@ -61,6 +95,7 @@ void	change_pwd_env(char *type, int size, char *val, char **env)
 	}
 }
 
+// Função que altera o PWD na lista de variáveis de ambiente
 void	change_pwd(char *type, char *str, char **env)
 {
 	t_env_lst	*head;
@@ -79,32 +114,4 @@ void	change_pwd(char *type, char *str, char **env)
 		com_info()->env_lst = com_info()->env_lst->next;
 	}
 	com_info()->env_lst = head;
-}
-
-void	do_cd(char *new_dir, char *new_pwd, char **env)
-{
-	chdir(new_dir);
-	change_pwd("PWD=", new_pwd, env);
-}
-
-void	ft_cd(char **input, char **env)
-{
-	char	*curr;
-	char	*new;
-
-	if (!cd_errors(input))
-		return ;
-	curr = print_dir();
-	new = ft_strjoin(curr, "/");
-	if (input[1])
-	{
-		if (!ft_strncmp(input[1], "-", 2))
-			do_cd(getenv("OLDPWD"), getenv("OLDPWD"), env);
-		else
-			do_cd(input[1], ft_strjoin(new, input[1]), env);
-	}
-	else
-		do_cd(getenv("HOME"), getenv("OLDPWD"), env);
-	com_info()->exit_value = 0;
-	change_pwd("OLDPWD=", curr, env);
 }

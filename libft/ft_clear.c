@@ -16,6 +16,3 @@ void	ft_clear(void)
 {
 	printf("\033c");
 }
-
-
-

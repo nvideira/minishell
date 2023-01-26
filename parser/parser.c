@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:45:00 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/23 19:02:20 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/26 05:04:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	parser2(char *input)
 		ft_error("minishell: syntax error: unclosed quotes\n");
 		return ;
 	}
-	if (check_xor(input))
+	if (check_xor(input)) // Se a seguir a > estiver um |, dá o mesmo erro
 	{
 		ft_error("minishell: syntax error near unexpected token `|'\n");
 		return ;
@@ -90,6 +90,18 @@ void	parser2(char *input)
 		ft_error("minishell: syntax error near unexpected token `&'\n");
 		return ;
 	}
+	if (!verify_redir(input))
+	{
+		ft_error("minishell: syntax error near unexpected token `'\n");
+		return ;
+	}
+	/*
+	if () // Se a seguir a > estiver \n dá erro
+	{
+		ft_error("minishell: syntax error near unexpected token `newline'\n");
+		return ;
+	}
+	*/
 	parser3(input);
 }
 
@@ -103,10 +115,9 @@ void	parser3(char *input)
 	pipe_no = count_pipes(input);
 	com_info()->pipe_no = pipe_no;
 	tmp = ft_split(input, '|');
-	com_info()->redir_no = count_redirs(tmp);
 	while (pipe_no >= 0)
 	{
-		lst_add_front(&com_info()->commands, add_mat_node(tmp[pipe_no], i));
+		lst_add_front(&com_info()->commands, add_mat_node(tmp[pipe_no]));
 		pipe_no--;
 		i++;
 	}

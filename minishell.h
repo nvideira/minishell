@@ -19,24 +19,28 @@
 # include <string.h>
 # include <stdarg.h>
 # include <fcntl.h>
-/////////////////////////////////////////////////
+//
 # include <signal.h>
-/////////////////////////////////////////////////
+//
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
-/////////////////////////////////////////////////
+//
 # include <dirent.h>
-/////////////////////////////////////////////////
+//
 # include <readline/readline.h>
 # include <readline/history.h>
-///////////////////////////////////////////////// PIPEX
+// PIPEX
 # include <fcntl.h>
 # include <errno.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
+/*___ _____ ___ _   _  ___ _____ ___ 
+ / __|_   _| _ \ | | |/ __|_   _/ __|
+ \__ \ | | |   / |_| | (__  | | \__ \
+ |___/ |_| |_|_\\___/ \___| |_| |___/*/
 typedef struct s_env_lst
 {
 	char				*name;
@@ -58,6 +62,7 @@ typedef struct s_command
 	int					**pip;
 	int					**red;
 	int					cmds_done;
+	int					cmds_done_redir;
 	pid_t				pid;
 	int					fd_in;
 	int					status;
@@ -74,7 +79,7 @@ typedef struct s_command
 	int					redir_no;
 	int					temp_fd;
 	char				**env;
-	int					redir_type_prev;
+	int					redir_type;
 	int					redir_database[100];
 }	t_command;
 
@@ -82,9 +87,8 @@ typedef struct s_command
  |  \/  |_ _| \| |_ _/ __| || | __| |  | |   
  | |\/| || || .` || |\__ \ __ | _|| |__| |__ 
  |_|  |_|___|_|\_|___|___/_||_|___|____|____|*/
-
-//COMMAND INFO - So you can acess the list in any part of the program
 t_command				*com_info(void);
+void    				free_all(void);
 
 //INIT SHELL
 void					init_shell(char **env);
@@ -106,9 +110,7 @@ t_env_lst				*env_to_lst(char **env);
 t_env_lst				*new_node(char *env);
 t_env_lst				*ft_lstlast(t_env_lst *lst);
 void					lst_add_back(t_env_lst **lst, t_env_lst *new);
-
 char					**lst_to_env(void);
-void					change_value(char *str);
 
 //FREE ENV
 void					free_env(t_env_lst **env);
@@ -122,11 +124,16 @@ void					free_env(t_env_lst **env);
 void					process_input(char **env);
 char					**parse_cenas(char **arg);
 int						count_args(char **matrix);
-void					exported_vars(char **input);
-int						find_es(char *str);
-int						check_if_exists_vars(char *str);
-void					change_value_vars(char *str);
 
+//EXPORTED VARS
+void					exported_vars(char **input);
+void					exported_vars_utils(char *input);
+int						find_es(char *str);
+int						cds(char *input, t_env_lst *temp);
+char					*remove_ds(char *input, int size);
+char					*create_new(char *input, int i, int j, char *name);
+int						is_valid(char c);
+int						count_ds(char *str);
 
 //QUOTES
 char 					**process_quotes(char **input);
@@ -153,33 +160,53 @@ int						empty_prompt(char *input);
 void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
 
-void					do_fork(char **input, int type);
-
-//////////////PIPES
+/*___ ___ ___ ___ ___ 
+ | _ \_ _| _ \ __/ __|
+ |  _/| ||  _/ _|\__ \
+ |_| |___|_| |___|___/*/
 void					init_pipes(void);
 void					do_pipes(char **input);
 void					execute_pipe(char **input);
 void					fd_dup(int i);
+void					fd_close(int pos);
 
-//////////////REDIRECTIONS
-void					init_redirs(void);
-void					check_redir(char **input);
-void					redirections(char **input, int i, int j, int type);
+/*___ ___ ___ ___ ___ 
+ | _ \ __|   \_ _| _ \
+ |   / _|| |) | ||   /
+ |_|_\___|___/___|_|_\*/
+void					execute_redir(char **input);
+//void					do_redir(char **input);
+void					do_redir(char **before, char **after);
+//void					redirections(char **input, int i, int j, int type);
+void					redirections(char **arquivo, int type);
+int						check_redir_type(char *input);
 int						heredoc(char *limiter);
 int						count_redirs(char **input);
+int						verify_redir(char *input);
+int						is_redir(char c);
 
-/*
-   ___ ___  __  __ __  __   _   _  _ ___  ___ 
+//SPLIT REDIR
+char					***split_redir(char **input);
+int						split_all(char **input, char ***new, int matlen);
+void					fill_word(char **input, int i, int nb_words, char **new);
+int						ft_matmeasures(char **input);
+int						count_second_word(char **input, int i);
+int						ft_strstr(char *str, char *set);
+int						get_size(char *input);
+void 					print_matrix_redir(char ***matrix);
+
+/* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
  | (_| (_) | |\/| | |\/| |/ _ \| .` | |) \__ \
   \___\___/|_|  |_|_|  |_/_/ \_\_|\_|___/|___/
 */
-
 void					commands(char **input, char **env, int is_fork);
 void					fork_commands(char **input, char **env, int is_fork);
 
+//DEFAULT COMMANDS
 void					env_commands(char **input, char **env);
 char					*find_path(char *cmd, t_env_lst *env_lst);
+char					*find_return_path(char *path, int j, char *cmd);
 
 //CHANGE COLOR
 void					change_color(char	**input);
@@ -188,14 +215,13 @@ void					change_color_help(void);
 
 //CD
 void					ft_cd(char **input, char **env);
+void					do_cd(char *new_dir, char *new_pwd, char **env);
 void					change_pwd(char *type, char *str, char **env);
 int						cd_errors(char **input);
 void					change_pwd_env(char *type, int size, char *val, char **env);
 
 //ECHO
 void					ft_echo(char **input);
-void					print_vars(char **input);
-void					print_vars2(char **input);
 void					do_print(char **input, int start, int type);
 void					check_flag(char c);
 void					process_flags(char **input, int start);
@@ -212,10 +238,8 @@ void					exit_errors(int error, char **input);
 
 //EXPORT
 void					*ft_export(char **input);
-void					change_value(char *str);
-void					change_value2(char *str);
-int						check_if_exists(char *str);
-int						check_if_exists2(char *str);
+void					change_value(char *str, t_env_lst *lst);
+int						check_if_exists(char *str, t_env_lst *lst);
 void					print_exported(char **input);
 void 					check_export(char *input);
 t_env_lst				*sort_list(t_env_lst *curr);
@@ -238,7 +262,6 @@ void					check_unset(char *input);
  | | | |_   _|_ _| |  / __|
  | |_| | | |  | || |__\__ \
   \___/  |_| |___|____|___/*/
-
 //FT_ERROR
 void					ft_error(char *err, ...);
 int						ft_putchar_fde(char c, int fd);
@@ -250,8 +273,9 @@ char					*ft_itoa(int number);
 int						size_of_number(long nb);
 
 //SHELL_SPLIT_UTILS
-int						find_quotes(const char *str, int i, int type);
+int						ft_space(char s);
 void					*freematrix(char **ns, int msize);
+int						ft_ispipe(char s, char c);
 
 //UTILS_PIPE
 int						ft_strichr(const char *s, int start, int c);
@@ -269,27 +293,28 @@ void					ft_putstr_fd(char *s, int fd);
 
 //UTILS2
 char					**ft_split(const char *s, char c);
+int						find_quotes(const char *str, int i, int type);
 int						ft_strcmp(char *s1, char *s2);
 int 					strict_cmp(char *s1, char *s2);
 void					ft_clear(void);
-int						ft_str1chr(const char *s, int c);
+//int					ft_str1chr(const char s, int c);
 int						ft_strchr(const char *s, int c);
 int						ft_atoi(const char *str);
 
 //UTILS3
 char					*ft_strljoin(char const *s1, char const *s2, unsigned int len);
 void					lst_add_front(t_args **lst, t_args *new);
-t_args					*add_mat_node(char *args, int i);
+t_args					*add_mat_node(char *args);
 
 //GET_NEXT_LINE
 char					*get_next_line(int fd);
 void 					ft_putnbr_fd(int n, int fd);
 void					ft_putchar_fd(char c, int fd);
+
 /* ___ ___  _    ___  ___  ___ 
   / __/ _ \| |  / _ \| _ \/ __|
  | (_| (_) | |_| (_) |   /\__ \
   \___\___/|____\___/|_|_\|___/*/
-
 //NORMAL COLORS
 int						black(char *str);
 int						red(char *str);

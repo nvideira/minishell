@@ -48,6 +48,7 @@ char	*create_new(char *input, int i, int j, char *name)
 	return (new);
 }
 
+// Remove $
 char	*remove_ds(char *input, int size)
 {
 	char	*new;
@@ -61,7 +62,7 @@ char	*remove_ds(char *input, int size)
 		return (NULL);
 	while (input[i])
 	{
-		if (input[i] == '$')
+		if (input[i] == '$' && i < size)
 		{
 			i++;
 			while (is_valid(input[i]) && input[i])
@@ -87,34 +88,4 @@ int	cds(char *input, t_env_lst *temp)
 		temp = temp->next;
 	}
 	return (0);
-}
-
-// Para dar para a norminette tive de pôr as variáveis i e j como argumentos!
-// É suposto serem iniciadas a 0
-char	*change_val2(char *input, int i, int j)
-{
-	char		*name;
-
-	while (input[i])
-	{
-		if (input[i] == '$')
-		{
-			i++;
-			while (is_valid(input[i]))
-			{
-				i++;
-				j++;
-			}
-			name = ft_substr(input, (i - j - 1), (j + 1));
-			if (cds(name, com_info()->env_lst) || cds(name, com_info()->vars))
-				input = create_new(input, i, j, name);
-			else
-				input = remove_ds(input, ft_strlen(name));
-			i = 0;
-			j = 0;
-		}
-		else
-			i++;
-	}
-	return (input);
 }

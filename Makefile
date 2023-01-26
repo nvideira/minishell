@@ -19,9 +19,9 @@ NAME = minishell
 INCLUDE = .
 
 SRC = \
-	main.c init_shell.c print_dir.c shell_split.c \
+	main.c init_shell.c print_dir.c shell_split.c shell_split_utils.c \
 	process_input.c process_input_utils.c process_input_utils2.c \
-	colors.c signals.c env_to_lst.c free_env.c \
+	colors.c signals.c env_to_lst.c free_env.c free_all.c\
 	\
 	commands/commands.c commands/env_commands.c commands/ft_exit.c \
 	commands/ft_echo.c commands/ft_unset.c commands/ft_export.c \
@@ -45,7 +45,9 @@ SRC = \
 	quotes_ds/remove_quote.c quotes_ds/process_ds.c \
 	quotes_ds/process_quotes.c quotes_ds/process_ds_utils.c \
 	\
-	redirections/redirections.c redirections/heredoc.c
+	redirections/redirections.c redirections/heredoc.c \
+	redirections/redirections_utils.c redirections/split_redirs.c \
+	redirections/split_redirs_utils.c
 	
 OBJ = $(SRC:.c=.o)
 

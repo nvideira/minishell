@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		size_of_number(long nb)
+int	size_of_number(long nb)
 {
 	int	len;
 
@@ -37,10 +37,11 @@ char	*ft_itoa(int number)
 	char	*str;
 	long	nb;
 	int		len;
-	
+
 	nb = number;
 	len = size_of_number(nb);
-	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
 		return (NULL);
 	str[len--] = '\0';
 	if (nb == 0)
