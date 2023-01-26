@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/26 17:19:42 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:06:31 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,27 @@ void	do_redir(char **before, char **after)
 void	execute_redir(char **input)
 {
 	char	***new;
-	int i;
+	int 	i;
 
 	i = 1;
 	new = split_redir(input);
-	//print_matrix_redir(new);
 	if (com_info()->redir_no > 1)
 	{
 		while (i < com_info()->redir_no * 2 - 2)
 		{
-			close(open(new[i + 1][0], O_CREAT, 0644));
-			i += 2;open(new[i + 1][0], O_CREAT, 0644);
+			if (check_redir_type(new[i][0]) <= 2)
+				close(open(new[i + 1][0], O_CREAT, 0644));
+			else
+			{
+				if (check_file_access(new[i + 1][0]))
+					return ;
+				else
+				{	
+					com_info()->redir_type = check_redir_type(new[i][0]);
+					do_redir(new[0], new[i + 1]);
+				}
+			}
+			i += 2;
 		}
 	}
 	com_info()->redir_type = check_redir_type(new[i][0]);
@@ -57,4 +67,19 @@ void	execute_redir(char **input)
 	// 	do_redir(new[i - 1], new[i + 1]);
 	// 	i += 2;
 	// }
+}
+
+int	check_file_access(char *file)
+{
+	if (access(file, F_OK))
+	{
+		ft_error("%s: No such file or directory\n", file);
+		return (1);
+	}
+	else if (access(file, R_OK))
+	{
+		ft_error("%s: Permission denied\n", file);
+		return (1);
+	}
+	return (0);
 }

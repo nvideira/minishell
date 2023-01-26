@@ -184,6 +184,7 @@ int						heredoc(char *limiter);
 int						count_redirs(char **input);
 int						verify_redir(char *input);
 int						is_redir(char c);
+int						check_file_access(char *file);
 
 //SPLIT REDIR
 char					***split_redir(char **input);
