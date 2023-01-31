@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:04:30 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 04:21:50 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/26 23:59:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exported_vars(char **input)
 // Adiciona à lista de variáveis
 void	exported_vars_utils(char *input)
 {
-	if (check_if_exists(input, com_info()->env_lst) 
+	if (check_if_exists(input, com_info()->env_lst)
 		&& !check_if_exists(input, com_info()->vars))
 	{
 		change_value(input, com_info()->env_lst);

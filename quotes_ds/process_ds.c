@@ -84,12 +84,8 @@ char	*change_val2(char *input, int i, int j)
 			i = skip_quotes_ds(input, i, '\'');
 		if (input[i] == '$')
 		{
-			i++;
-			while (is_valid(input[i]))
-			{
-				i++;
+			while (is_valid(input[++i]))
 				j++;
-			}
 			name = ft_substr(input, (i - j - 1), (j + 1));
 			if (cds(name, com_info()->env_lst) || cds(name, com_info()->vars))
 				input = create_new(input, i, j, name);
@@ -104,12 +100,10 @@ char	*change_val2(char *input, int i, int j)
 	return (input);
 }
 
-// ' and " handling not working properly when there's more than 2
-
 // Conta o numero de $ na string
 int	count_ds(char *str)
 {
-	int i;
+	int	i;
 	int	count;
 
 	i = 0;

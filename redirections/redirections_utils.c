@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/26 22:29:35 by marvin            #+#    #+#             */
+/*   Updated: 2023/01/26 23:51:04 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	count_redirs(char **input)
@@ -47,33 +59,12 @@ int	check_redir_type(char *input)
 	return (0);
 }
 
-/*
-int	check_redir_type(char *input, int j)
-{
-	if (input[j] == '>')
-	{
-		if (input[j + 1] == '>')
-			return (1);
-		else
-			return (2);
-	}
-	else if (input[j] == '<')
-	{
-		if (input[j + 1] == '<')
-			return (3);
-		else
-			return (4);
-	}
-	return (0);
-}
-*/
-
 // Faz as redireções e as duplicações de file descriptors
 // O que se faz quando tem vários argumentos a seguir ao redirecionador?
 void	redirections(char **arquivo, int type)
 {
 	int		fd;
-	char 	*file;
+	char	*file;
 
 	file = arquivo[0];
 	if (type == 1)
@@ -91,28 +82,3 @@ void	redirections(char **arquivo, int type)
 	close(fd);
 	free(file);
 }
-
-/* void	check_redir(char **input)
-{
-	int	i;
-	int	j;
-	int	type;
-
-	i = 0;
-	type = 0;
-	while (input[i])
-	{
-		j = 0;
-		while (input[i][j])
-		{
-			if (input[i][j] == '>' || input[i][j] == '<')
-			{
-				type = check_redir_type(input[i], j);
-				redirections(input, i, j, type);
-			}
-			j++;
-		}
-		i++;
-	}
-}
- */

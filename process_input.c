@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 04:58:35 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/26 23:59:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	process_input(char **env)
 		com_info()->cmds_done++;
 		com_info()->commands = com_info()->commands->next;
 	}
-	//free_all();
 	catch_signal();
 }
+
+// Temos de fazer free do input no fim

@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:35:18 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/25 15:37:36 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/27 00:12:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    free_all(void)
+void	free_all(void)
 {
-    free(com_info()->cmd);
-    free(com_info()->path);
-    free(com_info()->color);
+	free(com_info()->color);
 }

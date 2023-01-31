@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:45:00 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 05:04:29 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/30 01:04:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,11 @@ char	**parse_cenas(char **arg)
 	return (arg);
 }
 
-int	check_xor(char *input)
+char	*parse_input(char *input)
 {
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '|')
-		{
-			if (input[i + 1] == '|')
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	check_and(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '&')
-			return (1);
-		i++;
-	}
-	return (0);
+	input = put_spaces(input);
+	input = separate_input(input);
+	return (input);
 }
 
 void	parser(char *input)
@@ -69,18 +45,19 @@ void	parser(char *input)
 		free(tmp3);
 	}
 	if (ft_strlen(input))
-	 	add_history(input);
+		add_history(input);
 	parser2(input);
 }
 
 void	parser2(char *input)
 {
+	input = parse_input(input);
 	if (check_quotes(input))
 	{
 		ft_error("minishell: syntax error: unclosed quotes\n");
 		return ;
 	}
-	if (check_xor(input)) // Se a seguir a > estiver um |, dá o mesmo erro
+	if (check_xor(input))
 	{
 		ft_error("minishell: syntax error near unexpected token `|'\n");
 		return ;
@@ -95,13 +72,8 @@ void	parser2(char *input)
 		ft_error("minishell: syntax error near unexpected token `'\n");
 		return ;
 	}
-	/*
-	if () // Se a seguir a > estiver \n dá erro
-	{
-		ft_error("minishell: syntax error near unexpected token `newline'\n");
+	if (!verify_redir_2(input))
 		return ;
-	}
-	*/
 	parser3(input);
 }
 
@@ -110,7 +82,7 @@ void	parser3(char *input)
 	char		**tmp;
 	int			pipe_no;
 	int			i;
-	
+
 	i = 0;
 	pipe_no = count_pipes(input);
 	com_info()->pipe_no = pipe_no;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/25 16:51:50 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/30 22:58:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,42 @@ int	skip_quotes(char *input, int i, char quote)
 	return (j);
 }
 
-int	verify_redir(char *input)
+// Se a seguir a > estiver um |, dá o mesmo erro
+/*
+if () // Se a seguir a > estiver \n dá erro
+{
+	ft_error("minishell: syntax error near unexpected token `newline'\n");
+	return ;
+}
+*/
+
+int	check_xor(char *input)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (input[i])
 	{
-		if (input[i] == '>' || input[i] == '<' || input[i] == '|')
+		if (input[i] == '|')
 		{
-			j = i + 1;
-			while (input[j] && ft_space(input[j]))
-				j++;
-			if (input[j] != input[i] && (input[j] == '>' || input[j] == '<' || input[j] == '|'))
-				return (0);
-			j++;
+			if (input[i + 1] == '|')
+				return (1);
 		}
 		i++;
 	}
-	return (1);
+	return (0);
+}
+
+int	check_and(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '&')
+			return (1);
+		i++;
+	}
+	return (0);
 }

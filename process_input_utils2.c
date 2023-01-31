@@ -34,4 +34,3 @@ char	*get_name(char *str)
 	name[i] = '\0';
 	return (name);
 }
-

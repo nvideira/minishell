@@ -2,21 +2,20 @@ command < input.txt > output.txt
 
 TO DO:
 Função no Parser para ir ls > a.out e não ls>a.out (split só funciona assim)
+Tirar os espaços a mais no meio das strings
+Redirects com mais de 2
+Misturar Redirects e Pipes
 Norminette
 Free()
-Apagar funções e variáveis que não estão a ser usadas
-
-UPDATE:
-Split dos redirects a funcionar
-Aspas acho que está feito
-Redirects a funcionar (não testei Heredoc)
-Norminette quase (ainda vamos mexer em coisas)
-Problema do b=$a resolvido
+Arranjar avaliação
 
 TESTES:
 uname -mrs > uname.log
 cat uname.log
 whoami >> uname.log
+cat uname.log
 
 ls > a.txt
 wc - l < a.txt
+ls -l > a.txt
+cat < a.txt

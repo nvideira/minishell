@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/25 19:02:08 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/27 00:22:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	ft_wordcount(const char *str, char c)
 	return (words);
 }
 
+// Norminette
 static int	split_it(char const *str, char c, int st, char **ns)
 {
 	int	i;
@@ -102,7 +103,7 @@ char	**ft_split(const char *s, char c)
 	if (!s)
 		return (NULL);
 	matlen = ft_wordcount(s, c);
-	ns = malloc(sizeof(char *) * matlen + 1);
+	ns = malloc(sizeof(char *) * (matlen + 1));
 	if (!ns)
 		return (NULL);
 	if (!split_it(s, c, st, ns))

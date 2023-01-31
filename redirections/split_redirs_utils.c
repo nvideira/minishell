@@ -42,7 +42,7 @@ int	ft_matmeasures(char **input)
 // Conta o número de palavras que serão alocadas na matriz
 int	count_second_word(char **input, int i)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (input[i][0] == '>' || input[i][0] == '<')

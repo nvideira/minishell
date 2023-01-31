@@ -91,4 +91,3 @@ void	change_value(char *str, t_env_lst *lst)
 	}
 	lst = head;
 }
-

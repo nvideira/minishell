@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_mat_node.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:13:35 by marvin            #+#    #+#             */
-/*   Updated: 2023/01/25 18:32:10 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/01/26 23:18:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_args	*add_mat_node(char *args)
 	if (!new_node)
 		return (NULL);
 	new_node->arg = ft_split(args, ' ');
-	//new_node->redir_type = com_info()->redir_database[i];
 	new_node->next = NULL;
 	return (new_node);
 }

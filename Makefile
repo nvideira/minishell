@@ -39,6 +39,7 @@ SRC = \
 	libft/ft_error.c libft/ft_error_utils.c libft/ft_putstr_fd.c \
 	\
 	parser/parser.c parser/parser_utils.c parser/parser_utils2.c \
+	parser/parse_input.c parser/separate_input.c\
 	\
 	pipes/pipes.c pipes/utils_pipe.c \
 	\
@@ -47,7 +48,7 @@ SRC = \
 	\
 	redirections/redirections.c redirections/heredoc.c \
 	redirections/redirections_utils.c redirections/split_redirs.c \
-	redirections/split_redirs_utils.c
+	redirections/split_redirs_utils.c redirections/verify_redir.c
 	
 OBJ = $(SRC:.c=.o)
 

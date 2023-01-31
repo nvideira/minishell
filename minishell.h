@@ -60,27 +60,17 @@ typedef struct s_args
 typedef struct s_command
 {
 	int					**pip;
-	int					**red;
 	int					cmds_done;
-	int					cmds_done_redir;
-	pid_t				pid;
-	int					fd_in;
-	int					status;
-	char				*cmd;
-	char				*path;
-	char				**args;
 	int					exit_value;
 	t_env_lst			*env_lst;
-	t_args				*commands;
 	t_env_lst			*vars;
+	t_args				*commands;
 	int					nb_args;
 	char				*color;
 	int					pipe_no;
 	int					redir_no;
-	int					temp_fd;
 	char				**env;
 	int					redir_type;
-	int					redir_database[100];
 }	t_command;
 
 /*__  __ ___ _  _ ___ ___ _  _ ___ _    _    
@@ -88,7 +78,7 @@ typedef struct s_command
  | |\/| || || .` || |\__ \ __ | _|| |__| |__ 
  |_|  |_|___|_|\_|___|___/_||_|___|____|____|*/
 t_command				*com_info(void);
-void    				free_all(void);
+void					free_all(void);
 
 //INIT SHELL
 void					init_shell(char **env);
@@ -159,6 +149,14 @@ int						check_quotes(char *commands);
 int						empty_prompt(char *input);
 void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
+int						check_xor(char *input);
+int						check_and(char *input);
+
+//PARSE INPUT
+int     				is_space(char c);
+int						count_words(char *input);
+char					*put_spaces(char *input);
+char					*separate_input(char *input);
 
 /*___ ___ ___ ___ ___ 
  | _ \_ _| _ \ __/ __|
@@ -175,14 +173,13 @@ void					fd_close(int pos);
  |   / _|| |) | ||   /
  |_|_\___|___/___|_|_\*/
 void					execute_redir(char **input);
-//void					do_redir(char **input);
 void					do_redir(char **before, char **after);
-//void					redirections(char **input, int i, int j, int type);
 void					redirections(char **arquivo, int type);
 int						check_redir_type(char *input);
 int						heredoc(char *limiter);
 int						count_redirs(char **input);
 int						verify_redir(char *input);
+int						verify_redir_2(char *input);
 int						is_redir(char c);
 int						check_file_access(char *file);
 
@@ -219,7 +216,8 @@ void					ft_cd(char **input, char **env);
 void					do_cd(char *new_dir, char *new_pwd, char **env);
 void					change_pwd(char *type, char *str, char **env);
 int						cd_errors(char **input);
-void					change_pwd_env(char *type, int size, char *val, char **env);
+void					change_pwd_env(char *type, int size,
+							char *val, char **env);
 
 //ECHO
 void					ft_echo(char **input);
@@ -242,7 +240,7 @@ void					*ft_export(char **input);
 void					change_value(char *str, t_env_lst *lst);
 int						check_if_exists(char *str, t_env_lst *lst);
 void					print_exported(char **input);
-void 					check_export(char *input);
+void					check_export(char *input);
 t_env_lst				*sort_list(t_env_lst *curr);
 char					*get_name_export(char *str, int len);
 char					*get_name_change_export(char *str, int len);
@@ -282,34 +280,36 @@ int						ft_ispipe(char s, char c);
 int						ft_strichr(const char *s, int start, int c);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
 char					*join_strings(char *path, int j, char *cmd);
-char					*ft_substring(char const *s, unsigned int start, size_t len);
+char					*ft_substring(char const *s, unsigned int start,
+							size_t len);
 
 //UTILS
 char					*ft_strjoin(char const *s1, char const *s2);
 int						ft_strlen(const char *str);
-char					*ft_substr(char const *s, unsigned int start, size_t len);
 char					*ft_strdup(const char *s1);
 void					*ft_memmove(void *dst, const void *src, size_t len);
 void					ft_putstr_fd(char *s, int fd);
+char					*ft_substr(char const *s, unsigned int start,
+							size_t len);
 
 //UTILS2
 char					**ft_split(const char *s, char c);
 int						find_quotes(const char *str, int i, int type);
 int						ft_strcmp(char *s1, char *s2);
-int 					strict_cmp(char *s1, char *s2);
+int						strict_cmp(char *s1, char *s2);
 void					ft_clear(void);
-//int					ft_str1chr(const char s, int c);
 int						ft_strchr(const char *s, int c);
 int						ft_atoi(const char *str);
 
 //UTILS3
-char					*ft_strljoin(char const *s1, char const *s2, unsigned int len);
 void					lst_add_front(t_args **lst, t_args *new);
 t_args					*add_mat_node(char *args);
+char					*ft_strljoin(char const *s1, char const *s2,
+							unsigned int len);
 
 //GET_NEXT_LINE
 char					*get_next_line(int fd);
-void 					ft_putnbr_fd(int n, int fd);
+void					ft_putnbr_fd(int n, int fd);
 void					ft_putchar_fd(char c, int fd);
 
 /* ___ ___  _    ___  ___  ___ 
