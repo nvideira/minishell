@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/27 00:17:41 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:07:00 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ void	execute_redir(char **input)
 	char	***new;
 	int		i;
 
-	i = 1;
+	if (input[0][0] == '<' && input[0][1] == '<')
+		i = 0;
+	else
+		i = 1;
 	new = split_redir(input);
 	if (com_info()->redir_no > 1)
 	{
