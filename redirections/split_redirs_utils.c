@@ -28,7 +28,7 @@ int	ft_matmeasures(char **input)
 		{
 			if (input[i][j] == '>' || input[i][j] == '<')
 			{
-				if (input[i][j + 1] == '>' || input[i][j + 1] == '<')
+				if (input[i][j + 1] == input[i][j])
 					j++;
 				count += 2;
 			}
@@ -45,7 +45,7 @@ int	count_second_word(char **input, int i)
 	int	count;
 
 	count = 0;
-	if (input[i][0] == '>' || input[i][0] == '<')
+	if (input[i] && (input[i][0] == '>' || input[i][0] == '<'))
 		return (1);
 	while (input[i] && input[i][0] != '>' && input[i][0] != '<')
 	{
