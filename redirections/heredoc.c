@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:49:58 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/25 16:50:24 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/02/05 23:53:50 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	do_heredoc(char *limiter)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		heredoc(limiter);
+	}
+	else
+		waitpid(pid, &com_info()->exit_value, 0);
+	unlink(".heredoc");
+}
 
 int	heredoc(char *limiter)
 {

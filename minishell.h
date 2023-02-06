@@ -177,6 +177,8 @@ void					do_redir(char **before, char **after);
 void					redirections(char **arquivo, int type);
 int						check_redir_type(char *input);
 int						heredoc(char *limiter);
+void					do_heredoc(char *limiter);
+
 int						count_redirs(char **input);
 int						verify_redir(char *input);
 int						verify_redir_2(char *input);

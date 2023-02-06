@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/02 17:07:00 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/05 23:58:38 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	options(char ***new, int i)
 {
 	if (check_redir_type(new[i][0]) <= 2)
 		close(open(new[i + 1][0], O_CREAT, 0644));
-	else
+	else if (check_redir_type(new[i][0]) == 4)
 	{
 		if (check_file_access(new[i + 1][0]))
 			return ;
@@ -70,6 +70,8 @@ void	options(char ***new, int i)
 			do_redir(new[0], new[i + 1]);
 		}
 	}
+	else
+		do_heredoc(new[i + 1][0]);
 }
 
 // E preciso dar close?
@@ -97,7 +99,10 @@ void	execute_redir(char **input)
 		}
 	}
 	com_info()->redir_type = check_redir_type(new[i][0]);
-	do_redir(new[0], new[i + 1]);
+	if (com_info()->redir_type != 3)
+		do_redir(new[0], new[i + 1]);
+	else
+		do_heredoc(new[1][0]);
 }
 	// while (i < com_info()->redir_no * 2)
 	// {
