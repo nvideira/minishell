@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/30 22:58:10 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 16:17:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int	check_quotes(char *commands)
 {
@@ -68,7 +68,10 @@ int	check_xor(char *input)
 	{
 		if (input[i] == '|')
 		{
-			if (input[i + 1] == '|')
+			i++;
+			while (input[i] && is_space(input[i]))
+				i++;
+			if (input[i] == '|')
 				return (1);
 		}
 		i++;

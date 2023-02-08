@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Imprime o que foi passado para o comando echo
 void	do_print(char **input, int start, int type)

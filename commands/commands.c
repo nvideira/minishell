@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 02:29:10 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/08 04:00:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Esta função é chamada para executar os comandos
 // Compara o input com os comandos que temos e chama a função correspondente
@@ -44,17 +44,39 @@ void	commands(char **input, char **env, int is_fork)
 // Verifica se está dentro de um fork ou não (por causa dos pipes)
 void	fork_commands(char **input, char **env, int is_fork)
 {
-	int	cenas;
+	int	pid;
 
 	signal_block();
 	if (!is_fork)
 	{
-		cenas = fork();
-		if (cenas == 0)
+		pid = fork();
+		if (pid == 0)
 			env_commands(input, env);
 		else
-			waitpid(cenas, &com_info()->exit_value, 0);
+			waitpid(pid, &com_info()->exit_value, 0);
 	}
 	else
 		env_commands(input, env);
 }
+
+/*
+void	fork_commands(char **input, char **env, int is_fork)
+{
+	//int	cenas;
+
+	signal_block();
+	if (!is_fork)
+	{
+		com_info()->pid[com_info()->pid_counter++] = fork();
+		if (com_info()->pid[com_info()->pid_counter - 1] == 0)
+		{
+			env_commands(input, env);
+			com_info()->pid_counter++;
+		}
+		else
+			waitpid(com_info()->pid[com_info()->pid_counter - 1], &com_info()->exit_value, 0);
+	}
+	else
+		env_commands(input, env);
+}
+*/

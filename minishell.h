@@ -60,6 +60,9 @@ typedef struct s_args
 typedef struct s_command
 {
 	int					**pip;
+	pid_t				*pid;
+	//int					pid_index;
+	int					pid_counter;
 	int					cmds_done;
 	int					exit_value;
 	t_env_lst			*env_lst;
@@ -71,6 +74,7 @@ typedef struct s_command
 	int					redir_no;
 	char				**env;
 	int					redir_type;
+	int					hereflag;
 }	t_command;
 
 /*__  __ ___ _  _ ___ ___ _  _ ___ _    _    
@@ -79,12 +83,18 @@ typedef struct s_command
  |_|  |_|___|_|\_|___|___/_||_|___|____|____|*/
 t_command				*com_info(void);
 void					free_all(void);
+void					free_triple(char ***triple);
+void					free_list(t_env_lst *lst);
 
 //INIT SHELL
 void					init_shell(char **env);
+char					*get_cenas_do_env(char *str);
+
+//SIGNALS
 void					catch_signal(void);
 void					signal_block(void);
 void					recieve(int sig);
+void					change_ev(int sig);
 
 //PRINT DIR
 char					*print_info(void);
@@ -167,7 +177,8 @@ void					do_pipes(char **input);
 void					execute_pipe(char **input);
 void					fd_dup(int i);
 void					fd_close(int pos);
-
+void					ft_wait_pid(void);
+void					pipe_cleanup(void);
 /*___ ___ ___ ___ ___ 
  | _ \ __|   \_ _| _ \
  |   / _|| |) | ||   /
@@ -236,6 +247,7 @@ void					check_error_3(char *arg, char **input);
 char					*print_vars_exit(char **input);
 void					do_exit(int exit_value, char **input);
 void					exit_errors(int error, char **input);
+int						check_size_int(char *str);
 
 //EXPORT
 void					*ft_export(char **input);
@@ -265,9 +277,9 @@ void					check_unset(char *input);
   \___/  |_| |___|____|___/*/
 //FT_ERROR
 void					ft_error(char *err, ...);
-int						ft_putchar_fde(char c, int fd);
-int						ft_putstr_fde(char *s, int fd);
-int						ft_putnbr_fde(int n, int k, int fd);
+char					*ft_putchar_fde(char c);
+char					*ft_putstr_fde(char *s);
+char					*ft_putnbr_fde(int n, int k);
 
 //ITOA
 char					*ft_itoa(int number);

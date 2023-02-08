@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Função que muda a cor do prompt
 void	change_color(char	**input)
@@ -22,14 +22,14 @@ void	change_color(char	**input)
 		i++;
 	if (!input[1])
 	{
-		ft_error("\033[0;31mChange_Color: Not enough arguments\033[0m\n");
-		ft_error("\033[0;31mTry \"change_color --help\" for help\033[0m\n");
+		printf("\033[0;31mChange_Color: Not enough arguments\n");
+		printf("Try \"change_color --help\" for help\n\033[0m");
 		return ;
 	}
 	if (i > 3)
 	{
-		ft_error("\033[0;31mChange_Color: Too much arguments\033[0m\n");
-		ft_error("\033[0;31mTry \"change_color --help\" for help\033[0m\n");
+		printf("\033[0;31mChange_Color: Too much arguments\n");
+		printf("Try \"change_color --help\" for help\n\033[0m");
 		return ;
 	}
 	if (!ft_strncmp(input[1], "--help", 6))
@@ -37,7 +37,7 @@ void	change_color(char	**input)
 	else if (ft_isdigit(input[1]) && ft_strlen(input[1]) == 1)
 		do_change(input, i);
 	else
-		ft_error("\033[0;31mChange_Color: Invalid arguments\033[0m\n");
+		printf("\033[0;31mChange_Color: Invalid arguments\n\033[0m");
 }
 
 // Função que muda a cor do prompt
@@ -51,7 +51,7 @@ void	do_change(char **input, int bold)
 		if (ft_strlen(input[2]) != 1 || ft_atoi(input[1]) < 0
 			|| ft_atoi(input[1]) > 7 || ft_atoi(input[2]) < 0
 			|| ft_atoi(input[2]) > 1)
-			ft_error("\033[0;31mChange_Color: Invalid arguments\033[0m\n");
+			printf("\033[0;31mChange_Color: Invalid arguments\033[0m\n");
 		else
 			b = "1";
 	}

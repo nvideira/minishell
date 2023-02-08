@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Recria o comando cd
 // Tem as funcionalidades de - e ~
@@ -27,12 +27,19 @@ void	ft_cd(char **input, char **env)
 	if (input[1])
 	{
 		if (!ft_strncmp(input[1], "-", 2))
-			do_cd(getenv("OLDPWD"), getenv("OLDPWD"), env);
+		{
+			if (!check_if_exists("OLDPWD", com_info()->env_lst))
+			{
+				ft_error("minishell: cd: OLDPWD not set\n");
+				return ;
+			}
+			do_cd(get_cenas_do_env("OLDPWD="), get_cenas_do_env("OLDPWD="), env);
+		}
 		else
 			do_cd(input[1], ft_strjoin(new, input[1]), env);
 	}
 	else
-		do_cd(getenv("HOME"), getenv("OLDPWD"), env);
+		do_cd(get_cenas_do_env("HOME="), get_cenas_do_env("OLDPWD="), env);
 	com_info()->exit_value = 0;
 	change_pwd("OLDPWD=", curr, env);
 }

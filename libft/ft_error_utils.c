@@ -12,27 +12,38 @@
 
 #include "minishell.h"
 
-int	ft_putchar_fde(char c, int fd)
+char	*ft_putchar_fde(char c)
 {
-	return (write(fd, &c, 1));
+	char	*str;
+
+	str = malloc(sizeof(char) * 2);
+	if (!str)
+		return (NULL);
+	str[0] = c;
+	str[1] = '\0';
+	return (str);
 }
 
-int	ft_putstr_fde(char *s, int fd)
+char	*ft_putstr_fde(char *s)
 {
-	int	i;
+	char	*str;
+	int		i;
 
 	i = 0;
-	if (!s)
-		return (write(fd, "(null)", 6));
+	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!str)
+		return (NULL);
 	while (s[i])
 	{
-		ft_putchar_fde(s[i], fd);
+		str[i] = s[i];
 		i++;
 	}
-	return (ft_strlen(s));
+	str[i] = '\0';
+	return (str);
 }
 
-int	ft_putnbr_fde(int n, int k, int fd)
+/*
+char	*ft_putnbr_fde(int n, int k)
 {
 	if (n == (-2147483648))
 		return (write(1, "-2147483648", 11));
@@ -51,3 +62,4 @@ int	ft_putnbr_fde(int n, int k, int fd)
 	ft_putchar_fde(n + '0', fd);
 	return (k);
 }
+*/

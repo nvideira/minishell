@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:45:00 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/30 01:04:08 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/07 19:26:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char	**parse_cenas(char **arg)
 {
@@ -97,4 +97,7 @@ void	parser3(char *input)
 	com_info()->commands->arg = parse_cenas(com_info()->commands->arg);
 	if (com_info()->pipe_no > 0)
 		init_pipes();
+	// count_redirs_total(com_info()->commands->arg);
+	// 		com_info()->pid = malloc(sizeof(pid_t *) * (com_info()->pipe_no + com_info()->redir_no + 2));
+	// com_info()->pid_counter = 0;
 }

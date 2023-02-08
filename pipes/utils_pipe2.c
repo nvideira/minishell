@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   utils_pipe2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/04 01:07:27 by marvin            #+#    #+#             */
-/*   Updated: 2023/01/04 01:07:27 by marvin           ###   ########.fr       */
+/*   Created: 2023/02/06 18:25:19 by nvideira          #+#    #+#             */
+/*   Updated: 2023/02/06 18:39:38 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strlen(const char *str)
+void	pipe_cleanup(void)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (i < com_info()->pipe_no)
+	{
+		close(com_info()->pip[i][0]);
+		close(com_info()->pip[i][1]);
 		i++;
-	return ((int)i);
+	}
+	free(com_info()->pip);
 }

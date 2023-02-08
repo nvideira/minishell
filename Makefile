@@ -12,7 +12,7 @@
 
 CC = gcc
 RM = @rm -rf
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS = -I. -Wall -Werror -Wextra -g #-fsanitize=address
 
 NAME = minishell
 
@@ -28,7 +28,7 @@ SRC = \
 	commands/ft_env.c commands/ft_pwd.c commands/change_color.c \
 	commands/ft_export_utils.c commands/ft_export_utils2.c \
 	commands/ft_export_utils3.c commands/ft_echo_utils.c \
-	commands/ft_unset_utils.c commands/ft_cd.c \
+	commands/ft_unset_utils.c commands/ft_cd.c commands/ft_exit_utils.c \
 	\
 	libft/get_next_line.c libft/add_mat_node.c libft/ft_atoi.c \
 	libft/ft_clear.c libft/ft_isdigit.c libft/ft_itoa.c \
@@ -41,7 +41,7 @@ SRC = \
 	parser/parser.c parser/parser_utils.c parser/parser_utils2.c \
 	parser/parse_input.c parser/separate_input.c\
 	\
-	pipes/pipes.c pipes/utils_pipe.c \
+	pipes/pipes.c pipes/utils_pipe.c pipes/utils_pipe2.c\
 	\
 	quotes_ds/remove_quote.c quotes_ds/process_ds.c \
 	quotes_ds/process_quotes.c quotes_ds/process_ds_utils.c \

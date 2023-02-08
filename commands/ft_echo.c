@@ -10,7 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
+
+int	check_n(char **input)
+{
+	int i;
+
+	i = 1;
+	while (input[1][i] && input[1][i] != ' ')
+	{
+		if (input[1][i] != 'n' && input[1][i] != 'e')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 // Recria o comando echo
 // Tem as funcionalidades de -n e -e
@@ -19,8 +33,13 @@ void	ft_echo(char **input)
 {
 	if (!input[1])
 		printf("\n");
-	else if (!ft_strncmp(input[1], "-n", 3))
-		do_print(input, 2, 2);
+	else if (!ft_strncmp(input[1], "-n", 2))
+	{
+		if (check_n(input))
+			do_print(input, 2, 2);
+		else
+			do_print(input, 1, 1);
+	}
 	else if (!ft_strncmp(input[1], "-e", 3))
 		process_flags(input, 2);
 	else

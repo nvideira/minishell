@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 17:55:46 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/04 01:09:14 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 16:09:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {

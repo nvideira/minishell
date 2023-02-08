@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:04:30 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 23:59:02 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/08 04:28:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exported_vars(char **input)
 	i = 0;
 	if (input[0][i] == '=')
 	{
-		ft_error("%s not found\n", input[1]);
+		ft_error("%s not found", input[1]);
 		return ;
 	}
 	while (input[i])

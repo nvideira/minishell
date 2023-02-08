@@ -27,7 +27,7 @@ t_command	*com_info(void)
 // Se o comando for valido ele chama o parser e process_input
 int	main(int argc, char **argv, char **env)
 {
-	char		*input;
+	char	*input;
 
 	(void)argc;
 	(void)argv;
@@ -38,13 +38,15 @@ int	main(int argc, char **argv, char **env)
 		input = readline(print_info());
 		if (!input)
 		{
+			printf("exit\n");
 			rl_clear_history();
 			free (input);
-			exit(com_info()->exit_value);
+			exit(com_info()->exit_value >> 8 & 0xFF);
 		}
 		parser(input);
 		process_input(env);
+		//free (input);
+		//wait(NULL);
 	}
-	free (input);
 	return (com_info()->exit_value);
 }

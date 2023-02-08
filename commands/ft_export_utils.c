@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Compara o nome das variaveis
 int	cmp_name(char *s1, char *s2)
@@ -67,7 +67,10 @@ void	print_exported(char **input)
 	temp = sort_list(com_info()->env_lst);
 	while (temp)
 	{
-		printf("declare -x %s\"%s\"\n", temp->name, temp->value);
+		if (ft_strncmp(temp->value, "", 1))
+			printf("declare -x %s\"%s\"\n", temp->name, temp->value);
+		else
+			printf("declare -x %s\n", temp->name);
 		temp = temp->next;
 	}
 	com_info()->exit_value = 0;

@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 19:49:26 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/11 14:30:33 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 16:09:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {

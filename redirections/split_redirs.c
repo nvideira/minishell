@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 //	Tem de se criar uma função no parser para confirmar se os redir
 //	estão rodeados por espaços! Para o input vir "ls > a.txt" em vez de 

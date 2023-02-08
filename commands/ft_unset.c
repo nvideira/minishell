@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:44:22 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 02:42:25 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 16:07:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Recria o comando unset
 void	ft_unset(char **input)

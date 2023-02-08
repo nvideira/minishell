@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:46:02 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 02:42:17 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 16:07:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Recria o comando pwd
 void	ft_pwd(void)

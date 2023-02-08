@@ -17,6 +17,8 @@
 // Se input[i][0] for $ e tiver mais que 1 char e tiver apenas 1 $,
 // altera o valor com a funcao change_val.
 // Se tiver 1 ou mais $ altera o valor com a funcao change_val2.
+
+// >> 8 & 255
 char	**check_ds(char **input)
 {
 	int	i;
@@ -25,7 +27,7 @@ char	**check_ds(char **input)
 	while (input[i])
 	{
 		if (!ft_strncmp(input[i], "$?", 3))
-			input[i] = ft_itoa(com_info()->exit_value);
+			input[i] = ft_itoa((com_info()->exit_value >> 8 & 255));
 		else if (input[i][0] == '$' && ft_strlen(input[i]) > 1
 			&& count_ds(input[i]) == 1)
 			input[i] = ft_strdup(change_val(input[i]));

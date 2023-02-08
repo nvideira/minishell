@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 23:59:42 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/08 02:05:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ void	process_input(char **env)
 			commands(com_info()->commands->arg, env, 0);
 		com_info()->cmds_done++;
 		com_info()->commands = com_info()->commands->next;
+		catch_signal();
 	}
-	catch_signal();
+	//pipe_cleanup();
+	ft_wait_pid();
 }
 
 // Temos de fazer free do input no fim

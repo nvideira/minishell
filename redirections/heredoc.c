@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:49:58 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/05 23:53:50 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/07 19:00:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	do_heredoc(char *limiter)
 {
@@ -20,6 +20,7 @@ void	do_heredoc(char *limiter)
 	if (pid == 0)
 	{
 		heredoc(limiter);
+		com_info()->hereflag = 1;
 	}
 	else
 		waitpid(pid, &com_info()->exit_value, 0);

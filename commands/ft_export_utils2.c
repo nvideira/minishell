@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Verifica se a variável já existe na lista de variáveis de ambiente
 // e na lista de variáveis locais
@@ -50,7 +50,7 @@ int	check_if_exists(char *str, t_env_lst *lst)
 		return (0);
 	len = 0;
 	temp = lst;
-	while (str[len] != '=')
+	while (str[len] && str[len] != '=' && str[len] != '\0')
 		len++;
 	name = get_name_export(str, len);
 	while (temp)
@@ -76,18 +76,22 @@ void	change_value(char *str, t_env_lst *lst)
 
 	len = 0;
 	head = lst;
-	while (str[len] != '=')
+	while (str[len] && str[len] != '=' && str[len] != '\0')
 		len++;
 	name = get_name_change_export(str, len);
 	value = get_value_export(str, len + 1);
-	while (lst->name != name)
+	while (lst->name != ft_substr(name, 0, len))
 	{
-		if (!ft_strncmp(name, lst->name, (len + 1)))
+		if (!ft_strncmp(ft_substr(name, 0, len), lst->name, (len)))
 		{
-			lst->value = value;
+			if (!ft_strchr(lst->name, '='))
+				lst->name = ft_strdup(name);
+			lst->value = ft_strdup(value);
 			break ;
 		}
 		lst = lst->next;
 	}
 	lst = head;
+	free(name);
+	free(value);
 }

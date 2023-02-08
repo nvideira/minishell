@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:17:14 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 02:54:32 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/07 14:48:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Retorna o nome da variavel
 char	*get_name_export(char *str, int len)

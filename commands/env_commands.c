@@ -6,31 +6,30 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2023/01/26 22:20:47 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/08 04:31:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Executa os comandos que não são builtins
 void	env_commands(char **input, char **env)
 {
 	char	*path;
-
+	
 	path = find_path(input[0], com_info()->env_lst);
 	if (!path)
 	{
-		ft_error("Command not found: %s\n", input[0]);
-		com_info()->exit_value = 127;
-		catch_signal();
+		ft_error("Command not found: %s", input[0]);
 		free(path);
-		return ;
+		catch_signal();
+		exit(127);
 	}
-	if (execve(path, input, env) == -1)
+	else if (execve(path, input, env) == -1)
 	{
-		com_info()->exit_value = 126;
 		ft_error("Deu Merda\n");
 		free(path);
+		exit(126);
 	}
 }
 

@@ -1,11 +1,3 @@
-https://www.geeksforgeeks.org/making-linux-shell-c/
-
-sudo apt-get install libreadline-dev
-
-https://github.com/kube/42homebrew
-
-brew install readline
-
 ctrl-C displays a new prompt on a new line.
 ctrl-D exits the shell.
 ctrl-\ does nothing.

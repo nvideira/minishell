@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // Conta o número de char** que serão alocadas na matriz
 int	ft_matmeasures(char **input)
