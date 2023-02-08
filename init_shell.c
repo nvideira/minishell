@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:59:18 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/08 02:16:38 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/08 21:59:32 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_cenas_do_env(char *str)
 // Função que inicializa a shell
 void	init_shell(char **env)
 {
-	char	*username;
+	//char	*username;
 
 	com_info()->env_lst = env_to_lst(env);
 	com_info()->vars = NULL;
@@ -42,13 +42,13 @@ void	init_shell(char **env)
 	com_info()->hereflag = 0;
 	com_info()->color = "\033[1;32m:";
 	com_info()->env = env;
-	if (check_if_exists("USER", com_info()->env_lst))
-		username = getenv("USER");
-	else
-	{
-		printf("USER not found, setting to 'user'\n");
-		lst_add_back(&com_info()->env_lst, new_node("USER=user"));
-		username = get_cenas_do_env("USER=");
-	}
-	printf("\n\nUSER is: @%s\n", username);
+	// if (check_if_exists("USER", com_info()->env_lst))
+	// 	username = getenv("USER");
+	// else
+	// {
+	// 	printf("USER not found, setting to 'user'\n");
+	// 	lst_add_back(&com_info()->env_lst, new_node("USER=user"));
+	// 	username = get_cenas_do_env("USER=");
+	// }
+	//printf("\n\nUSER is: @%s\n", username);
 }

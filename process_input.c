@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:35:05 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/08 02:05:51 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/08 22:40:01 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ void	process_input(char **env)
 		if (find_es(com_info()->commands->arg[0]) == 1)
 			exported_vars(com_info()->commands->arg);
 		else if (count_redirs(com_info()->commands->arg) > 0)
+		{
 			execute_redir(com_info()->commands->arg);
+		}
 		else if (com_info()->pipe_no > 0)
 			execute_pipe(com_info()->commands->arg);
 		else
@@ -37,6 +39,7 @@ void	process_input(char **env)
 		com_info()->commands = com_info()->commands->next;
 		catch_signal();
 	}
+	unlink(".heredoc");
 	//pipe_cleanup();
 	ft_wait_pid();
 }

@@ -3,28 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:49:58 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/07 19:00:38 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/08 19:24:54 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_heredoc(char *limiter)
+void	do_heredoc(char ***mat_array, int i)
 {
-	int	pid;
+	pid_t	pid;
 
+	(void)i;
 	pid = fork();
 	if (pid == 0)
 	{
-		heredoc(limiter);
 		com_info()->hereflag = 1;
+		heredoc(mat_array[1][0]);
+		// if (mat_array[i + 2])
+		// {
+		// 	printf("mat_array[%d] = %s\n", i, mat_array[i][0]);
+		// 	commands(mat_array[i + 2], com_info()->env, 1);
+		// }
 	}
 	else
 		waitpid(pid, &com_info()->exit_value, 0);
-	unlink(".heredoc");
+	//unlink(".heredoc");
 }
 
 int	heredoc(char *limiter)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/08 02:17:24 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/08 22:35:45 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,20 @@ void	do_redir(char **before, char **after)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (com_info()->hereflag == 0)
-		{
+		//if (com_info()->hereflag == 0)
+		//{
 			redirections(after, com_info()->redir_type);
-			commands(before, com_info()->env, 1);
-		}
-		else
-		{
-			redirections(after, com_info()->redir_type);
-			com_info()->hereflag = 0;
-		}
+			if (com_info()->hereflag == 0)
+				commands(before, com_info()->env, 1);
+			else
+				com_info()->hereflag = 0;
+			exit(0);
+		//}
+		// else
+		// {
+		// 	redirections(after, com_info()->redir_type);
+		// 	com_info()->hereflag = 0;
+		// }
 	}
 	else
 		waitpid(pid, &com_info()->exit_value, 0);
@@ -81,7 +85,7 @@ void	options(char ***new, int i)
 	else
 	{
 		com_info()->hereflag = 1;
-		do_heredoc(new[i + 1][0]);
+		do_heredoc(new, i + 1);
 	}
 }
 
@@ -105,18 +109,22 @@ void	execute_redir(char **input)
 	{
 		while (i < com_info()->redir_no * 2 - 2)
 		{
-			options(new, i);
+			options(new, i + com_info()->hereflag);
 			i += 2;
 		}
 	}
 	com_info()->redir_type = check_redir_type(new[i][0]);
 	if (com_info()->redir_type != 3)
-		do_redir(new[0], new[i + 1]);
+	{
+		
+		do_redir(new[0 + com_info()->hereflag], new[i + 1 + com_info()->hereflag]);
+	}
 	else
 	{
-		do_heredoc(new[1][0]);
+		do_heredoc(new, i);
 		com_info()->hereflag = 1;
 	}
+
 	//free_triple(new);
 }
 
