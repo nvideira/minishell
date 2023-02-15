@@ -68,9 +68,19 @@ void	print_exported(char **input)
 	while (temp)
 	{
 		if (ft_strncmp(temp->value, "", 1))
-			printf("declare -x %s\"%s\"\n", temp->name, temp->value);
+		{
+			write(1, "declare -x ", 11);
+			write(1, temp->name, ft_strlen(temp->name));
+			write(1, "\"", 1);
+			write(1, temp->value, ft_strlen(temp->value));
+			write(1, "\"\n", 2);
+		}
 		else
-			printf("declare -x %s\n", temp->name);
+		{
+			write(1, "declare -x ", 11);
+			write(1, temp->name, ft_strlen(temp->name));
+			write(1, "\n", 1);
+		}
 		temp = temp->next;
 	}
 	com_info()->exit_value = 0;

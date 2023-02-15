@@ -3,59 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:49:58 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/08 19:24:54 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/13 01:00:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_heredoc(char ***mat_array, int i)
-{
-	pid_t	pid;
-
-	(void)i;
-	pid = fork();
-	if (pid == 0)
-	{
-		com_info()->hereflag = 1;
-		heredoc(mat_array[1][0]);
-		// if (mat_array[i + 2])
-		// {
-		// 	printf("mat_array[%d] = %s\n", i, mat_array[i][0]);
-		// 	commands(mat_array[i + 2], com_info()->env, 1);
-		// }
-	}
-	else
-		waitpid(pid, &com_info()->exit_value, 0);
-	//unlink(".heredoc");
-}
-
 int	heredoc(char *limiter)
 {
+	char	*file;
 	int		fd;
-	char	*tmp;
+	int		fd_in;
 
-	fd = open(".heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
-		perror("minishell: error opening heredoc file");
+	fd = open("./.tmp/tmpfile.txt", O_TRUNC | O_CREAT | O_WRONLY, 0666);
+	write(1, "> ", 2);
+	file = get_next_line(STDIN_FILENO);
 	while (1)
 	{
-		tmp = readline("> ");
-		if (ft_strncmp(tmp, limiter, ft_strlen(limiter)) == 0)
+		if (ft_strncmp(file, limiter, ft_strlen(file) - 1) == 0
+			&& ft_strlen(file) > 1)
 			break ;
-		ft_putstr_fd(tmp, fd);
-		free(tmp);
+		write(fd, file, ft_strlen(file));
+		free(file);
+		write(1, "> ", 2);
+		file = get_next_line(STDIN_FILENO);
 	}
-	free(tmp);
+	free(file);
 	close(fd);
-	fd = open(".heredoc", O_RDONLY);
-	if (fd < 0)
-	{
-		unlink(".heredoc");
-		perror("minishell: error opening heredoc file");
-	}
-	return (fd);
+	fd_in = open("./.tmp/tmpfile.txt", O_RDONLY, 0777);
+	return (fd_in);
 }

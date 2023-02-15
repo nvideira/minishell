@@ -17,7 +17,6 @@ int	verify_redir_2(char *input)
 	int	i;
 
 	i = 0;
-	//printf("input: %s\n", input);
 	while (input[i])
 	{
 		if (input[i] == '>' && input[i + 1] == '>' && (input[i + 2] == '>'

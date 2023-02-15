@@ -6,106 +6,100 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 02:15:07 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/08 04:01:49 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/12 19:40:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Inicializa os pipes
-void	init_pipes(void)
+void	pipe_commands(char **input, char **env)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-	com_info()->pid_counter = 0;
-	com_info()->cmds_done = 0;
-	com_info()->pip = malloc(sizeof(int *) * (com_info()->pipe_no + 1));
-	while (i < com_info()->pipe_no)
+	count = 0;
+	com_info()->pid = malloc(sizeof(int) * count_args(input));
+	while (input[count])
 	{
-		com_info()->pip[i] = malloc(sizeof(int) * 2);
-		if (pipe(com_info()->pip[i]) < 0)
+		if (parent_commands(input[count], env))
+			com_info()->pid[count] = 1;
+		else
 		{
-			ft_error("Pipe error\n");
-			return ;
+			if (pipe(com_info()->fd) == -1)
+				return ;
+			com_info()->pid[count] = fork();
+			if (com_info()->pid[count] < 0)
+				return ;
+			if (com_info()->pid[count] == 0)
+				execute_pipe(input, count, env);
+			close(com_info()->fd[1]);
+			com_info()->pipe_fd = com_info()->fd[0];
 		}
-		i++;
+		count++;
 	}
-	com_info()->pip[i] = NULL;
-	com_info()->pid = malloc(sizeof(int) * (com_info()->pipe_no));
-	com_info()->pid[com_info()->pipe_no] = 0;
+	ft_wait_pid(count);
 }
 
 // Executa os pipes
-void	execute_pipe(char **input)
+void	execute_pipe(char **input, int count, char **env)
 {
-	signal_block();
-	com_info()->pid[com_info()->pid_counter] = fork();
-	if (com_info()->pid[com_info()->cmds_done] == 0)
+	int	fd_out;
+	
+	child_input(input, count);
+	if (!ft_find_char(input[count], '>'))
 	{
-		fd_dup(com_info()->cmds_done);
-		commands(input, com_info()->env, 1);
+		if (count != (count_args(input) - 1))
+			dup2(com_info()->fd[1], STDOUT_FILENO);
 	}
-	com_info()->pid_counter++;
-	fd_close(com_info()->cmds_done);
-	unlink(".heredoc");
+	else
+	{
+		fd_out = redirect_output(input[count]);
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
+	if (ft_find_char(input[count], '<') || ft_find_char(input[count], '>'))
+		input[count] = ft_strtrim(input[count], " <>");
+	commands(input[count], env, 1);
+	exit(com_info()->exit_value);
+	
+}
+
+void	child_input(char **input, int count)
+{
+	int	fd_in;
+
+	if (!ft_find_char(input[count], '<'))
+	{
+		if (count == 0)
+			close(com_info()->fd[0]);
+		else if (count > 0)
+		{
+			dup2(com_info()->pipe_fd, STDIN_FILENO);
+			close(com_info()->pipe_fd);
+		}
+	}
+	else
+	{
+		if (count == 0)
+			close(com_info()->fd[0]);
+		else if (count > 0)
+			close(com_info()->pipe_fd);
+		fd_in = redirect_input(input[count]);
+		dup2(fd_in, STDIN_FILENO);
+		close(fd_in);
+	}
 }
 
 // Espera por todos os processos
-void	ft_wait_pid(void)
+void	ft_wait_pid(int counter)
 {
 	int	i;
 
 	i = 0;
-	signal_block();
-	while (i < (com_info()->pid_counter))
+	while (i < counter)
 	{
 		waitpid(com_info()->pid[i], &com_info()->exit_value, 0);
+		if (WIFEXITED(com_info()->exit_value))
+			com_info()->exit_value = WEXITSTATUS(com_info()->exit_value);
 		i++;
-	}
-	catch_signal();
-}
-
-// Duplica os file descriptors
-void	fd_dup(int pos)
-{
-	if (pos == 0)
-	{
-		close(com_info()->pip[0][0]);
-		dup2(com_info()->pip[0][1], STDOUT_FILENO);
-		close(com_info()->pip[0][1]);
-	}
-	else if (pos == com_info()->pipe_no)
-	{
-		dup2(com_info()->pip[pos - 1][0], STDIN_FILENO);
-		close(com_info()->pip[pos - 1][0]);
-	}
-	else
-	{
-		close(com_info()->pip[pos][0]);
-		dup2(com_info()->pip[pos][1], STDOUT_FILENO);
-		close(com_info()->pip[pos][1]);
-		dup2(com_info()->pip[pos - 1][0], STDIN_FILENO);
-		close(com_info()->pip[pos - 1][0]);
-	}
-}
-
-// Fecha os file descriptors
-void	fd_close(int pos)
-{
-	if (pos == 0)
-	{
-		if (close(com_info()->pip[0][1]) == -1)
-			ft_error("Close error 1\n");
-	}
-	else if (pos == com_info()->pipe_no)
-	{
-		if (close(com_info()->pip[pos - 1][0]) == -1)
-			ft_error("Close error 2\n");
-	}
-	else
-	{
-		if (close(com_info()->pip[pos][1]) == -1)
-			ft_error("Close error 3\n");
 	}
 }

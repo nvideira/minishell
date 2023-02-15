@@ -3,149 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 20:41:42 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/08 22:35:45 by nvideira         ###   ########.fr       */
+/*   Created: 2023/01/26 22:29:35 by marvin            #+#    #+#             */
+/*   Updated: 2023/02/12 19:49:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_redir(char **before, char **after)
+char	*remove_redirections(char *input)
 {
-	pid_t	pid;
+	char	**arr;
+	char	*new;
+	int	i;
 
-	pid = fork();
-	if (pid == 0)
+	i = 1;
+	arr = ft_split(input, ' ');
+	new = ft_strjoin(arr[0], " ");
+	while (arr[i])
 	{
-		//if (com_info()->hereflag == 0)
-		//{
-			redirections(after, com_info()->redir_type);
-			if (com_info()->hereflag == 0)
-				commands(before, com_info()->env, 1);
-			else
-				com_info()->hereflag = 0;
-			exit(0);
-		//}
-		// else
-		// {
-		// 	redirections(after, com_info()->redir_type);
-		// 	com_info()->hereflag = 0;
-		// }
+		if (ft_str1chr(arr[i], '<') || ft_str1chr(arr[i], '>'))
+			break ;	
+		new = ft_strjoin(new, arr[i]);
+		if (!ft_str1chr(arr[i + 1], '<') && !ft_str1chr(arr[i + 1], '>'))
+			new = ft_strjoin(new, " ");
+		i++;
 	}
-	else
-		waitpid(pid, &com_info()->exit_value, 0);
-	//unlink(".heredoc");
+	free_matrix(arr);
+	return (new);
 }
 
-/*
-void	fd_dup_redir(int fd, int type)
+// Faz as redireções e as duplicações de file descriptors
+// O que se faz quando tem vários argumentos a seguir ao redirecionador?
+void	redirections(char *input, char **env)
 {
-	if (type == 1)
-		dup2(fd, 1);
-	else if (type == 2)
-		dup2(fd, 0);
-	else if (type == 3)
-		dup2(fd, 1);
-	else if (type == 4)
-		dup2(fd, 0);
-}
+	int	fd_in;
+	int	fd_out;
 
-void	redirections(char **input, int type)
-{
-	int	fd;
-
-	if (type == 1)
-		fd = open(input[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (type == 2)
-		fd = open(input[0], O_RDONLY);
-	else if (type == 3)
-		fd = open(input[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (type == 4)
-		fd = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	fd_dup_redir(fd, type);
-}
-*/
-
-void	options(char ***new, int i)
-{
-	if (check_redir_type(new[i][0]) <= 2)
-		close(open(new[i + 1][0], O_CREAT, 0644));
-	else if (check_redir_type(new[i][0]) == 4)
+	if (check_special(input, '<'))
 	{
-		if (check_file_access(new[i + 1][0]))
-			return ;
-		else
-		{	
-			com_info()->redir_type = check_redir_type(new[i][0]);
-			do_redir(new[0], new[i + 1]);
-		}
+		fd_in = redirect_input(input);
+		if (fd_in <= -1)
+			exit(com_info()->exit_value);
+		dup2(fd_in, STDIN_FILENO);
+		close(fd_in);
 	}
-	else
+	if (check_special(input, '>'))
 	{
-		com_info()->hereflag = 1;
-		do_heredoc(new, i + 1);
+		fd_out = redirect_output(input);
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
 	}
-}
-
-// E preciso dar close?
-//fd_close(com_info()->cmds_done_redir);
-
-// Executa as redireções.
-// Se i for impar, é o tipo de redireção.
-// Se i for par, é o arquivo.
-void	execute_redir(char **input)
-{
-	char	***new;
-	int		i;
-
-	if (input[0][0] == '<' && input[0][1] == '<')
-		i = 0;
-	else
-		i = 1;
-	new = split_redir(input);
-	if (com_info()->redir_no > 1)
-	{
-		while (i < com_info()->redir_no * 2 - 2)
-		{
-			options(new, i + com_info()->hereflag);
-			i += 2;
-		}
-	}
-	com_info()->redir_type = check_redir_type(new[i][0]);
-	if (com_info()->redir_type != 3)
-	{
-		
-		do_redir(new[0 + com_info()->hereflag], new[i + 1 + com_info()->hereflag]);
-	}
-	else
-	{
-		do_heredoc(new, i);
-		com_info()->hereflag = 1;
-	}
-
-	//free_triple(new);
-}
-
-	// while (i < com_info()->redir_no * 2)
-	// {
-	// 	com_info()->redir_type = check_redir_type(new[i][0]);
-	// 	do_redir(new[i - 1], new[i + 1]);
-	// 	i += 2;
-	// }
-
-int	check_file_access(char *file)
-{
-	if (access(file, F_OK))
-	{
-		ft_error("%s: No such file or directory\n", file);
-		return (1);
-	}
-	else if (access(file, R_OK))
-	{
-		ft_error("%s: Permission denied\n", file);
-		return (1);
-	}
-	return (0);
+	input = remove_redirections(input);
+	commands(input, env, 1);
+	exit(com_info()->exit_value);
 }

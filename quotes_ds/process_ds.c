@@ -12,6 +12,23 @@
 
 #include "minishell.h"
 
+char *join_args(char **args)
+{
+	char	*input;
+	int		i;
+
+	i = 0;
+	input = ft_strdup("");
+	while (args[i])
+	{
+		input = ft_strjoin(input, args[i]);
+		if (args[i + 1])
+			input = ft_strjoin(input, " ");
+		i++;
+	}
+	return (input);
+}
+
 // Processa o $.
 // Se for $? retorna o exit value.
 // Se input[i][0] for $ e tiver mais que 1 char e tiver apenas 1 $,
@@ -19,23 +36,28 @@
 // Se tiver 1 ou mais $ altera o valor com a funcao change_val2.
 
 // >> 8 & 255
-char	**check_ds(char **input)
+char	*check_ds(char *input)
 {
-	int	i;
+	char	**args;
+	int		i;
+	char	*new;
 
 	i = 0;
-	while (input[i])
+	args = ft_split(input, ' ');
+	while (args[i])
 	{
-		if (!ft_strncmp(input[i], "$?", 3))
-			input[i] = ft_itoa((com_info()->exit_value >> 8 & 255));
-		else if (input[i][0] == '$' && ft_strlen(input[i]) > 1
-			&& count_ds(input[i]) == 1)
-			input[i] = ft_strdup(change_val(input[i]));
-		else if (count_ds(input[i]) >= 1 && (ft_strlen(input[i]) > 1))
-			input[i] = change_val2(input[i], 0, 0);
+		if (!ft_strncmp(args[i], "$?", 3))
+			args[i] = ft_itoa((com_info()->exit_value >> 8 & 255));
+		else if (args[i][0] == '$' && ft_strlen(args[i]) > 1
+			&& count_ds(args[i]) == 1)
+			args[i] = ft_strdup(change_val(args[i]));
+		else if (count_ds(args[i]) >= 1 && (ft_strlen(args[i]) > 1))
+			args[i] = change_val2(args[i], 0, 0);
 		i++;
 	}
-	return (input);
+	new = join_args(args);
+	free(input);
+	return (new);
 }
 
 // Altera o valor da variavel quando tiver apenas 1 $.

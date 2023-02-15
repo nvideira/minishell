@@ -15,17 +15,18 @@
 // Imprime o que foi passado para o comando echo
 void	do_print(char **input, int start, int type)
 {
-	while (start < com_info()->commands->nb_args)
+	while (start < com_info()->nb_args)
 	{
-		printf("%s", input[start]);
-		if ((com_info()->commands->nb_args - start) != 1
-			&& ft_strncmp(com_info()->commands->arg[start], "", 1)
-			&& ft_strncmp(com_info()->commands->arg[start + 1], "", 1))
-			printf(" ");
+		write(1, input[start], ft_strlen(input[start]));
+		//printf("%s", input[start]);
+		if ((com_info()->nb_args - start) != 1)
+			write(1, " ", 1);
+			//printf(" ");
 		start++;
 	}
 	if (type != 2)
-		printf("\n");
+		write(1, "\n", 1);
+		//printf("\n");
 	com_info()->exit_value = 0;
 }
 
@@ -33,19 +34,19 @@ void	do_print(char **input, int start, int type)
 void	check_flag(char c)
 {
 	if (c == 'a')
-		printf("\a");
+		write(1, "\a", 1);
 	else if (c == 'b')
-		printf("\b");
+		write(1, "\b", 1);
 	else if (c == 't')
-		printf("\t");
+		write(1, "\t", 1);
 	else if (c == 'n')
-		printf("\n");
+		write(1, "\n", 1);
 	else if (c == 'v')
-		printf("\v");
+		write(1, "\v", 1);
 	else if (c == 'f')
-		printf("\f");
+		write(1, "\f", 1);
 	else if (c == 'r')
-		printf("\r");
+		write(1, "\r", 1);
 	return ;
 }
 
@@ -55,7 +56,7 @@ void	process_flags(char **input, int start)
 	int	i;
 
 	i = 0;
-	while (start < com_info()->commands->nb_args)
+	while (start < com_info()->nb_args)
 	{
 		while (input[start][i])
 		{
@@ -69,7 +70,7 @@ void	process_flags(char **input, int start)
 				printf("%c", input[start][i]);
 			i++;
 		}
-		if ((com_info()->commands->nb_args - start) != 1)
+		if ((com_info()->nb_args - start) != 1)
 			printf(" ");
 		start++;
 	}

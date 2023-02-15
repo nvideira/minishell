@@ -3,41 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 22:29:35 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/08 19:00:42 by nvideira         ###   ########.fr       */
+/*   Created: 2023/02/11 18:10:11 by marvin            #+#    #+#             */
+/*   Updated: 2023/02/11 18:10:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_redirs(char **input)
+int	count_char(char *input, char c)
 {
 	int	i;
-	int	j;
-	int	redir_no;
+	int	count;
 
 	i = 0;
-	redir_no = 0;
+	count = 0;
 	while (input[i])
 	{
-		j = 0;
-		while (input[i][j])
+		if (input[i] == c)
 		{
-			if (input[i][j] == '>' || input[i][j] == '<')
-			{
-				if ((input[i][j] == '>' && input[i][j + 1] == '>')
-					|| (input[i][j] == '<' && input[i][j + 1] == '<'))
-					j++;
-				redir_no++;
-			}
-			j++;
+			if (input[i + 1] == c)
+				i++;
+			count++;
 		}
 		i++;
 	}
-	com_info()->redir_no = redir_no;
-	return (redir_no);
+	return (count);
+}
+
+int	check_file_access(char *file)
+{
+	if (access(file, F_OK))
+	{
+		ft_error("%s: No such file or directory\n", file);
+		return (1);
+	}
+	else if (access(file, R_OK))
+	{
+		ft_error("%s: Permission denied\n", file);
+		return (1);
+	}
+	return (0);
 }
 
 int	check_redir_type(char *input)
@@ -57,28 +64,4 @@ int	check_redir_type(char *input)
 			return (4);
 	}
 	return (0);
-}
-
-// Faz as redireções e as duplicações de file descriptors
-// O que se faz quando tem vários argumentos a seguir ao redirecionador?
-void	redirections(char **arquivo, int type)
-{
-	int		fd;
-	char	*file;
-
-	file = arquivo[0];
-	if (type == 1)
-		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	else if (type == 2)
-		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (type == 4)
-		fd = open(file, O_RDONLY);
-	else if (type == 3)
-		fd = heredoc(file);
-	if (type == 1 || type == 2)
-		dup2(fd, STDOUT_FILENO);
-	else if (type == 4 || type == 3)
-		dup2(fd, STDIN_FILENO);
-	close(fd);
-	free(file);
 }

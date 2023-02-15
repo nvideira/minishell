@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_input_utils2.c                             :+:      :+:    :+:   */
+/*   join_strings.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 04:59:21 by marvin            #+#    #+#             */
-/*   Updated: 2023/01/12 04:59:21 by marvin           ###   ########.fr       */
+/*   Created: 2023/02/11 17:53:14 by marvin            #+#    #+#             */
+/*   Updated: 2023/02/11 17:53:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Função que retorna o nome da variável
-char	*get_name(char *str)
+// Retorna o path do comando
+char	*join_strings(char *path, int j, char *cmd)
 {
-	int		len;
-	int		i;
-	char	*name;
+	char	*dir;
+	char	*ret_path;
 
-	len = 0;
-	i = 0;
-	while (str[len] != '=')
-		len++;
-	name = malloc(sizeof(char) * (len + 1));
-	if (!name)
-		return (0);
-	while (i < len)
-	{
-		name[i] = str[i];
-		i++;
-	}
-	name[i] = '\0';
-	return (name);
+	dir = ft_substring(path, j, ft_strichr(path, j, ':') - j);
+	ret_path = ft_strjoin(dir, cmd);
+	free(dir);
+	return (ret_path);
 }

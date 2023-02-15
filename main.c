@@ -28,25 +28,29 @@ t_command	*com_info(void)
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
+	char	*info;
 
 	(void)argc;
 	(void)argv;
 	init_shell(env);
+	catch_signal();
 	while (1)
 	{
-		catch_signal();
-		input = readline(print_info());
+		info = print_info();
+		input = readline(info);
 		if (!input)
 		{
-			printf("exit\n");
+			write(2, "exit\n", 5);
 			rl_clear_history();
 			free (input);
+			free(info);
 			exit(com_info()->exit_value >> 8 & 0xFF);
 		}
-		parser(input);
-		process_input(env);
-		//free (input);
-		//wait(NULL);
+		signal_block();
+		parser(input, env);
+		free(input);
+		free(info);
+		catch_signal();
 	}
 	return (com_info()->exit_value);
 }

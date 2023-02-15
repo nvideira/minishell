@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:46:39 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/07 16:30:02 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/09 16:51:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ void	ft_env(char **input)
 	while (temp)
 	{
 		if (ft_strchr(temp->name, '='))
-			printf("%s%s\n", temp->name, temp->value);
+		{
+			write(1, temp->name, ft_strlen(temp->name));
+			write(1, temp->value, ft_strlen(temp->value));
+			write(1, "\n", 1);
+		}
 		temp = temp->next;
 	}
 	com_info()->exit_value = 0;

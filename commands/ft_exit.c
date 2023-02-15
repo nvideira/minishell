@@ -44,7 +44,7 @@ void	ft_exit(char **input)
 // Função que executa o exit
 void	do_exit(int exit_value, char **input)
 {
-	printf("exit\n");
+	write(1, "exit\n", 5);
 	rl_clear_history();
 	free (input);
 	exit(exit_value);

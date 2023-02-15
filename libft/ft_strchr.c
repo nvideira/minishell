@@ -24,7 +24,7 @@ int	ft_strchr(const char *s, int c)
 	return (0);
 }
 
-/* int	ft_str1chr(const char s, int c)
+int	ft_str1chr(const char *s, int c)
 {
 	int	i;
 
@@ -35,4 +35,3 @@ int	ft_strchr(const char *s, int c)
 		return (1);
 	return (0);
 }
- */

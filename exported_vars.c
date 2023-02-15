@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_input_utils.c                              :+:      :+:    :+:   */
+/*   exported_vars.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 17:04:30 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/08 04:28:50 by marvin           ###   ########.fr       */
+/*   Created: 2023/02/11 17:57:07 by marvin            #+#    #+#             */
+/*   Updated: 2023/02/11 17:57:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,25 @@ int	find_es(char *str)
 	return (0);
 }
 
-// Conta os argumentos passados
-// Atribui o valor no com_info()->nb_args
-int	count_args(char **matrix)
+// Função que retorna o nome da variável
+char	*get_name(char *str)
 {
-	int	i;
+	int		len;
+	int		i;
+	char	*name;
 
+	len = 0;
 	i = 0;
-	while (matrix[i])
+	while (str[len] != '=')
+		len++;
+	name = malloc(sizeof(char) * (len + 1));
+	if (!name)
+		return (0);
+	while (i < len)
+	{
+		name[i] = str[i];
 		i++;
-	com_info()->nb_args = i;
-	return (i);
+	}
+	name[i] = '\0';
+	return (name);
 }

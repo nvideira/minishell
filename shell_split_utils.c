@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 18:00:37 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/25 18:28:33 by jlebre           ###   ########.fr       */
+/*   Updated: 2023/02/11 17:57:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	ft_rollback(char const *str, int st)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (st > 0 && (str[st] != '>' && str[st] != '<'))
-// 	{
-// 		st--;
-// 		i++;
-// 	}
-// 	if (str[st] == '>' || str[st] == '<')
-// 		return (i);
-// 	return (0);
-// }
 
 void	*freematrix(char **ns, int msize)
 {

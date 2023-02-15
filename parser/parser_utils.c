@@ -5,37 +5,52 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/06 16:17:30 by marvin           ###   ########.fr       */
+/*   Created: 2022/12/14 16:57:06 by jlebre            #+#    #+#             */
+/*   Updated: 2023/02/11 17:45:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_quotes(char *commands)
+void	print_matrix(char **matrix)
 {
 	int	i;
-	int	quotes;
-	int	dquotes;
 
 	i = 0;
-	quotes = 0;
-	dquotes = 0;
-	while (commands[i])
+	while (matrix[i])
 	{
-		if (commands[i] == '\'' && dquotes == 0 && quotes == 0)
-			quotes = 1;
-		else if (commands[i] == '\'' && dquotes == 0 && quotes == 1)
-			quotes = 0;
-		else if (commands[i] == '\"' && dquotes == 0 && quotes == 0)
-			dquotes = 1;
-		else if (commands[i] == '\"' && dquotes == 1 && quotes == 0)
-			dquotes = 0;
+		printf("matrix[%i] = %s\n", i, matrix[i]);
 		i++;
 	}
-	if (quotes || dquotes)
+}
+
+void	free_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
+
+int	empty_prompt(char *input)
+{
+	int	i;
+
+	i = 0;
+	if (!input[i])
 		return (1);
-	return (0);
+	while (input[i])
+	{
+		if (input[i] != ' ' && input[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	skip_quotes(char *input, int i, char quote)
@@ -50,43 +65,14 @@ int	skip_quotes(char *input, int i, char quote)
 	return (j);
 }
 
-// Se a seguir a > estiver um |, dá o mesmo erro
-/*
-if () // Se a seguir a > estiver \n dá erro
+int ft_find_char(char *str, char c)
 {
-	ft_error("minishell: syntax error near unexpected token `newline'\n");
-	return ;
-}
-*/
-
-int	check_xor(char *input)
-{
-	int	i;
+	int i;
 
 	i = 0;
-	while (input[i])
+	while (str[i])
 	{
-		if (input[i] == '|')
-		{
-			i++;
-			while (input[i] && is_space(input[i]))
-				i++;
-			if (input[i] == '|')
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	check_and(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '&')
+		if (str[i] == c)
 			return (1);
 		i++;
 	}
