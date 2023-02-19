@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:58:53 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/12 18:57:18 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:14:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	count_args(char **input)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (input[count])

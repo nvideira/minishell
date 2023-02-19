@@ -6,13 +6,14 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:59:18 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/11 17:56:15 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:23:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_cenas_do_env(char *str)
+// Get Cenas do Env (Sigle por causa da norminette)
+char	*gce(char *str)
 {
 	char		*user;
 	t_env_lst	*temp;
@@ -45,7 +46,7 @@ void	init_shell(char **env)
 	{
 		write(1, "USER not found, setting to 'user'\n", 35);
 		lst_add_back(&com_info()->env_lst, new_node("USER=user"));
-		username = get_cenas_do_env("USER=");
+		username = gce("USER=");
 	}
 	write(1, "\n\nUSER is: @", 12);
 	write(1, username, ft_strlen(username));

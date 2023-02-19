@@ -43,7 +43,6 @@ int	main(int argc, char **argv, char **env)
 			write(2, "exit\n", 5);
 			rl_clear_history();
 			free (input);
-			free(info);
 			exit(com_info()->exit_value >> 8 & 0xFF);
 		}
 		signal_block();

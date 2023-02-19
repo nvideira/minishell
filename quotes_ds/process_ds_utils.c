@@ -90,3 +90,20 @@ int	cds(char *input, t_env_lst *temp)
 	}
 	return (0);
 }
+
+// Conta o numero de $ na string
+int	count_ds(char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			count++;
+		i++;
+	}
+	return (count);
+}

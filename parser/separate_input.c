@@ -75,7 +75,7 @@ char	*separate_input(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '>' || input[i] == '<'	|| input[i] == '|')
+		if (input[i] == '>' || input[i] == '<' || input[i] == '|')
 		{
 			if (input[i - 1] != ' ' && input[i - 1] != input[i])
 				input = ft_put_space_before(input, i - 1);

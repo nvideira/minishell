@@ -6,11 +6,18 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:46:39 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/09 16:51:17 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:22:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_ft_env(char *name, char *value)
+{
+	write(1, name, ft_strlen(name));
+	write(1, value, ft_strlen(value));
+	write(1, "\n", 1);
+}
 
 // Recria o comando env
 void	ft_env(char **input)
@@ -34,11 +41,7 @@ void	ft_env(char **input)
 	while (temp)
 	{
 		if (ft_strchr(temp->name, '='))
-		{
-			write(1, temp->name, ft_strlen(temp->name));
-			write(1, temp->value, ft_strlen(temp->value));
-			write(1, "\n", 1);
-		}
+			print_ft_env(temp->name, temp->value);
 		temp = temp->next;
 	}
 	com_info()->exit_value = 0;

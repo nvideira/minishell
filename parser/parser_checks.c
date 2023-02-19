@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/14 15:52:01 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:33:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int parser_checks(char *input)
+int	parser_checks(char *input)
 {
 	if (empty_prompt(input))
 	{

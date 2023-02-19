@@ -33,13 +33,13 @@ void	ft_cd(char **input, char **env)
 				ft_error("minishell: cd: OLDPWD not set\n");
 				return ;
 			}
-			do_cd(get_cenas_do_env("OLDPWD="), get_cenas_do_env("OLDPWD="), env);
+			do_cd(gce("OLDPWD="), gce("OLDPWD="), env);
 		}
 		else
 			do_cd(input[1], ft_strjoin(new, input[1]), env);
 	}
 	else
-		do_cd(get_cenas_do_env("HOME="), get_cenas_do_env("OLDPWD="), env);
+		do_cd(gce("HOME="), gce("OLDPWD="), env);
 	com_info()->exit_value = 0;
 	change_pwd("OLDPWD=", curr, env);
 }

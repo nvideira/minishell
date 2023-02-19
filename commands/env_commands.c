@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/08 04:31:26 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:17:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	env_commands(char **input, char **env)
 {
 	char	*path;
-	
+
 	path = find_path(input[0], com_info()->env_lst);
 	if (!path)
 	{

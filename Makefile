@@ -35,7 +35,7 @@ SRC = \
 	commands/ft_unset_utils.c commands/ft_cd.c commands/ft_exit_utils.c \
 	\
 	libft/get_next_line.c libft/add_mat_node.c libft/ft_atoi.c \
-	libft/ft_clear.c libft/ft_isdigit.c libft/ft_itoa.c libft/ft_strtrim.c\
+	libft/ft_clear.c libft/ft_isdigit.c libft/ft_itoa.c libft/ft_strtrim.c \
 	libft/ft_memmove.c libft/ft_strchr.c libft/ft_strcmp.c \
 	libft/ft_strdup.c libft/ft_strjoin.c libft/ft_strlen.c \
 	libft/ft_strljoin.c libft/ft_substr.c libft/lst_add_front.c \
@@ -48,10 +48,11 @@ SRC = \
 	\
 	quotes_ds/remove_quote.c quotes_ds/process_ds.c \
 	quotes_ds/process_quotes.c quotes_ds/process_ds_utils.c \
+	quotes_ds/check_all_quotes.c \
 	\
-	redirections/redirections.c redirections/heredoc.c redirections/redirections_utils.c \
+	redirections/redirections.c redirections/heredoc.c \
+	redirections/redirections_utils.c redirections/verify_redir.c \
 	redirections/redirections_input.c redirections/redirections_output.c \
-	redirections/verify_redir.c
 	
 OBJ = $(SRC:.c=.o)
 

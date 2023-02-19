@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:29:35 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/12 19:49:02 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/16 13:08:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*remove_redirections(char *input)
 {
 	char	**arr;
 	char	*new;
-	int	i;
+	int		i;
 
 	i = 1;
 	arr = ft_split(input, ' ');
@@ -24,7 +24,7 @@ char	*remove_redirections(char *input)
 	while (arr[i])
 	{
 		if (ft_str1chr(arr[i], '<') || ft_str1chr(arr[i], '>'))
-			break ;	
+			break ;
 		new = ft_strjoin(new, arr[i]);
 		if (!ft_str1chr(arr[i + 1], '<') && !ft_str1chr(arr[i + 1], '>'))
 			new = ft_strjoin(new, " ");

@@ -12,18 +12,25 @@
 
 #include "minishell.h"
 
-char *join_args(char **args)
+char	*join_args(char **args)
 {
 	char	*input;
 	int		i;
+	char	*tmp;
 
 	i = 0;
-	input = ft_strdup("");
+	tmp = ft_strdup("");
 	while (args[i])
 	{
-		input = ft_strjoin(input, args[i]);
+		input = ft_strjoin(tmp, args[i]);
+		free(tmp);
 		if (args[i + 1])
-			input = ft_strjoin(input, " ");
+		{
+			tmp = ft_strjoin(input, " ");
+			free(input);
+			input = ft_strdup(tmp);
+			free(tmp);
+		}
 		i++;
 	}
 	return (input);
@@ -40,7 +47,6 @@ char	*check_ds(char *input)
 {
 	char	**args;
 	int		i;
-	char	*new;
 
 	i = 0;
 	args = ft_split(input, ' ');
@@ -55,9 +61,9 @@ char	*check_ds(char *input)
 			args[i] = change_val2(args[i], 0, 0);
 		i++;
 	}
-	new = join_args(args);
-	free(input);
-	return (new);
+	input = join_args(args);
+	free_matrix(args);
+	return (input);
 }
 
 // Altera o valor da variavel quando tiver apenas 1 $.
@@ -122,21 +128,4 @@ char	*change_val2(char *input, int i, int j)
 			i++;
 	}
 	return (input);
-}
-
-// Conta o numero de $ na string
-int	count_ds(char *str)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			count++;
-		i++;
-	}
-	return (count);
 }

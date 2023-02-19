@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:08:14 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/12 19:57:38 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:13:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	redirect_input(char *input)
 	i = 0;
 	fd = -1;
 	nb = count_char(input, '<');
-	while(nb && input[i])
+	while (nb && input[i])
 	{
 		if (input[i] != '<')
 			i++;

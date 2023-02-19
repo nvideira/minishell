@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:57:06 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/11 17:45:54 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:33:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	skip_quotes(char *input, int i, char quote)
 	return (j);
 }
 
-int ft_find_char(char *str, char c)
+int	ft_find_char(char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

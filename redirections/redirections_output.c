@@ -20,7 +20,7 @@ int	redirect_output(char *input)
 
 	i = 0;
 	nb = count_char(input, '>');
-	while(nb && input[i])
+	while (nb && input[i])
 	{
 		if (input[i] != '>')
 			i++;

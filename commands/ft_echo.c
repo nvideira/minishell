@@ -15,7 +15,7 @@
 // Faz as verificações para saber se o comando echo tem a flag -n
 int	check_n(char **input)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (input[1][i] && input[1][i] != ' ')

@@ -79,7 +79,7 @@ void					free_list(t_env_lst *lst);
 
 //INIT SHELL
 void					init_shell(char **env);
-char					*get_cenas_do_env(char *str);
+char					*gce(char *str);
 
 //SIGNALS
 void					catch_signal(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2023/01/27 00:22:19 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/16 17:00:15 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@ int	ft_wordcount(const char *str, char c)
 	return (words);
 }
 
+/*
+void	do_split()
+{
+	while (str[st] && (ft_space(str[st]) || ft_ispipe(str[st], c)))
+		st++;
+	ns[j] = ft_substr(str, st, (i - st) + 1);
+	if (!ns[j++])
+		return (0);
+}
+*/
+
 // Norminette
 static int	split_it(char const *str, char c, int st, char **ns)
 {
@@ -67,7 +78,7 @@ static int	split_it(char const *str, char c, int st, char **ns)
 	j = 0;
 	while (str[i])
 	{
-		while (str[i] != '\0' && str[i] == c)
+		while (str[i] && str[i] == c)
 		{
 			i++;
 			st++;

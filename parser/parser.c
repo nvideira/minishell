@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 // Processa o input e verifica se há erros
-void    parser(char *input, char **env)
+void	parser(char *input, char **env)
 {
 	char	**args;
 

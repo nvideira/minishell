@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:17:25 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/15 23:04:35 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:42:04 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ char	*print_info(void)
 	char	*str;
 	char	*username;
 	char	*dir;
-	char	*temp;
+	char	*new;
 
 	dir = getcwd(cwd, sizeof(cwd));
-	username = get_cenas_do_env("USER=");
-	str = ft_strjoin(username, com_info()->color);
+	username = gce("USER=");
+	new = ft_strjoin(username, com_info()->color);
 	free(username);
-	temp = ft_strjoin(str, dir);
+	str = ft_strjoin(new, dir);
+	free(new);
+	new = ft_strjoin(str, "$ \033[0m");
 	free(str);
-	str = ft_strjoin(temp, "$ \033[0m");
-	free(temp);
-	return (str);
+	return (new);
 }
 
 // Função para imprimir o diretório atual

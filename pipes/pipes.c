@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 02:15:07 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/12 19:40:50 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:13:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	pipe_commands(char **input, char **env)
 void	execute_pipe(char **input, int count, char **env)
 {
 	int	fd_out;
-	
+
 	child_input(input, count);
 	if (!ft_find_char(input[count], '>'))
 	{
@@ -60,7 +60,6 @@ void	execute_pipe(char **input, int count, char **env)
 		input[count] = ft_strtrim(input[count], " <>");
 	commands(input[count], env, 1);
 	exit(com_info()->exit_value);
-	
 }
 
 void	child_input(char **input, int count)

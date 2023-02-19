@@ -60,8 +60,8 @@ void	check_error_3(char *arg, char **input)
 // Verifica se o input é maior que um int64
 int	check_size_int(char *str)
 {
-	char *max_int;
-	int	i;
+	char	*max_int;
+	int		i;
 
 	i = 0;
 	max_int = "9223372036854775807";
