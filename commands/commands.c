@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/16 17:04:05 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:41:43 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	commands(char *input, char **env, int is_fork)
 	char	**arg;
 
 	arg = ft_split(input, ' ');
+	my_free(input);
+	arg = parse_input3(arg);
 	com_info()->nb_args = count_args(arg);
 	if (arg[0])
 	{
@@ -31,18 +33,25 @@ void	commands(char *input, char **env, int is_fork)
 			ft_pwd();
 		else if (!ft_strncmp(arg[0], "export", 7))
 			ft_export(arg);
-		else if (!ft_strncmp(arg[0], "unset", 6))
-			ft_unset(arg);
-		else if (!ft_strncmp(arg[0], "env", 4))
-			ft_env(arg);
-		else if (!ft_strncmp(arg[0], "exit", 5))
-			ft_exit(arg);
-		else if (!ft_strncmp(arg[0], "change_color", 13))
-			change_color(arg);
 		else
-			fork_commands(arg, env, is_fork);
+			commands2(arg, env, is_fork);
 	}
 	free_matrix(arg);
+}
+
+// Continuação da função commands
+void	commands2(char **arg, char **env, int is_fork)
+{
+	if (!ft_strncmp(arg[0], "unset", 6))
+		ft_unset(arg);
+	else if (!ft_strncmp(arg[0], "env", 4))
+		ft_env(arg);
+	else if (!ft_strncmp(arg[0], "exit", 5))
+		ft_exit(arg);
+	else if (!ft_strncmp(arg[0], "change_color", 13))
+		change_color(arg);
+	else
+		fork_commands(arg, env, is_fork);
 }
 
 int	parent_commands(char *input, char **env)
@@ -50,6 +59,7 @@ int	parent_commands(char *input, char **env)
 	char	**arg;
 
 	arg = ft_split(input, ' ');
+	arg = parse_input3(arg);
 	if (!ft_strncmp(arg[0], "cd", 3))
 		ft_cd(arg, env);
 	else if (!ft_strncmp(arg[0], "export", 7))
@@ -59,7 +69,12 @@ int	parent_commands(char *input, char **env)
 	else if (!ft_strncmp(arg[0], "exit", 5))
 		ft_exit(arg);
 	else
+	{
+		free_matrix(arg);
 		return (0);
+	}
+	free_matrix(arg);
+	my_free(input);
 	return (1);
 }
 

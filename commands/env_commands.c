@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/15 13:17:15 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/22 16:39:45 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ void	env_commands(char **input, char **env)
 	if (!path)
 	{
 		ft_error("Command not found: %s", input[0]);
-		free(path);
+		free_matrix(input);
 		catch_signal();
 		exit(127);
 	}
 	else if (execve(path, input, env) == -1)
 	{
 		ft_error("Deu Merda\n");
-		free(path);
+		my_free(path);
+		free_matrix(input);
 		exit(126);
 	}
 }

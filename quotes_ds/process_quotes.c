@@ -15,15 +15,28 @@
 // Processa aspas duplas
 char	*process_quotes(char *input)
 {
+	//char	*new;
+
 	if (find_quote(input) % 2 == 0 && find_quote(input) != 0)
-		input = remove_quotes(input);
+	{
+		//new = remove_quotes(input);
+		input = remove_quotes(input, '"');
+		//return (new);
+	}
 	return (input);
 }
 
 // Processa aspas simples
 char	*process_peliculas(char *input)
 {
+	//char	*new;
+
 	if (find_pelicula(input) % 2 == 0 && find_pelicula(input) != 0)
-		input = remove_peliculas(input);
+	{
+		//new = remove_peliculas(input);
+		input = remove_quotes(input, '\'');
+		//free(input);
+		//return (new);
+	}
 	return (input);
 }

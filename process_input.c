@@ -29,7 +29,6 @@ void	process_input(char **args, char *input, char **env)
 	}
 	else
 	{
-		input = parse_input2(input);
 		commands(input, env, 0);
 	}
 	free_matrix(args);

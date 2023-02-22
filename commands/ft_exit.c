@@ -46,6 +46,6 @@ void	do_exit(int exit_value, char **input)
 {
 	write(1, "exit\n", 5);
 	rl_clear_history();
-	free (input);
+	free_matrix(input);
 	exit(exit_value);
 }

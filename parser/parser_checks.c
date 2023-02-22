@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/15 13:33:22 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/16 22:39:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 int	parser_checks(char *input)
 {
 	if (empty_prompt(input))
-	{
-		free(input);
 		return (1);
-	}
 	if (ft_strlen(input))
 		add_history(input);
 	return (0);

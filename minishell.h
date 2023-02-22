@@ -76,6 +76,8 @@ typedef struct s_command
  |_|  |_|___|_|\_|___|___/_||_|___|____|____|*/
 t_command				*com_info(void);
 void					free_list(t_env_lst *lst);
+void					free_all(char *input, char *info);
+void					my_free(char *input);	
 
 //INIT SHELL
 void					init_shell(char **env);
@@ -124,6 +126,7 @@ int						check_and(char *input);
 //PARSE INPUT
 char					*parse_input(char *input);
 char					*parse_input2(char *input);
+char					**parse_input3(char **input);
 char					*separate_input(char *input);
 char					**parse_cenas(char **arg);
 int     				is_space(char c);
@@ -154,8 +157,8 @@ char 					*process_quotes(char *input);
 char 					*process_peliculas(char *input);
 int						find_quote(char *str);
 int						find_pelicula(char *str);
-char					*remove_quotes(char *input);
-char					*remove_peliculas(char *input);
+char					*remove_quotes(char *input, char quote);
+//char					*remove_peliculas(char *input);
 int						surround_quote(char *input, int index, int quote);
 
 //DOLLAR SIGN
@@ -201,6 +204,7 @@ int						check_file_access(char *file);
   \___\___/|_|  |_|_|  |_/_/ \_\_|\_|___/|___/
 */
 void					commands(char *input, char **env, int is_fork);
+void					commands2(char **arg, char **env, int is_fork);
 int						parent_commands(char *input, char **env);
 void					fork_commands(char **input, char **env, int is_fork);
 

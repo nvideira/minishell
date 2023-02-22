@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_dir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:17:25 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/16 16:42:04 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:55:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ char	*print_info(void)
 	char	*str;
 	char	*username;
 	char	*dir;
-	char	*new;
+	char	*temp;
 
 	dir = getcwd(cwd, sizeof(cwd));
 	username = gce("USER=");
-	new = ft_strjoin(username, com_info()->color);
+	str = ft_strjoin(username, com_info()->color);
 	free(username);
-	str = ft_strjoin(new, dir);
-	free(new);
-	new = ft_strjoin(str, "$ \033[0m");
+	temp = ft_strjoin(str, dir);
 	free(str);
-	return (new);
+	str = ft_strjoin(temp, "$ \033[0m");
+	free(temp);
+	return (str);
 }
 
 // Função para imprimir o diretório atual

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/16 17:00:15 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:27:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Shell_Split não está de acordo com a Norminette
 
 int	find_quotes(const char *str, int i, int type)
 {
@@ -57,19 +55,16 @@ int	ft_wordcount(const char *str, char c)
 	return (words);
 }
 
-/*
-void	do_split()
+int	get_i(const char *str, int i)
 {
-	while (str[st] && (ft_space(str[st]) || ft_ispipe(str[st], c)))
-		st++;
-	ns[j] = ft_substr(str, st, (i - st) + 1);
-	if (!ns[j++])
-		return (0);
+	if (str[i] == 34)
+		i = find_quotes(str, i, 34);
+	if (str[i] == 39)
+		i = find_quotes(str, i, 39);
+	return (i);
 }
-*/
 
-// Norminette
-static int	split_it(char const *str, char c, int st, char **ns)
+int	split_it(char const *str, char c, int st, char **ns)
 {
 	int	i;
 	int	j;
@@ -83,24 +78,21 @@ static int	split_it(char const *str, char c, int st, char **ns)
 			i++;
 			st++;
 		}
-		if (str[i] == 34)
-			i = find_quotes(str, i, 34);
-		if (str[i] == 39)
-			i = find_quotes(str, i, 39);
+		i = get_i(str, i);
 		if (str[i] == '\0')
 			break ;
-		if (ft_ispipe(str[i], c) == 0 && ft_ispipe(str[i + 1], c) == 1)
+		if (!ft_ispipe(str[i], c) && ft_ispipe(str[i + 1], c) == 1)
 		{
 			while (str[st] && (ft_space(str[st]) || ft_ispipe(str[st], c)))
 				st++;
 			ns[j] = ft_substr(str, st, (i - st) + 1);
-			if (!ns[j++])
+			if (!ns[j])
 				return (0);
+			j++;
 			st = i + 1;
 		}
 		i++;
 	}
-	ns[j] = NULL;
 	return (1);
 }
 
@@ -117,7 +109,11 @@ char	**ft_split(const char *s, char c)
 	ns = malloc(sizeof(char *) * (matlen + 1));
 	if (!ns)
 		return (NULL);
+	ns[matlen] = NULL;
 	if (!split_it(s, c, st, ns))
-		return (freematrix(ns, matlen));
+	{
+		free_matrix(ns);
+		return (NULL);
+	}
 	return (ns);
 }

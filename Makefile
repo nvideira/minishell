@@ -22,7 +22,7 @@ SRC = \
 	main.c init_shell.c signals.c print_dir.c \
 	env_to_lst.c free_env.c free_all.c \
 	shell_split.c shell_split_utils.c \
-	exported_vars.c process_input.c\
+	exported_vars.c process_input.c \
 	\
 	parser/parser.c parser/parser_utils.c parser/parser_checks.c \
 	parser/parse_input.c parser/separate_input.c\

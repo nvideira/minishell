@@ -12,21 +12,6 @@
 
 #include "minishell.h"
 
-char	*parse_input(char *input)
-{
-	input = put_spaces(input);
-	input = separate_input(input);
-	return (input);
-}
-
-char	*parse_input2(char *input)
-{
-	input = process_quotes(input);
-	input = check_ds(input);
-	input = process_peliculas(input);
-	return (input);
-}
-
 int	is_space(char c)
 {
 	if (c == '\n' || c == '\t' || c == '\v'
@@ -72,7 +57,7 @@ char	*put_spaces(char *input)
 	i = 0;
 	j = 0;
 	words = count_words(input);
-	new = malloc(sizeof(char) * (words + 1));
+	new = malloc(sizeof(char) * (words));
 	if (!new)
 		return (NULL);
 	while (input[i])

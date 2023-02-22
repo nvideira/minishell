@@ -33,3 +33,37 @@ void	parser(char *input, char **env)
 	args = ft_split(input, ' ');
 	process_input(args, input, env);
 }
+
+//input = put_spaces(input);
+char	*parse_input(char *input)
+{
+	input = separate_input(input);
+	return (input);
+}
+
+char	*parse_input2(char *input)
+{
+	input = process_quotes(input);
+	input = check_ds(input);
+	input = process_peliculas(input);
+	return (input);
+}
+
+char	**parse_input3(char **input)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (input[i])
+	{
+		tmp = check_ds(input[i]);
+		free(input[i]);
+		input[i] = ft_strdup(tmp);
+		free(tmp);
+		input[i] = process_quotes(input[i]);
+		input[i] = process_peliculas(input[i]);
+		i++;
+	}
+	return (input);
+}
