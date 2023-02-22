@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:13:10 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/22 21:33:07 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/22 22:35:09 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*remove_quotes(char *input, char quote)
 		i++;
 	}
 	new[j] = '\0';
+	free(input);
 	return (new);
 }
 
