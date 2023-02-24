@@ -13,14 +13,14 @@
 #include "minishell.h"
 
 // Processa o input e verifica se há erros
-void	parser(char *input, char **env)
+char	*parser(char *input, char **env)
 {
 	char	**args;
 
 	if (parser_checks(input))
-		return ;
+		return NULL;
 	if (!parser_checks2(input))
-		return ;
+		return NULL;
 	input = parse_input(input);
 	if (check_special(input, '|'))
 	{
@@ -28,10 +28,11 @@ void	parser(char *input, char **env)
 		args = ft_split(input, '|');
 		pipe_commands(args, env);
 		free_matrix(args);
-		return ;
+		free(input);
+		return NULL;
 	}
 	args = ft_split(input, ' ');
-	process_input(args, input, env);
+	return (process_input(args, input, env));
 }
 
 //input = put_spaces(input);
@@ -52,16 +53,16 @@ char	*parse_input2(char *input)
 char	**parse_input3(char **input)
 {
 	int		i;
-	char	*tmp;
+	//char	*tmp;
 
 	i = 0;
 	while (input[i])
 	{
-		tmp = check_ds(input[i]);
-		free(input[i]);
-		input[i] = ft_strdup(tmp);
-		free(tmp);
+	//	free(input[i]);
+	//	input[i] = ft_strdup(tmp);
+		// free(tmp);
 		input[i] = process_quotes(input[i]);
+		input[i] = check_ds(input[i]);
 		input[i] = process_peliculas(input[i]);
 		i++;
 	}

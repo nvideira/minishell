@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	process_input(char **args, char *input, char **env)
+char	*process_input(char **args, char *input, char **env)
 {
 	int		pid;
 
@@ -32,4 +32,5 @@ void	process_input(char **args, char *input, char **env)
 		commands(input, env, 0);
 	}
 	free_matrix(args);
+	return (input);
 }

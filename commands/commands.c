@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/22 20:41:43 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/24 18:55:28 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	commands(char *input, char **env, int is_fork)
 {
 	char	**arg;
 
+	input = parse_input2(input);
 	arg = ft_split(input, ' ');
-	my_free(input);
-	arg = parse_input3(arg);
 	com_info()->nb_args = count_args(arg);
 	if (arg[0])
 	{
@@ -36,6 +35,7 @@ void	commands(char *input, char **env, int is_fork)
 		else
 			commands2(arg, env, is_fork);
 	}
+	//free(input);
 	free_matrix(arg);
 }
 
@@ -58,8 +58,8 @@ int	parent_commands(char *input, char **env)
 {
 	char	**arg;
 
+	input = parse_input2(input);
 	arg = ft_split(input, ' ');
-	arg = parse_input3(arg);
 	if (!ft_strncmp(arg[0], "cd", 3))
 		ft_cd(arg, env);
 	else if (!ft_strncmp(arg[0], "export", 7))
@@ -70,11 +70,12 @@ int	parent_commands(char *input, char **env)
 		ft_exit(arg);
 	else
 	{
+		free(input);
 		free_matrix(arg);
 		return (0);
 	}
+	//free(input);
 	free_matrix(arg);
-	my_free(input);
 	return (1);
 }
 

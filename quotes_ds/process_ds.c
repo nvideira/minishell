@@ -12,23 +12,57 @@
 
 #include "minishell.h"
 
+int count_all_char(char **input)
+{
+	int i;
+	int j;
+	int count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while (input[i])
+	{
+		j = 0;
+		while (input[i][j])
+		{
+			count++;
+			j++;
+		}
+		i++;
+	}
+	return (count + i);
+}
+
 char	*join_args(char **args)
 {
 	char	*new;
 	int		i;
-	char	*tmp;
+	int	j;
+	int k;
 
 	i = 0;
+	k = 0;
+	new = malloc(sizeof(char) * count_all_char(args));
+	if (!new)
+		return (NULL);
 	while (args[i])
 	{
-		if (i == 0)
-			tmp = ft_strdup("");
-		new = ft_strjoin(tmp, args[i]);
-		free(tmp);
+		j = 0;
+		while (args[i][j])
+		{
+			new[k] = args[i][j];
+			j++;
+			k++;
+		}
 		if (args[i + 1])
-			tmp = ft_strjoin(new, " ");
+		{
+			new[k] = ' ';
+			k++;
+		}
 		i++;
 	}
+	new[k] = '\0';
 	return (new);
 }
 
@@ -43,28 +77,41 @@ char	*check_ds(char *input)
 {
 	char	**args;
 	int		i;
-	char	*new;
+	char	*tmp;
 
 	i = 0;
-	if (ft_strchr(input, '$'))
+	if (!ft_strchr(input, '$'))
 		return (input);
 	args = ft_split(input, ' ');
 	while (args[i])
 	{
 		if (!ft_strncmp(args[i], "$?", 3))
-			args[i] = ft_itoa((com_info()->exit_value >> 8 & 255));
+		{
+			tmp = ft_itoa((com_info()->exit_value >> 8 & 255));
+			free(args[i]);
+			args[i] = ft_strdup(tmp);
+			free(tmp);
+		}
 		else if (args[i][0] == '$' && ft_strlen(args[i]) > 1
 			&& count_ds(args[i]) == 1)
-			args[i] = ft_strdup(change_val(args[i]));
+		{
+			tmp = change_val(args[i]);
+			free(args[i]);
+			args[i] = ft_strdup(tmp);
+			free(tmp);
+		}
 		else if (count_ds(args[i]) >= 1 && (ft_strlen(args[i]) > 1))
-			args[i] = change_val2(args[i], 0, 0);
+		{
+			tmp = change_val2(args[i], 0, 0);
+			free(args[i]);
+			args[i] = ft_strdup(tmp);
+			free(tmp);
+		}
 		i++;
 	}
-	new = join_args(args);
-	//input = join_args(args);
+	input = join_args(args);
 	free_matrix(args);
-	//free(input);
-	return (new);
+	return (input);
 }
 
 // Altera o valor da variavel quando tiver apenas 1 $.
@@ -74,24 +121,31 @@ char	*change_val(char *input)
 	t_env_lst	*temp2;
 	char		*name;
 
-	name = input;
+	input++;
+	name = ft_strjoin(input, "=");
 	temp = com_info()->vars;
-	name++;
 	while (temp)
 	{
-		if (!ft_strncmp(ft_strjoin(name, "="), temp->name, ft_strlen(name) + 1))
+		if (!ft_strncmp(name, temp->name, ft_strlen(name)))
+		{
+			free(name);
 			return (temp->value);
+		}
 		temp = temp->next;
 	}
 	temp2 = com_info()->env_lst;
 	while (temp2)
 	{
-		if (!ft_strncmp(ft_strjoin(name, "=")
-				, temp2->name, ft_strlen(name) + 1))
+		if (!ft_strncmp(name
+				, temp2->name, ft_strlen(name)))
+		{
+			free(name);
 			return (temp2->value);
+		}
 		temp2 = temp2->next;
 	}
-	return ("");
+	free(name);
+	return (ft_strdup(""));
 }
 
 // Salta as aspas simples.
@@ -108,6 +162,7 @@ int	skip_quotes_ds(char *input, int i, char c)
 char	*change_val2(char *input, int i, int j)
 {
 	char		*name;
+	char		*tmp;
 
 	while (input[i])
 	{
@@ -119,9 +174,13 @@ char	*change_val2(char *input, int i, int j)
 				j++;
 			name = ft_substr(input, (i - j - 1), (j + 1));
 			if (cds(name, com_info()->env_lst) || cds(name, com_info()->vars))
-				input = create_new(input, i, j, name);
+				tmp = create_new(input, i, j, name);
 			else
-				input = remove_ds(input, ft_strlen(name));
+				tmp = remove_ds(input, ft_strlen(name));
+			free(input);
+			input = ft_strdup(tmp);
+			free(tmp);
+			free(name);
 			i = 0;
 			j = 0;
 		}

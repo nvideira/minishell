@@ -109,7 +109,7 @@ void					free_env(t_env_lst **env);
  |  _/ _ \|   /\__ \ _||   /
  |_|/_/ \_\_|_\|___/___|_|_\*/
 //PARSER
-void    				parser(char *input, char **env);
+char *parser(char *input, char **env);
 int						skip_quotes(char *input, int i, char quote);
 char					***split_split(char **matrix);
 int						check_quotes(char *commands);
@@ -134,7 +134,7 @@ char					*put_spaces(char *input);
 int						count_words(char *input);
 
 //PROCESS INPUT
-void					process_input(char **args, char *input, char **env);
+char *process_input(char **args, char *input, char **env);
 int 					ft_find_char(char *str, char c);
 int						ft_find_in_matrix(char **matrix, char c);
 int						count_args(char **matrix);
