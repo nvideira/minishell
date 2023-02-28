@@ -30,11 +30,14 @@ void	check_unset(char *input)
 // Verifica se a variável existe
 int	check_if_exists_unset(char *input, t_env_lst *temp)
 {
-	while (temp)
+	t_env_lst	*head;
+
+	head = temp;
+	while (head)
 	{
-		if (!ft_strncmp(input, temp->name, ft_strlen(input)))
+		if (!ft_strncmp(input, head->name, ft_strlen(input)))
 			return (1);
-		temp = temp->next;
+		head = head->next;
 	}
 	return (0);
 }
@@ -47,11 +50,8 @@ void	do_unset(char *input, t_env_lst *lst)
 	head = lst;
 	while (lst)
 	{
-		if (!ft_strncmp(input, lst->name, (ft_strlen(lst->name) - 1))
-			&& ft_strncmp(lst->name, "_=", 2))
+		if (!ft_strncmp(input, lst->name, (ft_strlen(lst->name) - 1)))
 		{
-			free(lst->name);
-			free(lst->value);
 			if (!lst->next && !lst->prev)
 				head = NULL;
 			else if (!lst->next)
@@ -61,16 +61,12 @@ void	do_unset(char *input, t_env_lst *lst)
 				lst->prev->next = lst->next;
 				lst->next->prev = lst->prev;
 			}
+			free(lst->name);
+			free(lst->value);
+			free(lst);
 			break ;
 		}
 		lst = lst->next;
 	}
 	lst = head;
-}
-
-// Erros do comando unset
-void	unset_error(void)
-{
-	ft_error("unset: not enough arguments\n");
-	return ;
 }

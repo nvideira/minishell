@@ -69,8 +69,8 @@ $(NAME): $(OBJ) $(INCLUDE)
 .c.o:
 	@$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $(<:.c=.o)
 
-valgrind:
-	valgrind --leak-check=full \
+valgrind: re
+		valgrind --leak-check=full \
          --show-leak-kinds=all \
          --track-origins=yes \
          --log-file=valgrind-out.txt \

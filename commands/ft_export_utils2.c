@@ -73,25 +73,32 @@ void	change_value(char *str, t_env_lst *lst)
 	char		*name;
 	char		*value;
 	int			len;
+	char 		*sub;
 
 	len = 0;
 	head = lst;
 	while (str[len] && str[len] != '=' && str[len] != '\0')
 		len++;
 	name = get_name_change_export(str, len);
+	sub = ft_substr(name, 0, len);
 	value = get_value_export(str, len + 1);
-	while (lst->name != ft_substr(name, 0, len))
+	while (lst->name != sub)
 	{
-		if (!ft_strncmp(ft_substr(name, 0, len), lst->name, (len)))
+		if (!ft_strncmp(sub, lst->name, (len)))
 		{
 			if (!ft_strchr(lst->name, '='))
+			{
+				free(lst->name);
 				lst->name = ft_strdup(name);
+			}
+			free(lst->value);
 			lst->value = ft_strdup(value);
 			break ;
 		}
 		lst = lst->next;
 	}
 	lst = head;
+	free(sub);
 	free(name);
 	free(value);
 }

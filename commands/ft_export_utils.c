@@ -45,11 +45,17 @@ t_env_lst	*sort_list(t_env_lst *curr)
 		{
 			temp = ft_strdup(curr->name);
 			value = ft_strdup(curr->value);
+			free(curr->name);
 			curr->name = ft_strdup(curr->next->name);
+			free(curr->value);
 			curr->value = ft_strdup(curr->next->value);
+			free(curr->next->name);
 			curr->next->name = ft_strdup(temp);
+			free(curr->next->value);
 			curr->next->value = ft_strdup(value);
 			curr = head;
+			free(temp);
+			free(value);
 		}
 		else
 			curr = curr->next;
@@ -83,5 +89,6 @@ void	print_exported(char **input)
 		}
 		temp = temp->next;
 	}
+	free_list(temp);
 	com_info()->exit_value = 0;
 }

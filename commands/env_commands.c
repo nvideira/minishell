@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/24 17:34:47 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:01:14 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	env_commands(char **input, char **env)
 	else if (execve(path, input, env) == -1)
 	{
 		ft_error("Deu Merda\n");
-		//my_free(path);
 		//free_matrix(input);
 		//free_list(com_info()->env_lst);
 		exit(126);
 	}
+	free(path);
 }
 
 // Encontra o path do comando

@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/24 18:55:28 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:52:15 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	commands(char *input, char **env, int is_fork)
 		else
 			commands2(arg, env, is_fork);
 	}
-	//free(input);
+	free(input);
 	free_matrix(arg);
 }
 

@@ -49,14 +49,14 @@ int	main(int argc, char **argv, char **env)
 			write(2, "exit\n", 5);
 			rl_clear_history();
 			free_all(input, info);
-			//free_list(com_info()->env_lst);
+			free_list(com_info()->env_lst);
 			exit(com_info()->exit_value >> 8 & 0xFF);
 		}
 		signal_block();
 		input = parser(input, env);
-		free_all(input, info);
+		free(info);
 		catch_signal();
 	}
-	//free_list(com_info()->env_lst);
+	free_list(com_info()->env_lst);
 	return (com_info()->exit_value);
 }

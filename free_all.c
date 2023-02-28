@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:35:18 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/24 17:29:02 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/28 19:31:32 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ void	free_list(t_env_lst *lst)
 	while (lst)
 	{
 		free(lst->name);
-		lst->name = NULL;
+		//lst->name = NULL;
 		free(lst->value);
-		lst->value = NULL;
-		free(lst);
+		//lst->value = NULL;
 		lst = lst->next;
 	}
 	free(lst);

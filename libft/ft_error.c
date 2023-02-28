@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:15:16 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/22 17:39:11 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:05:01 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_error(char *err, ...)
 	va_end(arg);
 	temp = ft_strjoin("\033[0;31m", error);
 	free(error);
-	error = ft_strjoin(temp, "\033[0m");
-	perror(error);
+	error = ft_strjoin(temp, "\033[0m\n");
+	write(2, error, ft_strlen(error));
 	free_all(temp, error);
 }

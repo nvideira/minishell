@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:46:39 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/15 13:22:33 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/28 18:03:29 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	print_ft_env(char *name, char *value)
 void	ft_env(char **input)
 {
 	t_env_lst	*temp;
+	char		*path;
 
-	if (!find_path("env", com_info()->env_lst))
+	path = find_path("env", com_info()->env_lst);
+	if (!path)
 	{
 		ft_error("Command not found: env\n");
 		com_info()->exit_value = 127;
@@ -35,6 +37,7 @@ void	ft_env(char **input)
 		ft_error("Env: '%s': No such file or directory\n",
 			input[1]);
 		com_info()->exit_value = 127;
+		free(path);
 		return ;
 	}
 	temp = com_info()->env_lst;
@@ -45,4 +48,5 @@ void	ft_env(char **input)
 		temp = temp->next;
 	}
 	com_info()->exit_value = 0;
+	free(path);
 }

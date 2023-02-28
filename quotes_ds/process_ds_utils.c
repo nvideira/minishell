@@ -33,7 +33,7 @@ char	*create_new(char *input, int i, int j, char *name)
 	l = 0;
 	val = ft_strdup(change_val(name));
 	size = ((ft_strlen(input) - j) + ft_strlen(val));
-	new = malloc(sizeof(char) * size);
+	new = malloc(sizeof(char) * (size + 1));
 	if (!new)
 		return (NULL);
 	while (k < (i - j - 1))
@@ -43,9 +43,10 @@ char	*create_new(char *input, int i, int j, char *name)
 	}
 	while (val[l])
 		new[k++] = val[l++];
-	while (new[k] || k < size)
+	while (k < size)
 		new[k++] = input[i++];
 	new[k] = '\0';
+	free(val);
 	return (new);
 }
 
@@ -81,13 +82,20 @@ char	*remove_ds(char *input, int size)
 // Check If Dollar Sign Exists
 int	cds(char *input, t_env_lst *temp)
 {
+	char *name;
+
 	input++;
+	name = ft_strjoin(input, "=");
 	while (temp)
 	{
-		if (!ft_strncmp(ft_strjoin(input, "="), temp->name, ft_strlen(input)))
+		if (!ft_strncmp(name, temp->name, ft_strlen(input)))
+		{
+			free(name);
 			return (1);
+		}
 		temp = temp->next;
 	}
+	free(name);
 	return (0);
 }
 

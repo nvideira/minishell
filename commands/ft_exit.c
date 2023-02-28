@@ -47,6 +47,6 @@ void	do_exit(int exit_value, char **input)
 	write(1, "exit\n", 5);
 	rl_clear_history();
 	free_matrix(input);
-	//free_list(com_info()->env_lst);
+	free_list(com_info()->env_lst);
 	exit(exit_value);
 }

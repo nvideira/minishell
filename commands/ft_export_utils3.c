@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:17:14 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/07 14:48:43 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/28 18:24:10 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_value_export(char *str, int len)
 
 	i = 0;
 	len_val = (ft_strlen(str) - (len + 1));
-	value = malloc(sizeof(char) * (len_val + 1));
+	value = malloc(sizeof(char) * (len_val + 2));
 	if (!value)
 		return (NULL);
 	while (str[len])
