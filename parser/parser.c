@@ -27,7 +27,7 @@ char	*parser(char *input, char **env)
 		input = parse_input2(input);
 		args = ft_split(input, '|');
 		pipe_commands(args, env);
-		free_matrix(args);
+		//free_matrix(args);
 		free(input);
 		return NULL;
 	}

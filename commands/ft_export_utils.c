@@ -89,6 +89,6 @@ void	print_exported(char **input)
 		}
 		temp = temp->next;
 	}
-	free_list(temp);
+	//free_list(temp);
 	com_info()->exit_value = 0;
 }
