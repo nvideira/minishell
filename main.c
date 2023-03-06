@@ -59,5 +59,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	//free_list(com_info()->env_lst);
 	rl_clear_history();
+	if (input)
+		free(input);
 	return (com_info()->exit_value);
 }

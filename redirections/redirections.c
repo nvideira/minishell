@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:29:35 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/01 04:49:16 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:13:52 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,5 @@ void	redirections(char *input, char **env)
 	}
 	input = remove_redirections(input);
 	commands(input, env, 1);
-	rl_clear_history();
 	exit(com_info()->exit_value);
 }

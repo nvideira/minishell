@@ -20,7 +20,7 @@ char	*ft_put_space_before(char *input, int i)
 
 	j = 0;
 	len = ft_strlen(input);
-	new = malloc(sizeof(char) * (len + 2));
+	new = malloc(sizeof(char) * (len + 3));
 	if (!new)
 		return (NULL);
 	while (input[j] && (j < (i + 1)))
@@ -37,6 +37,7 @@ char	*ft_put_space_before(char *input, int i)
 		j++;
 	}
 	new[j] = '\0';
+	free(input);
 	return (new);
 }
 
@@ -48,7 +49,7 @@ char	*ft_put_space_after(char *input, int i)
 
 	j = 0;
 	len = ft_strlen(input);
-	new = malloc(sizeof(char) * (len + 2));
+	new = malloc(sizeof(char) * (len + 3));
 	if (!new)
 		return (NULL);
 	while (input[j] && (j < i))
@@ -65,6 +66,7 @@ char	*ft_put_space_after(char *input, int i)
 		j++;
 	}
 	new[j] = '\0';
+	free(input);
 	return (new);
 }
 
@@ -77,10 +79,10 @@ char	*separate_input(char *input)
 	{
 		if (input[i] == '>' || input[i] == '<' || input[i] == '|')
 		{
-			if (i > 0 && input[i - 1] != ' ' && input[i - 1] != input[i])
-				input = ft_put_space_before(input, i - 1);
 			if (input[i + 1] && input[i + 1] != ' ' && input[i + 1] != input[i])
 				input = ft_put_space_after(input, i + 1);
+			if (i > 0 && input[i - 1] != ' ' && input[i - 1] != input[i])
+				input = ft_put_space_before(input, i - 1);
 		}
 		i++;
 	}
