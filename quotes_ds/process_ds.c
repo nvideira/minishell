@@ -98,14 +98,11 @@ char	*check_ds(char *input)
 			tmp = change_val(args[i]);
 			free(args[i]);
 			args[i] = ft_strdup(tmp);
-			//free(tmp);
 		}
 		else if (count_ds(args[i]) >= 1 && (ft_strlen(args[i]) > 1))
 		{
 			tmp = change_val2(args[i], 0, 0);
-			//free(args[i]);
 			args[i] = ft_strdup(tmp);
-			//free(tmp);
 		}
 		i++;
 	}

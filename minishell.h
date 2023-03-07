@@ -80,7 +80,7 @@ void					free_all(char *input, char *info);
 void					my_free(char *input);	
 
 //INIT SHELL
-void					init_shell(char **env);
+void					init_shell(int argc, char **argv, char **env);
 char					*gce(char *str);
 
 //SIGNALS

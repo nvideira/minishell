@@ -38,7 +38,6 @@ void	exit_errors(int error, char **input)
 		ft_error("exit\nexit: %s: numeric argument required\n", input[1]);
 		rl_clear_history();
 		free_matrix(input);
-		//free_list(com_info()->env_lst);
 		exit(2);
 	}
 	else if (error == 2)

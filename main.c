@@ -36,9 +36,7 @@ int	main(int argc, char **argv, char **env)
 	char	*input;
 	char	*info;
 
-	(void)argc;
-	(void)argv;
-	init_shell(env);
+	init_shell(argc, argv, env);
 	catch_signal();
 	while (1)
 	{
@@ -49,7 +47,6 @@ int	main(int argc, char **argv, char **env)
 			write(2, "exit\n", 5);
 			rl_clear_history();
 			free_all(input, info);
-			//free_list(com_info()->env_lst);
 			exit(com_info()->exit_value >> 8 & 0xFF);
 		}
 		signal_block();
@@ -57,7 +54,6 @@ int	main(int argc, char **argv, char **env)
 		free(info);
 		catch_signal();
 	}
-	//free_list(com_info()->env_lst);
 	rl_clear_history();
 	if (input)
 		free(input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:59:18 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/15 13:23:24 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/07 03:35:35 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ char	*gce(char *str)
 }
 
 // Função que inicializa a shell
-void	init_shell(char **env)
+void	init_shell(int argc, char **argv, char **env)
 {
 	char	*username;
 
+	(void)argc;
+	(void)argv;
 	com_info()->env_lst = env_to_lst(env);
 	com_info()->vars = NULL;
 	com_info()->color = "\033[1;32m:";

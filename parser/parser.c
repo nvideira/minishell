@@ -27,7 +27,6 @@ char	*parser(char *input, char **env)
 		input = parse_input2(input);
 		args = ft_split(input, '|');
 		pipe_commands(args, env);
-		//free_matrix(args);
 		free(input);
 		return NULL;
 	}
@@ -35,7 +34,6 @@ char	*parser(char *input, char **env)
 	return (process_input(args, input, env));
 }
 
-//input = put_spaces(input);
 char	*parse_input(char *input)
 {
 	input = separate_input(input);
@@ -53,14 +51,10 @@ char	*parse_input2(char *input)
 char	**parse_input3(char **input)
 {
 	int		i;
-	//char	*tmp;
 
 	i = 0;
 	while (input[i])
 	{
-	//	free(input[i]);
-	//	input[i] = ft_strdup(tmp);
-		// free(tmp);
 		input[i] = process_quotes(input[i]);
 		input[i] = check_ds(input[i]);
 		input[i] = process_peliculas(input[i]);

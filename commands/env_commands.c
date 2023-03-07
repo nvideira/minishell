@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/05 18:15:21 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/07 02:46:35 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,12 @@ void	env_commands(char **input, char **env)
 	if (!path)
 	{
 		ft_error("Command not found: %s", input[0]);
-		//free_matrix(input);
 		catch_signal();
-		//free_list(com_info()->env_lst);
 		exit(127);
 	}
 	else if (execve(path, input, env) == -1)
 	{
 		ft_error("Deu Merda\n");
-		//free_matrix(input);
-		//free_list(com_info()->env_lst);
 		exit(126);
 	}
 	free(path);

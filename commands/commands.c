@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/05 18:32:11 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/07 02:46:19 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,9 @@ int	parent_commands(char *input, char **env)
 		ft_exit(arg);
 	else
 	{
-		//free(input);
 		free_matrix(arg);
 		return (0);
 	}
-	//free(input);
 	free_matrix(arg);
 	return (1);
 }

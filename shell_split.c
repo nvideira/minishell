@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/21 23:27:18 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/07 03:20:01 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,29 +69,26 @@ int	split_it(char const *str, char c, int st, char **ns)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	while (str[i])
+	while (str[++i])
 	{
 		while (str[i] && str[i] == c)
 		{
 			i++;
 			st++;
 		}
-		i = get_i(str, i);
 		if (str[i] == '\0')
 			break ;
 		if (!ft_ispipe(str[i], c) && ft_ispipe(str[i + 1], c) == 1)
 		{
 			while (str[st] && (ft_space(str[st]) || ft_ispipe(str[st], c)))
 				st++;
-			ns[j] = ft_substr(str, st, (i - st) + 1);
-			if (!ns[j])
+			ns[j] = ft_substr(str, st, (get_i(str, i) - st) + 1);
+			if (!ns[j++])
 				return (0);
-			j++;
-			st = i + 1;
+			st += ft_strlen(ns[j - 1]);
 		}
-		i++;
 	}
 	return (1);
 }

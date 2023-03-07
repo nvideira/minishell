@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:13:10 by jlebre            #+#    #+#             */
-/*   Updated: 2023/02/28 17:50:01 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/07 02:48:49 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,8 @@ char	*remove_quotes(char *input, char quote)
 		i++;
 	}
 	new[j] = '\0';
-	//free(input);
 	return (new);
 }
-
-// char	*remove_peliculas(char *input)
-// {
-// 	char	*new;
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	j = 0;
-// 	new = malloc(sizeof(char) * (ft_strlen(input) - 1));
-// 	if (!new)
-// 		return (NULL);
-// 	while (input[i])
-// 	{
-// 		if (input[i] != '\'')
-// 		{
-// 			new[j] = input[i];
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	new[j] = '\0';
-// 	return (new);
-// }
 
 int	find_quote(char *str)
 {
