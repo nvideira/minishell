@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-int count_all_char(char **input)
+int	count_all_char(char **input)
 {
-	int i;
-	int j;
-	int count;
+	int	i;
+	int	j;
+	int	count;
 
 	i = 0;
 	j = 0;
@@ -38,8 +38,8 @@ char	*join_args(char **args)
 {
 	char	*new;
 	int		i;
-	int	j;
-	int k;
+	int		j;
+	int		k;
 
 	i = 0;
 	k = 0;
@@ -56,10 +56,7 @@ char	*join_args(char **args)
 			k++;
 		}
 		if (args[i + 1])
-		{
-			new[k] = ' ';
-			k++;
-		}
+			new[k++] = ' ';
 		i++;
 	}
 	new[k] = '\0';
@@ -98,11 +95,14 @@ char	*check_ds(char *input)
 			tmp = change_val(args[i]);
 			free(args[i]);
 			args[i] = ft_strdup(tmp);
+			//free(tmp);
 		}
 		else if (count_ds(args[i]) >= 1 && (ft_strlen(args[i]) > 1))
 		{
 			tmp = change_val2(args[i], 0, 0);
+			free(args[i]);
 			args[i] = ft_strdup(tmp);
+			free(tmp);
 		}
 		i++;
 	}

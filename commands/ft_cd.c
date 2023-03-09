@@ -135,6 +135,5 @@ void	change_pwd(char *type, char *str, char **env)
 		}
 		com_info()->env_lst = com_info()->env_lst->next;
 	}
-	free(val);
 	com_info()->env_lst = head;
 }

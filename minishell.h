@@ -109,7 +109,7 @@ void					free_env(t_env_lst **env);
  |  _/ _ \|   /\__ \ _||   /
  |_|/_/ \_\_|_\|___/___|_|_\*/
 //PARSER
-char *parser(char *input, char **env);
+char 					*parser(char *input, char **env);
 int						skip_quotes(char *input, int i, char quote);
 char					***split_split(char **matrix);
 int						check_quotes(char *commands);
@@ -122,6 +122,8 @@ int 					parser_checks(char *input);
 int						parser_checks2(char *input);
 int						check_xor(char *input);
 int						check_and(char *input);
+int						find_quote_position(char *input, char type);
+int						check_if_inside_quotes(char *input, int i);
 
 //PARSE INPUT
 char					*parse_input(char *input);
