@@ -47,6 +47,8 @@ int	main(int argc, char **argv, char **env)
 			write(2, "exit\n", 5);
 			rl_clear_history();
 			free_all(input, info);
+			// free_list(com_info()->env_lst);
+			// free_list(com_info()->vars);
 			exit(com_info()->exit_value >> 8 & 0xFF);
 		}
 		signal_block();

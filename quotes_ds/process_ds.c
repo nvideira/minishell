@@ -75,6 +75,7 @@ char	*check_ds(char *input)
 	char	**args;
 	int		i;
 	char	*tmp;
+	char	*new;
 
 	i = 0;
 	if (!ft_strchr(input, '$'))
@@ -100,15 +101,16 @@ char	*check_ds(char *input)
 		else if (count_ds(args[i]) >= 1 && (ft_strlen(args[i]) > 1))
 		{
 			tmp = change_val2(args[i], 0, 0);
-			free(args[i]);
+			//free(args[i]);
 			args[i] = ft_strdup(tmp);
 			free(tmp);
 		}
 		i++;
 	}
-	input = join_args(args);
+	new = join_args(args);
+	free(input);
 	free_matrix(args);
-	return (input);
+	return (new);
 }
 
 // Altera o valor da variavel quando tiver apenas 1 $.
