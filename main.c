@@ -26,6 +26,16 @@ void	free_all(char *input, char *info)
 	free(info);
 }
 
+void	ft_clean(char *input, char *info)
+{
+	write(2, "exit\n", 5);
+	rl_clear_history();
+	free_all(input, info);
+	free_list(com_info()->env_lst);
+	free_list(com_info()->vars);
+	exit(com_info()->exit_value >> 8 & 0xFF);
+}
+
 // Main
 // Inicia o shell e fica em loop para ler os comandos
 // Se o comando for nulo (ctrl + D) ele sai do shell
@@ -43,14 +53,7 @@ int	main(int argc, char **argv, char **env)
 		info = print_info();
 		input = readline(info);
 		if (!input)
-		{
-			write(2, "exit\n", 5);
-			rl_clear_history();
-			free_all(input, info);
-			// free_list(com_info()->env_lst);
-			// free_list(com_info()->vars);
-			exit(com_info()->exit_value >> 8 & 0xFF);
-		}
+			ft_clean(input, info);
 		signal_block();
 		input = parser(input, env);
 		free(info);

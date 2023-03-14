@@ -77,7 +77,8 @@ typedef struct s_command
 t_command				*com_info(void);
 void					free_list(t_env_lst *lst);
 void					free_all(char *input, char *info);
-void					my_free(char *input);	
+void					my_free(char *input);
+void					ft_clean(char *input, char *info);
 
 //INIT SHELL
 void					init_shell(int argc, char **argv, char **env);
@@ -136,7 +137,7 @@ char					*put_spaces(char *input);
 int						count_words(char *input);
 
 //PROCESS INPUT
-char *process_input(char **args, char *input, char **env);
+char 					*process_input(char **args, char *input, char **env);
 int 					ft_find_char(char *str, char c);
 int						ft_find_in_matrix(char **matrix, char c);
 int						count_args(char **matrix);
@@ -160,13 +161,16 @@ char 					*process_peliculas(char *input);
 int						find_quote(char *str);
 int						find_pelicula(char *str);
 char					*remove_quotes(char *input, char quote);
-//char					*remove_peliculas(char *input);
 int						surround_quote(char *input, int index, int quote);
+char					*join_args(char **args);
 
 //DOLLAR SIGN
 char					*check_ds(char *input);
 char					*change_val(char *input);
 char					*change_val2(char *input, int i, int j);
+char					*change_val_help(char *name, t_env_lst *lst);
+char					*change_val2_help(char *input, int i, int j);
+char					*check_ds_help(char **args, int i);
 
 /*___ ___ ___ ___ ___ 
  | _ \_ _| _ \ __/ __|
@@ -225,6 +229,7 @@ void					ft_cd(char **input, char **env);
 void					do_cd(char *new_dir, char *new_pwd, char **env);
 void					change_pwd(char *type, char *str, char **env);
 int						cd_errors(char **input);
+void					cd_cenas(char **input, char **env, char *new);
 void					change_pwd_env(char *type, int size,
 							char *val, char **env);
 
@@ -236,6 +241,7 @@ void					process_flags(char **input, int start);
 
 //ENV
 void					ft_env(char **input);
+int						env_errors(char *path, char **input);
 
 //EXIT
 void					ft_exit(char **input);

@@ -31,7 +31,7 @@ SRC = \
 	commands/ft_echo.c commands/ft_unset.c commands/ft_export.c \
 	commands/ft_env.c commands/ft_pwd.c commands/change_color.c \
 	commands/ft_export_utils.c commands/ft_export_utils2.c \
-	commands/ft_export_utils3.c commands/ft_echo_utils.c \
+	commands/ft_export_utils3.c commands/ft_echo_utils.c commands/cd_errors.c\
 	commands/ft_unset_utils.c commands/ft_cd.c commands/ft_exit_utils.c \
 	\
 	libft/get_next_line.c libft/add_mat_node.c libft/ft_atoi.c \
@@ -48,7 +48,7 @@ SRC = \
 	\
 	quotes_ds/remove_quote.c quotes_ds/process_ds.c \
 	quotes_ds/process_quotes.c quotes_ds/process_ds_utils.c \
-	quotes_ds/check_all_quotes.c \
+	quotes_ds/check_all_quotes.c quotes_ds/utils_extra.c\
 	\
 	redirections/redirections.c redirections/heredoc.c \
 	redirections/redirections_utils.c redirections/verify_redir.c \

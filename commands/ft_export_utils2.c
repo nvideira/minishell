@@ -73,7 +73,7 @@ void	change_value(char *str, t_env_lst *lst)
 	char		*name;
 	char		*value;
 	int			len;
-	char 		*sub;
+	char		*sub;
 
 	len = 0;
 	head = lst;

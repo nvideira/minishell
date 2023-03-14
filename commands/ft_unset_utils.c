@@ -35,6 +35,8 @@ int	check_if_exists_unset(char *input, t_env_lst *temp)
 	head = temp;
 	while (head)
 	{
+		if (head->name == NULL)
+			return (0);
 		if (!ft_strncmp(input, head->name, ft_strlen(input)))
 			return (1);
 		head = head->next;
@@ -56,6 +58,11 @@ void	do_unset(char *input, t_env_lst *lst)
 				head = NULL;
 			else if (!lst->next)
 				lst->prev->next = NULL;
+			else if (!lst->prev)
+			{
+				head = lst->next;
+				lst->next->prev = NULL;
+			}
 			else
 			{
 				lst->prev->next = lst->next;
@@ -63,7 +70,10 @@ void	do_unset(char *input, t_env_lst *lst)
 			}
 			free(lst->name);
 			free(lst->value);
-			free(lst);
+			lst->name = NULL;
+			lst->value = NULL;
+			if (head != NULL)
+				free(lst);
 			break ;
 		}
 		lst = lst->next;

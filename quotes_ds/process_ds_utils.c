@@ -82,7 +82,7 @@ char	*remove_ds(char *input, int size)
 // Check If Dollar Sign Exists
 int	cds(char *input, t_env_lst *temp)
 {
-	char *name;
+	char	*name;
 
 	input++;
 	name = ft_strjoin(input, "=");

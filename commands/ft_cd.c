@@ -12,6 +12,29 @@
 
 #include "minishell.h"
 
+void	cd_cenas(char **input, char **env, char *new)
+{
+	char	*tmp;
+
+	if (!ft_strncmp(input[1], "-", 2))
+	{
+		if (!check_if_exists("OLDPWD", com_info()->env_lst))
+		{
+			ft_error("minishell: cd: OLDPWD not set\n");
+			return ;
+		}
+		tmp = gce("OLDPWD=");
+		do_cd(tmp, tmp, env);
+		free(tmp);
+	}
+	else
+	{
+		tmp = ft_strjoin(new, input[1]);
+		do_cd(input[1], tmp, env);
+		free(tmp);
+	}
+}
+
 // Recria o comando cd
 // Tem as funcionalidades de - e ~
 // Também tem a funcionalidade de mudar o diretório atual
@@ -27,25 +50,7 @@ void	ft_cd(char **input, char **env)
 	curr = print_dir();
 	new = ft_strjoin(curr, "/");
 	if (input[1])
-	{
-		if (!ft_strncmp(input[1], "-", 2))
-		{
-			if (!check_if_exists("OLDPWD", com_info()->env_lst))
-			{
-				ft_error("minishell: cd: OLDPWD not set\n");
-				return ;
-			}
-			tmp = gce("OLDPWD=");
-			do_cd(tmp, tmp, env);
-			free(tmp);
-		}
-		else
-		{
-			tmp = ft_strjoin(new, input[1]);
-			do_cd(input[1], tmp, env);
-			free(tmp);
-		}
-	}
+		cd_cenas(input, env, new);
 	else
 	{
 		tmp = gce("HOME=");
@@ -63,34 +68,6 @@ void	do_cd(char *new_dir, char *new_pwd, char **env)
 {
 	chdir(new_dir);
 	change_pwd("PWD=", new_pwd, env);
-}
-
-// Função que vê se há erros no comando cd
-int	cd_errors(char **input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-		i++;
-	if (i > 2)
-	{
-		ft_error("cd: string not in pwd: %s\n", input[1]);
-		return (0);
-	}
-	if (i == 2)
-	{
-		if (ft_strlen(input[1]) == 1 && !ft_strncmp(input[1], "-", 2))
-			return (1);
-		if (i == 1)
-			return (1);
-		if (access(input[1], F_OK) != 0)
-		{
-			ft_error("cd: no such file or directory: %s\n", input[1]);
-			return (0);
-		}
-	}
-	return (1);
 }
 
 // FUnção que altera o PWD no env
