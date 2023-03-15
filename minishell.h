@@ -258,9 +258,12 @@ int						check_if_exists(char *str, t_env_lst *lst);
 void					print_exported(char **input);
 void					check_export(char *input);
 t_env_lst				*sort_list(t_env_lst *curr);
+void					do_sort(t_env_lst *curr, t_env_lst *head);
 char					*get_name_export(char *str, int len);
 char					*get_name_change_export(char *str, int len);
 char					*get_value_export(char *str, int len);
+void					change_value_help(t_env_lst *lst,
+							char *name, char *value, int len);
 
 //PWD
 void					ft_pwd(void);
@@ -272,6 +275,7 @@ void					unset_error(void);
 void					do_unset(char *input, t_env_lst *lst);
 int						check_if_exists_unset(char *input, t_env_lst *temp);
 void					check_unset(char *input);
+void					do_unset_help(t_env_lst *lst, t_env_lst *head);
 
 /*_   _ _____ ___ _    ___ 
  | | | |_   _|_ _| |  / __|

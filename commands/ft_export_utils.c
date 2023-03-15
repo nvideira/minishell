@@ -34,34 +34,38 @@ int	cmp_name(char *s1, char *s2)
 // Ordena a lista de variaveis
 t_env_lst	*sort_list(t_env_lst *curr)
 {
-	char		*temp;
-	char		*value;
 	t_env_lst	*head;
 
 	head = curr;
 	while (curr->next)
 	{
 		if (cmp_name(curr->name, curr->next->name) == 1)
-		{
-			temp = ft_strdup(curr->name);
-			value = ft_strdup(curr->value);
-			free(curr->name);
-			curr->name = ft_strdup(curr->next->name);
-			free(curr->value);
-			curr->value = ft_strdup(curr->next->value);
-			free(curr->next->name);
-			curr->next->name = ft_strdup(temp);
-			free(curr->next->value);
-			curr->next->value = ft_strdup(value);
-			curr = head;
-			free(temp);
-			free(value);
-		}
+			do_sort(curr, head);
 		else
 			curr = curr->next;
 	}
 	curr = head;
 	return (curr);
+}
+
+void	do_sort(t_env_lst *curr, t_env_lst *head)
+{
+	char		*temp;
+	char		*value;
+
+	temp = ft_strdup(curr->name);
+	value = ft_strdup(curr->value);
+	free(curr->name);
+	curr->name = ft_strdup(curr->next->name);
+	free(curr->value);
+	curr->value = ft_strdup(curr->next->value);
+	free(curr->next->name);
+	curr->next->name = ft_strdup(temp);
+	free(curr->next->value);
+	curr->next->value = ft_strdup(value);
+	curr = head;
+	free(temp);
+	free(value);
 }
 
 // Imprime as variaveis exportadas

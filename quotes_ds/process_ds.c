@@ -33,7 +33,6 @@ char	*check_ds_help(char **args, int i)
 	else if (count_ds(args[i]) >= 1 && (ft_strlen(args[i]) > 1))
 	{
 		tmp = change_val2(args[i], 0, 0);
-		free(args[i]);
 		args[i] = ft_strdup(tmp);
 		free(tmp);
 	}
