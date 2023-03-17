@@ -21,17 +21,13 @@ char	*process_input(char **args, char *input, char **env)
 	else if (check_special(input, '>')
 		|| check_special(input, '<'))
 	{
-		input = parse_input2(input);
 		pid = fork();
 		if (pid == 0)
 			redirections(input, env);
 		waitpid(pid, &com_info()->exit_value, 0);
 	}
 	else
-	{
-		input = parse_input2(input);
 		commands(input, env, 0);
-	}
 	free_matrix(args);
 	return (input);
 }

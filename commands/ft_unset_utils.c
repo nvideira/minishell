@@ -44,6 +44,30 @@ int	check_if_exists_unset(char *input, t_env_lst *temp)
 	return (0);
 }
 
+void	unset_actions(t_env_lst *lst, t_env_lst *head)
+{
+	if (!lst->next && !lst->prev)
+		head = NULL;
+	else if (!lst->next)
+		lst->prev->next = NULL;
+	else if (!lst->prev)
+	{
+		head = lst->next;
+		lst->next->prev = NULL;
+	}
+	else
+	{
+		lst->prev->next = lst->next;
+		lst->next->prev = lst->prev;
+	}
+	free(lst->name);
+	free(lst->value);
+	lst->name = NULL;
+	lst->value = NULL;
+	if (head != NULL)
+		free(lst);
+}
+
 // Executa o unset
 void	do_unset(char *input, t_env_lst *lst)
 {
@@ -54,26 +78,7 @@ void	do_unset(char *input, t_env_lst *lst)
 	{
 		if (!ft_strncmp(input, lst->name, (ft_strlen(lst->name) - 1)))
 		{
-			if (!lst->next && !lst->prev)
-				head = NULL;
-			else if (!lst->next)
-				lst->prev->next = NULL;
-			else if (!lst->prev)
-			{
-				head = lst->next;
-				lst->next->prev = NULL;
-			}
-			else
-			{
-				lst->prev->next = lst->next;
-				lst->next->prev = lst->prev;
-			}
-			free(lst->name);
-			free(lst->value);
-			lst->name = NULL;
-			lst->value = NULL;
-			if (head != NULL)
-				free(lst);
+			unset_actions(lst, head);
 			break ;
 		}
 		lst = lst->next;

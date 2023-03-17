@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:29:35 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/05 18:13:52 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:12:28 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,28 @@ char	*remove_redirections(char *input)
 {
 	char	**arr;
 	char	*new;
+	char	*temp;
 	int		i;
 
-	i = 1;
+	i = 0;
 	arr = ft_split(input, ' ');
 	new = ft_strjoin(arr[0], " ");
-	while (arr[i])
+	while (arr[++i])
 	{
 		if (ft_str1chr(arr[i], '<') || ft_str1chr(arr[i], '>'))
 			break ;
-		new = ft_strjoin(new, arr[i]);
+		temp = ft_strjoin(new, arr[i]);
+		free(new);
+		new = temp;
 		if (!ft_str1chr(arr[i + 1], '<') && !ft_str1chr(arr[i + 1], '>'))
-			new = ft_strjoin(new, " ");
-		i++;
+		{
+			temp = ft_strjoin(new, " ");
+			free(new);
+			new = temp;
+		}
 	}
 	free_matrix(arr);
+	free(input);
 	return (new);
 }
 

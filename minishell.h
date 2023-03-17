@@ -275,8 +275,7 @@ void					unset_error(void);
 void					do_unset(char *input, t_env_lst *lst);
 int						check_if_exists_unset(char *input, t_env_lst *temp);
 void					check_unset(char *input);
-void					do_unset_help(t_env_lst *lst, t_env_lst *head);
-
+void					unset_actions(t_env_lst *lst, t_env_lst *head);
 /*_   _ _____ ___ _    ___ 
  | | | |_   _|_ _| |  / __|
  | |_| | | |  | || |__\__ \

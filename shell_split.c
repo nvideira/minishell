@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:03:49 by nvideira          #+#    #+#             */
-/*   Updated: 2023/03/14 22:09:30 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:06:53 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,55 @@ int	get_i(const char *str, int i)
 	return (i);
 }
 
+void	split_it(char const *str, char c, int st, char **ns)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		while (str[i] && str[i] == c)
+		{
+			i++;
+			st++;
+		}
+		i = get_i(str, i);
+		if (str[i] == '\0')
+			break ;
+		if (!ft_ispipe(str[i], c) && ft_ispipe(str[i + 1], c) == 1)
+		{
+			while (str[st] && (ft_space(str[st]) || ft_ispipe(str[st], c)))
+				st++;
+			ns[j] = ft_substr(str, st, (i - st) + 1);
+			j++;
+			st = i + 1;
+		}
+		i++;
+	}
+}
+
+// Não esquecer o |echo "     42"|
+char	**ft_split(const char *s, char c)
+{
+	char	**ns;
+	size_t	st;
+	int		matlen;
+
+	st = 0;
+	if (!s)
+		return (NULL);
+	matlen = ft_wordcount(s, c);
+	ns = malloc(sizeof(char *) * (matlen + 1));
+	if (!ns)
+		return (NULL);
+	ns[matlen] = NULL;
+	split_it(s, c, st, ns);
+	return (ns);
+}
+
+/*
 int	split_it(char const *str, char c, int st, char **ns)
 {
 	int	i;
@@ -114,3 +163,4 @@ char	**ft_split(const char *s, char c)
 	}
 	return (ns);
 }
+*/

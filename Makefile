@@ -25,7 +25,7 @@ SRC = \
 	exported_vars.c process_input.c \
 	\
 	parser/parser.c parser/parser_utils.c parser/parser_checks.c \
-	parser/parse_input.c parser/separate_input.c\
+	parser/parse_input.c parser/separate_input.c parser/parser_checks2.c\
 	\
 	commands/commands.c commands/env_commands.c commands/ft_exit.c \
 	commands/ft_echo.c commands/ft_unset.c commands/ft_export.c \

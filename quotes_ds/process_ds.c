@@ -16,7 +16,7 @@ char	*check_ds_help(char **args, int i)
 {
 	char	*tmp;
 
-	if (!ft_strncmp(args[i], "$?", 3))
+	if (!ft_strncmp(args[i], "$?", 2))
 	{
 		tmp = ft_itoa((com_info()->exit_value >> 8 & 255));
 		free(args[i]);
@@ -53,7 +53,7 @@ char	*check_ds(char *input)
 	char	*new;
 
 	i = 0;
-	if (!ft_strchr(input, '$'))
+	if (!ft_str1chr(input, '$'))
 		return (input);
 	args = ft_split(input, ' ');
 	while (args[i])
@@ -71,9 +71,13 @@ char	*change_val_help(char *name, t_env_lst *lst)
 {
 	t_env_lst	*temp;
 
+	if (!name || !lst)
+		return (NULL);
 	temp = lst;
 	while (temp)
 	{
+		if (!temp->name)
+			return (NULL);
 		if (!ft_strncmp(name, temp->name, ft_strlen(name)))
 			return (temp->value);
 		temp = temp->next;

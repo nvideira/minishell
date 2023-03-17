@@ -6,7 +6,7 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/09 01:09:39 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:10:40 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	check_if_inside_quotes(char *input, int i)
 {
 	int	j;
 
-	j = i;
+	j = i - 1;
 	while (j >= 0)
 	{
 		if (input[j] == '"' || input[j] == '\'')
@@ -97,40 +97,6 @@ int	check_if_inside_quotes(char *input, int i)
 	while (input[i])
 	{
 		if (j >= 0 && input[i] == input[j])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	check_xor(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '|')
-		{
-			i++;
-			while (input[i] && is_space(input[i]))
-				i++;
-			if (input[i] == '|')
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	check_and(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '&')
 			return (1);
 		i++;
 	}
