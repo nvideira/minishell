@@ -252,7 +252,7 @@ void					exit_errors(int error, char **input);
 int						check_size_int(char *str);
 
 //EXPORT
-void					*ft_export(char **input);
+void					ft_export(char **input);
 void					change_value(char *str, t_env_lst *lst);
 int						check_if_exists(char *str, t_env_lst *lst);
 void					print_exported(char **input);
@@ -264,9 +264,10 @@ char					*get_name_change_export(char *str, int len);
 char					*get_value_export(char *str, int len);
 void					change_value_help(t_env_lst *lst,
 							char *name, char *value, int len);
+int						check_var_name(char *input);
 
 //PWD
-void					ft_pwd(void);
+void					ft_pwd(char **arg);
 int						ft_isdigit(char *str);
 
 //UNSET
@@ -287,6 +288,7 @@ char					*ft_putstr_fde(char *s);
 char					*ft_putnbr_fde(int n, int k);
 
 char					*ft_strtrim(char const *s1, char const *set);
+char					*trim_redir(char *input);
 
 //ITOA
 char					*ft_itoa(int number);

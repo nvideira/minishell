@@ -6,11 +6,25 @@
 /*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/17 20:09:15 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/22 20:05:33 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_all_space(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 // Esta função é chamada para executar os comandos
 // Compara o input com os comandos que temos e chama a função correspondente
@@ -22,6 +36,11 @@ void	commands(char *input, char **env, int is_fork)
 	arg = ft_split(input, ' ');
 	arg = parse_input3(arg);
 	free(input);
+	if (!arg[0] || !ft_strncmp(arg[0], "", 2) || is_all_space(arg[0]))
+	{
+		free_matrix(arg);
+		return ;
+	}
 	com_info()->nb_args = count_args(arg);
 	if (arg[0])
 	{
@@ -30,9 +49,7 @@ void	commands(char *input, char **env, int is_fork)
 		else if (!ft_strncmp(arg[0], "cd", 3))
 			ft_cd(arg, env);
 		else if (!ft_strncmp(arg[0], "pwd", 4))
-			ft_pwd();
-		else if (!ft_strncmp(arg[0], "export", 7))
-			ft_export(arg);
+			ft_pwd(arg);
 		else
 			commands2(arg, env, is_fork);
 	}
@@ -42,7 +59,9 @@ void	commands(char *input, char **env, int is_fork)
 // Continuação da função commands
 void	commands2(char **arg, char **env, int is_fork)
 {
-	if (!ft_strncmp(arg[0], "unset", 6))
+	if (!ft_strncmp(arg[0], "export", 7))
+		ft_export(arg);
+	else if (!ft_strncmp(arg[0], "unset", 6))
 		ft_unset(arg);
 	else if (!ft_strncmp(arg[0], "env", 4))
 		ft_env(arg);

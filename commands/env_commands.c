@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:55:34 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/07 02:46:35 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/20 11:50:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ char	*find_path(char *cmd, t_env_lst *env_lst)
 	j = 0;
 	temp = env_lst;
 	while (temp && ft_strncmp(temp->name, "PATH=", 5))
-	{
 		temp = temp->next;
-		j++;
-	}
 	if (temp == NULL)
 		return (0);
 	path = temp->value;
@@ -62,9 +59,11 @@ char	*find_path(char *cmd, t_env_lst *env_lst)
 // Junta o path com o comando
 char	*find_return_path(char *path, int j, char *cmd)
 {
-	char		*ret_path;
+	char	*ret_path;
+	int		len;
 
-	while (path[j] && ft_strichr(path, j, ':') > -1)
+	len = ft_strlen(path);
+	while (j < len && path[j] && ft_strichr(path, j, ':') > -1)
 	{
 		ret_path = join_strings(path, j, cmd);
 		if (!access(ret_path, F_OK))
@@ -72,7 +71,7 @@ char	*find_return_path(char *path, int j, char *cmd)
 		free(ret_path);
 		j += ft_strichr(path, j, ':') - j + 1;
 	}
-	if (path[j] && ft_strichr(path, j, ':') < 0)
+	if (j < len && path[j] && ft_strichr(path, j, ':') < 0)
 	{
 		ret_path = join_strings(path, j, cmd);
 		if (!access(ret_path, F_OK))

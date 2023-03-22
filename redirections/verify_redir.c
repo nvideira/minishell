@@ -20,7 +20,9 @@ int	verify_redir_2(char *input)
 	while (input[i])
 	{
 		if (input[i] == '>' && input[i + 1] == '>' && (input[i + 2] == '>'
-				|| input[i + 2] == '<' || input[i + 2] == '|'))
+			|| input[i + 2] == '<' || input[i + 2] == '|')
+			&& (!surround_quote(input, i, '"')
+			&& !surround_quote(input, i, '\'')))
 		{
 			ft_error("minishell: syntax error near\
 				unexpected token `newline'\n");
@@ -46,7 +48,9 @@ int	verify_redir(char *input)
 			while (input[j] && ft_space(input[j]))
 				j++;
 			if (input[j] != input[i] && (input[j] == '>'
-					|| input[j] == '<' || input[j] == '|'))
+				|| input[j] == '<' || input[j] == '|')
+				&& (!surround_quote(input, i, '"')
+				&& !surround_quote(input, i, '\'')))
 				return (0);
 			j++;
 		}

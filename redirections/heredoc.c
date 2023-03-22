@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:49:58 by nvideira          #+#    #+#             */
-/*   Updated: 2023/02/13 01:00:51 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/21 17:45:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,23 @@ int	heredoc(char *limiter)
 	int		fd;
 	int		fd_in;
 
-	fd = open("./.tmp/tmpfile.txt", O_TRUNC | O_CREAT | O_WRONLY, 0666);
+	fd = open(".tmpfile.txt", O_TRUNC | O_CREAT | O_WRONLY, 0666);
 	write(1, "> ", 2);
-	file = get_next_line(STDIN_FILENO);
-	while (1)
+	file = readline(STDIN_FILENO);
+	while (file)
 	{
-		if (ft_strncmp(file, limiter, ft_strlen(file) - 1) == 0
+		if (!ft_strncmp(file, limiter, ft_strlen(file) - 1)
 			&& ft_strlen(file) > 1)
 			break ;
 		write(fd, file, ft_strlen(file));
+		write(fd, "\n", 1);
 		free(file);
 		write(1, "> ", 2);
-		file = get_next_line(STDIN_FILENO);
+		file = readline(STDIN_FILENO);
 	}
-	free(file);
+	if (file)
+		free(file);
 	close(fd);
-	fd_in = open("./.tmp/tmpfile.txt", O_RDONLY, 0777);
+	fd_in = open(".tmpfile.txt", O_RDONLY, 0777);
 	return (fd_in);
 }

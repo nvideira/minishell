@@ -53,21 +53,17 @@ SRC = \
 	redirections/redirections.c redirections/heredoc.c \
 	redirections/redirections_utils.c redirections/verify_redir.c \
 	redirections/redirections_input.c redirections/redirections_output.c \
-	
-OBJ = $(SRC:.c=.o)
+
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(INCLUDE)
-	@$(CC) $(OBJ) $(CFLAGS) -lreadline -o $(NAME)
+$(NAME): $(SRC) $(INCLUDE)
+	@$(CC) $(CFLAGS) $(SRC) -lreadline -o $(NAME)
 	@echo " __  __ _      _ ___ _        _ _ "
 	@echo "|  \/  (_)_ _ (_) __| |_  ___| | |"
 	@echo "| |\/| | | ' \| \__ \ ' \/ -_) | |"
 	@echo "|_|  |_|_|_||_|_|___/_||_\___|_|_|"
 	@echo "\033[0;32mMiniShell Compiled!\033[0m"
- 
-.c.o:
-	@$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $(<:.c=.o)
 
 valgrind: re
 		valgrind --leak-check=full \
@@ -77,16 +73,15 @@ valgrind: re
          ./${NAME}
 
 clean:
-	$(RM) $(OBJ)
-	@echo "\033[0;31m.o Files Removed!\033[0m"
 
 fclean: clean
-	$(RM) $(NAME) 
+	$(RM) $(NAME)
+	$(RM) ".tmpfile.txt"
 	@echo "\033[0;31mMiniShell Removed!\033[0m"
 
 re: fclean all
 
 a:
-	make && make clean && ./minishell
+	make && ./minishell
 
 .PHONY: all clean fclean re a

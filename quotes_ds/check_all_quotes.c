@@ -60,6 +60,8 @@ int	check_after(char *input, int index, int quote)
 	return (count);
 }
 
+// 0 - not surrounded
+// 1 - surrounded
 int	surround_quote(char *input, int index, int quote)
 {
 	int	quote_before;
@@ -67,12 +69,14 @@ int	surround_quote(char *input, int index, int quote)
 
 	quote_before = check_before(input, index, quote);
 	quote_after = check_after(input, index, quote);
+	if (quote_before == 0 && quote_after == 0)
+		return (0);
 	if (quote_before != 0 && quote_before % 2 == 0)
 		return (0);
 	if (quote_after != 0 && quote_after % 2 == 0)
 		return (0);
 	if ((quote_before != 0 && quote_before % 2 != 0)
-		&& (quote_after != 0 && quote_after % 2 == 0))
+		&& (quote_after != 0 && quote_after % 2 != 0))
 		return (1);
 	return (0);
 }

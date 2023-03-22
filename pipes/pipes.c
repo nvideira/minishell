@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 02:15:07 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/01 05:02:33 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:18:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	pipe_commands(char **input, char **env)
 	}
 	free_matrix(input);
 	ft_wait_pid(count);
+	free(com_info()->pid);
 }
 
 // Executa os pipes
@@ -58,7 +59,7 @@ void	execute_pipe(char **input, int count, char **env)
 		close(fd_out);
 	}
 	if (ft_find_char(input[count], '<') || ft_find_char(input[count], '>'))
-		input[count] = ft_strtrim(input[count], " <>");
+		input[count] = trim_redir(input[count]);
 	commands(input[count], env, 1);
 	rl_clear_history();
 	exit(com_info()->exit_value);

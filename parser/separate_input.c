@@ -75,14 +75,19 @@ char	*separate_input(char *input)
 	int	i;
 
 	i = 0;
-	while (input[i])
+	if (!input)
+		return (NULL);
+	while (input[i] != '\0')
 	{
-		if (input[i] == '>' || input[i] == '<' || input[i] == '|')
+		if (!surround_quote(input, i, '"') && !surround_quote(input, i, '\''))
 		{
-			if (input[i + 1] && input[i + 1] != ' ' && input[i + 1] != input[i])
-				input = ft_put_space_after(input, i + 1);
-			if (i > 0 && input[i - 1] != ' ' && input[i - 1] != input[i])
-				input = ft_put_space_before(input, i - 1);
+			if ((input[i] == '>' || input[i] == '<' || input[i] == '|'))
+			{
+				if (input[i + 1] && input[i + 1] != ' ' && input[i + 1] != input[i])
+					input = ft_put_space_after(input, i + 1);
+				if (i > 0 && input[i - 1] != ' ' && input[i - 1] != input[i])
+					input = ft_put_space_before(input, i - 1);
+			}
 		}
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 00:33:34 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/07 14:33:11 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/22 20:04:26 by nvideira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,49 @@ void	check_export_without_value(char *name)
 }
 
 // Recria o comando export
-void	*ft_export(char **input)
+void	ft_export(char **input)
 {
 	int	i;
+	int	j;
 
 	i = 1;
+	j = 0;
 	if (!input[i])
 	{
 		print_exported(input);
-		return (0);
+		return ;
 	}
 	while (input[i])
 	{
+		j = check_var_name(input[i]);
+		if (j >= 0)
+		{
+			printf("export: `%c': not a valid identifier\n", input[i][j]);
+			com_info()->exit_value = 1;
+			return ;
+		}
 		if (ft_strchr(input[i], '='))
 			check_export(input[i]);
 		else
 			check_export_without_value(input[i]);
 		i++;
 	}
-	return (0);
+}
+
+int	check_var_name(char *input)
+{
+	int	i;
+
+	i = 0;
+	if ((input[i] > 'z' || input[i] < 'a')
+		&& (input[i] < 'A' || input[i] > 'Z') && input[i] != '_')
+		return (0);
+	while (input[++i])
+	{
+		if ((input[i] < 'a' || input[i] > 'z')
+			&& (input[i] < 'A' || input[i] > 'Z') && input[i] != '_'
+			&& (input[i] < '0' || input[i] > '9'))
+			return (i);
+	}
+	return (-1);
 }

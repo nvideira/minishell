@@ -76,7 +76,7 @@ char	*out_file(char *input, int count)
 	filename = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	while (input[count] && input[count] == ' ')
 		count++;
-	while (ft_strchr("<> ", input[count]) == 0 && input[count])
+	while (ft_str1chr("<> ", input[count]) == 0 && input[count])
 	{
 		filename[i] = input[count];
 		i++;

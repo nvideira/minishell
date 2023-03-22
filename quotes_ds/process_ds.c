@@ -12,19 +12,42 @@
 
 #include "minishell.h"
 
+char	*get_return_value(char **args, int i)
+{
+	char	*tmp;
+	char	*before;
+	char	*after;
+	char	*new;
+	int		j;
+
+	j = -1;
+	printf("exit value: %d\n", com_info()->exit_value);
+	while (args[i][++j])
+	{
+		if (args[i][j] == '$' && args[i][j + 1] == '?'
+			&& !surround_quote(args[i], j, '\''))
+		{
+			before = ft_substr(args[i], 0, j);
+			tmp = ft_itoa((com_info()->exit_value & 0xFF));
+			printf("tmp: %s\n", tmp);
+			after = ft_substr(args[i], j + 2, ft_strlen(args[i]));
+			new = ft_strjoin(before, tmp);
+			free(args[i]);
+			args[i] = ft_strjoin(new, after);
+			free_all(before, after);
+			free_all(tmp, new);
+		}
+	}
+	return (args[i]);
+}
+
 char	*check_ds_help(char **args, int i)
 {
 	char	*tmp;
 
-	if (!ft_strncmp(args[i], "$?", 2))
-	{
-		tmp = ft_itoa((com_info()->exit_value >> 8 & 255));
-		free(args[i]);
-		args[i] = ft_strdup(tmp);
-		free(tmp);
-	}
-	else if (args[i][0] == '$' && ft_strlen(args[i]) > 1
-		&& count_ds(args[i]) == 1)
+	args[i] = get_return_value(args, i);
+	if (args[i][0] == '$' && ft_strlen(args[i]) > 1
+		&& count_ds(args[i]) == 1 && is_valid(args[i][1]))
 	{
 		tmp = change_val(args[i]);
 		free(args[i]);

@@ -62,5 +62,6 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	if (input)
 		free(input);
+	free(info);
 	return (com_info()->exit_value);
 }

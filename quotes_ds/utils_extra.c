@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_extra.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 21:56:27 by nvideira          #+#    #+#             */
-/*   Updated: 2023/03/14 23:42:06 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/22 18:02:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*change_val2(char *input, int i, int j)
 	{
 		if (input[i] == '\'')
 			i = (skip_quotes_ds(input, i, '\''));
-		if (input[i] == '$')
+		if (input[i] == '$' && is_valid(input[i + 1]))
 		{
 			tmp = change_val2_help(input, i, j);
 			free(input);

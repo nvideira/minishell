@@ -29,7 +29,9 @@ int	ft_str1chr(const char *s, int c)
 	int	i;
 
 	i = 0;
-	while (s[i] != (char )c && s[i] != '\0')
+	if (!s)
+		return (0);
+	while (s[i] && s[i] != (char )c)
 		i++;
 	if (s[i] == (char )c)
 		return (1);

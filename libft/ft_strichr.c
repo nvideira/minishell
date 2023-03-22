@@ -15,9 +15,11 @@
 // Recria a função strichr
 int	ft_strichr(const char *s, int start, int c)
 {
+	if (start > ft_strlen(s))
+		return (-1);
 	while (s[start] != (char )c && s[start] != '\0')
 		start++;
-	if (s[start] == (char )c)
+	if (s[start] == (char )c || s[start] == '\0')
 		return (start);
 	else
 		return (-1);
