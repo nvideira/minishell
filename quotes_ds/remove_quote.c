@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:13:10 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/14 19:05:48 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:30:53 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*remove_quotes(char *input, char quote)
 
 	i = 0;
 	j = 0;
-	new = malloc(sizeof(char) * (ft_strlen(input) - 1));
+	new = malloc(sizeof(char)
+			* (ft_strlen(input) - find_quote(input, quote) + 1));
 	if (!new)
 		return (NULL);
 	while (input[i])
@@ -36,34 +37,18 @@ char	*remove_quotes(char *input, char quote)
 	return (new);
 }
 
-int	find_quote(char *str)
+int	find_quote(char *str, char quote)
 {
 	int	i;
-	int	quote;
+	int	counter;
 
 	i = 0;
-	quote = 0;
+	counter = 0;
 	while (str[i])
 	{
-		if (str[i] == '\"')
-			quote++;
+		if (str[i] == quote)
+			counter++;
 		i++;
 	}
-	return (quote);
-}
-
-int	find_pelicula(char *str)
-{
-	int	i;
-	int	quote;
-
-	i = 0;
-	quote = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			quote++;
-		i++;
-	}
-	return (quote);
+	return (counter);
 }

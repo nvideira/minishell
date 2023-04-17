@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:56:15 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/17 20:10:40 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/23 22:19:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ int	parser_checks2(char *input)
 {
 	if (check_quotes(input))
 	{
-		printf("minishell: syntax error: unclosed quotes\n");
+		ft_error("minishell: syntax error: unclosed quotes\n");
 		return (0);
 	}
 	if (check_xor(input))
 	{
-		printf("minishell: syntax error near unexpected token `|'\n");
+		ft_error("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
 	if (check_and(input))
 	{
-		printf("minishell: syntax error near unexpected token `&'\n");
+		ft_error("minishell: syntax error near unexpected token `&'\n");
 		return (0);
 	}
 	if (!verify_redir(input))
 	{
-		printf("minishell: syntax error near unexpected token `'\n");
+		ft_error("minishell: syntax error near unexpected token `'\n");
 		return (0);
 	}
 	if (!verify_redir_2(input))
@@ -52,14 +52,14 @@ int	check_quotes(char *commands)
 {
 	int	i;
 
-	if (find_quote(commands) % 2 != 0 && find_quote(commands) != 0)
+	if (find_quote(commands, '"') % 2 != 0 && find_quote(commands, '"') != 0)
 	{
 		i = find_quote_position(commands, '"');
 		if (check_if_inside_quotes(commands, i))
 			return (0);
 		return (1);
 	}
-	if (find_pelicula(commands) % 2 != 0 && find_pelicula(commands) != 0)
+	if (find_quote(commands, '\'') % 2 != 0 && find_quote(commands, '\'') != 0)
 	{
 		i = find_quote_position(commands, '\'');
 		if (check_if_inside_quotes(commands, i))

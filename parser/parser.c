@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+//input = separate_input(input);
 // Processa o input e verifica se há erros
 char	*parser(char *input, char **env)
 {
@@ -21,7 +22,6 @@ char	*parser(char *input, char **env)
 		return (NULL);
 	if (!parser_checks2(input))
 		return (NULL);
-	input = separate_input(input);
 	if (check_special(input, '|'))
 	{
 		args = ft_split(input, '|');
@@ -42,9 +42,13 @@ char	*parse_input(char *input)
 
 char	*parse_input2(char *input)
 {
+	char	*old;
+
 	input = check_ds(input);
+	old = ft_strdup(input);
 	input = process_peliculas(input);
-	input = process_quotes(input);
+	input = process_quotes(input, old);
+	free(old);
 	return (input);
 }
 
@@ -53,6 +57,8 @@ char	**parse_input3(char **input)
 	int		i;
 
 	i = 0;
+	if (!strncmp(input[0], "export", 6))
+		return (input);
 	while (input[i])
 	{
 		input[i] = parse_input2(input[i]);

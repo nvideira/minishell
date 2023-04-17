@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_input.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:08:14 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/15 13:13:42 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/05 21:42:50 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,36 @@ int	redirect_input(char *input)
 	return (fd);
 }
 
+int	get_fd_input(char *filename, int type)
+{
+	int	fd;
+
+	if (type == 1)
+		fd = heredoc(filename);
+	else
+		fd = open(filename, O_RDONLY);
+	return (fd);
+}
+
 int	get_input_fd(char *input, int nb, int count)
 {
 	char	*filename;
 	int		fd;
+	int		type;
 
+	type = 0;
 	if (input[count + 1] == '<')
 	{
-		filename = out_file(input, count + 2);
-		fd = heredoc(filename);
+		count++;
 		nb = 1;
+		type = 1;
 	}
-	else
-	{
-		filename = out_file(input, count + 1);
-		fd = open(filename, O_RDONLY);
-		if (fd < 0)
-			count = -1;
-	}
+	filename = out_file(input, count + 1);
+	fd = get_fd_input(filename, type);
+	if (fd < 0)
+		count = -1;
+	if (check_file_access(filename, R_OK) || check_file_existence(filename))
+		exit(1);
 	if (nb == 1)
 	{
 		free(filename);

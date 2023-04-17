@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:29:35 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/21 18:06:31 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/23 22:19:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*remove_redirections1(char *input)
 
 // Faz as redireções e as duplicações de file descriptors
 // O que se faz quando tem vários argumentos a seguir ao redirecionador?
-void	redirections(char *input, char **env)
+int	redirections(char *input, char **env)
 {
 	int	fd_in;
 	int	fd_out;
@@ -81,4 +81,5 @@ void	redirections(char *input, char **env)
 		commands(input, env, 1);
 	}
 	exit(com_info()->exit_value);
+	return (0);
 }

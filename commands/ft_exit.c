@@ -12,31 +12,37 @@
 
 #include "minishell.h"
 
+void	ft_exit2(char **input)
+{
+	char	*value;
+
+	if (input[1][0] == '$' && ft_strlen(input[1]) > 1)
+	{
+		value = print_vars_exit(input);
+		check_error_3(value, input);
+	}
+	check_error_3(input[1], input);
+}
+
 // Recria a função exit
 void	ft_exit(char **input)
 {
 	int		i;
-	char	*value;
 
 	i = 0;
 	while (input[i])
 		i++;
 	if (i > 2)
 	{
-		if (!ft_isdigit(input[1]))
+		if (input[2])
+			exit_errors(2, input);
+		else if (!ft_isdigit(input[1]))
 			exit_errors(1, input);
 		else
 			exit_errors(2, input);
 	}
 	else if (i == 2)
-	{
-		if (input[1][0] == '$' && ft_strlen(input[1]) > 1)
-		{
-			value = print_vars_exit(input);
-			check_error_3(value, input);
-		}
-		check_error_3(input[1], input);
-	}
+		ft_exit2(input);
 	else
 		do_exit(com_info()->exit_value, input);
 }

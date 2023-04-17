@@ -20,16 +20,14 @@ char	*get_return_value(char **args, int i)
 	char	*new;
 	int		j;
 
-	j = -1;
-	printf("exit value: %d\n", com_info()->exit_value);
-	while (args[i][++j])
+	j = 0;
+	while (args[i][j])
 	{
 		if (args[i][j] == '$' && args[i][j + 1] == '?'
 			&& !surround_quote(args[i], j, '\''))
 		{
 			before = ft_substr(args[i], 0, j);
-			tmp = ft_itoa((com_info()->exit_value & 0xFF));
-			printf("tmp: %s\n", tmp);
+			tmp = ft_itoa(convert_return_value(com_info()->exit_value));
 			after = ft_substr(args[i], j + 2, ft_strlen(args[i]));
 			new = ft_strjoin(before, tmp);
 			free(args[i]);
@@ -37,6 +35,7 @@ char	*get_return_value(char **args, int i)
 			free_all(before, after);
 			free_all(tmp, new);
 		}
+		j++;
 	}
 	return (args[i]);
 }
@@ -57,8 +56,8 @@ char	*check_ds_help(char **args, int i)
 	{
 		tmp = change_val2(args[i], 0, 0);
 		args[i] = ft_strdup(tmp);
-		free(tmp);
 	}
+	free(tmp);
 	return (args[i]);
 }
 

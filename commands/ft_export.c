@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 00:33:34 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/22 20:04:26 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:29:08 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,37 @@ void	check_export_without_value(char *name)
 		export_without_value(name);
 }
 
+int	errors_export(char *input)
+{
+	if (ft_str1chr(input, '-')
+		&& (!surround_quote(input, ft_strchr(input, '-'), '"')
+			&& !surround_quote(input, ft_strchr(input, '-'), '\'')))
+		return (1);
+	if (ft_isdigit(input))
+		return (1);
+	if (!ft_strncmp(input, "=", 1))
+		return (1);
+	return (0);
+}
+
 // Recria o comando export
-void	ft_export(char **input)
+void	*ft_export(char **input)
 {
 	int	i;
-	int	j;
 
 	i = 1;
-	j = 0;
 	if (!input[i])
 	{
 		print_exported(input);
-		return ;
+		return (0);
 	}
 	while (input[i])
 	{
-		j = check_var_name(input[i]);
-		if (j >= 0)
+		if (errors_export(input[i]))
 		{
-			printf("export: `%c': not a valid identifier\n", input[i][j]);
+			ft_error("export: %s: not a valid identifier\n", input[i]);
 			com_info()->exit_value = 1;
-			return ;
+			return (0);
 		}
 		if (ft_strchr(input[i], '='))
 			check_export(input[i]);
@@ -70,22 +80,5 @@ void	ft_export(char **input)
 			check_export_without_value(input[i]);
 		i++;
 	}
-}
-
-int	check_var_name(char *input)
-{
-	int	i;
-
-	i = 0;
-	if ((input[i] > 'z' || input[i] < 'a')
-		&& (input[i] < 'A' || input[i] > 'Z') && input[i] != '_')
-		return (0);
-	while (input[++i])
-	{
-		if ((input[i] < 'a' || input[i] > 'z')
-			&& (input[i] < 'A' || input[i] > 'Z') && input[i] != '_'
-			&& (input[i] < '0' || input[i] > '9'))
-			return (i);
-	}
-	return (-1);
+	return (0);
 }

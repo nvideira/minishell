@@ -29,7 +29,7 @@ SRC = \
 	\
 	commands/commands.c commands/env_commands.c commands/ft_exit.c \
 	commands/ft_echo.c commands/ft_unset.c commands/ft_export.c \
-	commands/ft_env.c commands/ft_pwd.c commands/change_color.c \
+	commands/ft_env.c commands/ft_pwd.c commands/print_exported.c \
 	commands/ft_export_utils.c commands/ft_export_utils2.c \
 	commands/ft_export_utils3.c commands/ft_echo_utils.c commands/cd_errors.c\
 	commands/ft_unset_utils.c commands/ft_cd.c commands/ft_exit_utils.c \

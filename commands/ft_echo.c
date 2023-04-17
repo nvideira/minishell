@@ -20,7 +20,7 @@ int	check_n(char **input)
 	i = 1;
 	while (input[1][i] && input[1][i] != ' ')
 	{
-		if (input[1][i] != 'n' && input[1][i] != 'e')
+		if (input[1][i] != 'n')
 			return (0);
 		i++;
 	}
@@ -28,7 +28,7 @@ int	check_n(char **input)
 }
 
 // Recria o comando echo
-// Tem as funcionalidades de -n e -e
+// Tem as funcionalidades de -n
 // Também tem a funcionalidade de imprimir o que é passado como argumento
 void	ft_echo(char **input)
 {
@@ -41,9 +41,12 @@ void	ft_echo(char **input)
 		else
 			do_print(input, 1, 1);
 	}
-	else if (!ft_strncmp(input[1], "-e", 3))
-		process_flags(input, 2);
 	else
 		do_print(input, 1, 1);
 	com_info()->exit_value = 0;
 }
+
+/*
+else if (!ft_strncmp(input[1], "-e", 3))
+	process_flags(input, 2);
+*/

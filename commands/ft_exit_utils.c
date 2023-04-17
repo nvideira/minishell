@@ -35,14 +35,16 @@ void	exit_errors(int error, char **input)
 {
 	if (error == 1)
 	{
-		ft_error("exit\nexit: %s: numeric argument required\n", input[1]);
+		write(1, "exit\n", 5);
+		write(2, "exit: numeric argument required", 31);
 		rl_clear_history();
 		free_matrix(input);
 		exit(2);
 	}
 	else if (error == 2)
 	{
-		ft_error("exit\nexit: too many arguments\n");
+		write(1, "exit\n", 5);
+		write(2, "exit: too many arguments", 24);
 		com_info()->exit_value = 1;
 		return ;
 	}
@@ -51,6 +53,8 @@ void	exit_errors(int error, char **input)
 // Verifica se o exit tem erros
 void	check_error_3(char *arg, char **input)
 {
+	if (!ft_strncmp(arg, "-9223372036854775809", 20))
+		exit_errors(1, input);
 	if (!ft_isdigit(arg) || !check_size_int(arg))
 		exit_errors(1, input);
 	else
@@ -74,4 +78,18 @@ int	check_size_int(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int	convert_return_value(int exit_value)
+{
+	if (exit_value == 0)
+		return (0);
+	else if (exit_value == 1)
+		return (1);
+	else if (exit_value == 2)
+		return (2);
+	else if (exit_value == 256)
+		return (1);
+	else
+		return ((exit_value >> 8 & 255));
 }

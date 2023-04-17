@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:02:49 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/22 20:05:33 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:19:02 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	commands2(char **arg, char **env, int is_fork)
 		ft_env(arg);
 	else if (!ft_strncmp(arg[0], "exit", 5))
 		ft_exit(arg);
-	else if (!ft_strncmp(arg[0], "change_color", 13))
-		change_color(arg);
 	else
 		fork_commands(arg, env, is_fork);
 }

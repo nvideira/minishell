@@ -83,7 +83,8 @@ char	*separate_input(char *input)
 		{
 			if ((input[i] == '>' || input[i] == '<' || input[i] == '|'))
 			{
-				if (input[i + 1] && input[i + 1] != ' ' && input[i + 1] != input[i])
+				if (input[i + 1] && input[i + 1] != ' '
+					&& input[i + 1] != input[i])
 					input = ft_put_space_after(input, i + 1);
 				if (i > 0 && input[i - 1] != ' ' && input[i - 1] != input[i])
 					input = ft_put_space_before(input, i - 1);

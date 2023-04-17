@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 02:15:07 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/21 16:18:47 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/05 21:32:55 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,25 @@ void	pipe_commands(char **input, char **env)
 	com_info()->pid = malloc(sizeof(int) * count_args(input));
 	while (input[count])
 	{
-		if (parent_commands(input[count], env))
-			com_info()->pid[count] = 1;
-		else
-		{
-			if (pipe(com_info()->fd) == -1)
-				return ;
-			com_info()->pid[count] = fork();
-			if (com_info()->pid[count] < 0)
-				return ;
-			if (com_info()->pid[count] == 0)
-				execute_pipe(input, count, env);
-			close(com_info()->fd[1]);
-			com_info()->pipe_fd = com_info()->fd[0];
-		}
+		if (pipe(com_info()->fd) == -1)
+			return ;
+		com_info()->pid[count] = fork();
+		if (com_info()->pid[count] < 0)
+			return ;
+		if (com_info()->pid[count] == 0)
+			execute_pipe(input, count, env);
+		close(com_info()->fd[1]);
+		com_info()->pipe_fd = com_info()->fd[0];
 		count++;
 	}
 	free_matrix(input);
 	ft_wait_pid(count);
 	free(com_info()->pid);
 }
+
+//if (parent_commands(input[count], env))
+//	com_info()->pid[count] = 1;
+//else
 
 // Executa os pipes
 void	execute_pipe(char **input, int count, char **env)

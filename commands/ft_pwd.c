@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlebre <jlebre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:46:02 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/22 18:56:41 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:28:32 by jlebre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,3 +20,14 @@ void	ft_pwd(char **arg)
 	write(1, "\n", 1);
 	com_info()->exit_value = 0;
 }
+
+/*
+To recreate ZSH's behaviour
+
+if (arg[1])
+{
+	write(2, "pwd: too many arguments\n", 24);
+	com_info()->exit_value = 1;
+	return ;
+}
+*/

@@ -24,8 +24,9 @@ void	do_print(char **input, int start, int type)
 	}
 	if (type != 2)
 		write(1, "\n", 1);
-	com_info()->exit_value = 0;
 }
+
+//com_info()->exit_value = 0;
 
 // Verifica qual flag foi passada para o comando echo -e
 void	check_flag(char c)

@@ -22,7 +22,8 @@ int	check_special(char *input, char c)
 		if (input[i] == c)
 		{
 			if (!special_quote(input, i)
-				&& !surround_quote(input, i, '"'))
+				&& !surround_quote(input, i, '"')
+				&& !surround_quote(input, i, '\''))
 				return (1);
 		}
 		i++;

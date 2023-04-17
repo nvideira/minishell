@@ -117,6 +117,7 @@ int						check_quotes(char *commands);
 int						empty_prompt(char *input);
 void					print_matrix(char **matrix);
 void					free_matrix(char **matrix);
+int						check_acess_all(char **arr);
 
 //PARSER CHECKS
 int 					parser_checks(char *input);
@@ -156,10 +157,9 @@ int						is_valid(char c);
 int						count_ds(char *str);
 
 //QUOTES
-char 					*process_quotes(char *input);
+char 					*process_quotes(char *input, char *old);
 char 					*process_peliculas(char *input);
-int						find_quote(char *str);
-int						find_pelicula(char *str);
+int						find_quote(char *str, char quote);
 char					*remove_quotes(char *input, char quote);
 int						surround_quote(char *input, int index, int quote);
 char					*join_args(char **args);
@@ -171,6 +171,7 @@ char					*change_val2(char *input, int i, int j);
 char					*change_val_help(char *name, t_env_lst *lst);
 char					*change_val2_help(char *input, int i, int j);
 char					*check_ds_help(char **args, int i);
+int						convert_return_value(int exit_value);
 
 /*___ ___ ___ ___ ___ 
  | _ \_ _| _ \ __/ __|
@@ -185,7 +186,7 @@ void					ft_wait_pid(int counter);
  | _ \ __|   \_ _| _ \
  |   / _|| |) | ||   /
  |_|_\___|___/___|_|_\*/
-void					redirections(char *input, char **env);
+int						redirections(char *input, char **env);
 char					*get_filename(char *input, int count);
 
 //INPUT
@@ -202,7 +203,8 @@ int						check_redir_type(char *input);
 int						heredoc(char *limiter);
 int						verify_redir(char *input);
 int						verify_redir_2(char *input);
-int						check_file_access(char *file);
+int						check_file_access(char *file, int type);
+int						check_file_existence(char *file);
 
 /* ___ ___  __  __ __  __   _   _  _ ___  ___ 
   / __/ _ \|  \/  |  \/  | /_\ | \| |   \/ __|
@@ -220,9 +222,9 @@ char					*find_path(char *cmd, t_env_lst *env_lst);
 char					*find_return_path(char *path, int j, char *cmd);
 
 //CHANGE COLOR
-void					change_color(char	**input);
-void					do_change(char **input, int bold);
-void					change_color_help(void);
+//void					change_color(char	**input);
+//void					do_change(char **input, int bold);
+//void					change_color_help(void);
 
 //CD
 void					ft_cd(char **input, char **env);
@@ -252,7 +254,7 @@ void					exit_errors(int error, char **input);
 int						check_size_int(char *str);
 
 //EXPORT
-void					ft_export(char **input);
+void					*ft_export(char **input);
 void					change_value(char *str, t_env_lst *lst);
 int						check_if_exists(char *str, t_env_lst *lst);
 void					print_exported(char **input);
@@ -264,7 +266,6 @@ char					*get_name_change_export(char *str, int len);
 char					*get_value_export(char *str, int len);
 void					change_value_help(t_env_lst *lst,
 							char *name, char *value, int len);
-int						check_var_name(char *input);
 
 //PWD
 void					ft_pwd(char **arg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvideira <nvideira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 17:46:39 by jlebre            #+#    #+#             */
-/*   Updated: 2023/03/14 22:42:36 by nvideira         ###   ########.fr       */
+/*   Updated: 2023/03/23 22:19:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	env_errors(char *path, char **input)
 {
 	if (!path)
 	{
-		printf("\033[0;31mCommand not found: env\033[0m\n");
+		ft_error("command not found: env\n");
 		com_info()->exit_value = 127;
 		return (1);
 	}
